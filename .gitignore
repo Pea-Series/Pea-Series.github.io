@@ -1,0 +1,5 @@
+# Open Design 运行时文件
+.file-versions/
+.od-skills/
+.mcp.json
+*.artifact.json
