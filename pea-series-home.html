@@ -539,13 +539,19 @@ img, svg { display: block; }
 .value-card p { font-size: 14px; line-height: 1.72; color: var(--fg-2); }
 
 /* ===== footer ===== */
-.site-footer { border-top: 1px solid var(--border-soft); padding: 52px 0 60px; }
+.site-footer { border-top: 1px solid var(--border-soft); padding: 40px 0 48px; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.footer-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 650; font-size: 15px; color: var(--fg); letter-spacing: -0.01em; }
-.footer-links { display: flex; gap: 26px; }
-.footer-links a { font-size: 13.5px; color: var(--muted); transition: color var(--motion-fast) var(--ease-standard); }
-.footer-links a:hover { color: var(--fg); }
-.footer-note { font-size: 12.5px; color: var(--muted); }
+.footer-copy { font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
+.footer-more { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.footer-more-label { font-size: 13px; color: var(--muted); margin-right: 2px; }
+.footer-sep { color: var(--border); }
+.footer-ext {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 14px; font-weight: 550; color: var(--fg-2);
+  padding: 6px 10px; border-radius: 10px;
+  transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard);
+}
+.footer-ext:hover { color: var(--accent); background: var(--surface-warm); }
 
 /* ===== toast ===== */
 .toast {
@@ -625,7 +631,6 @@ img, svg { display: block; }
   <section class="hero" data-od-id="page-hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <p class="eyebrow" data-i18n="hero.eyebrow">Pea 系列 · 本地优先桌面工具</p>
       <h1 data-i18n="hero.title">为学习与创作，<br>做安静可靠的本地工具。</h1>
       <p class="hero-sub" data-i18n="hero.sub">Pea 系列是一组小而美的桌面应用——从视频里学语言，从音频里生成字幕。文件留在本地，速度即是体验。</p>
       <div class="hero-actions">
@@ -906,16 +911,13 @@ img, svg { display: block; }
 
 <footer class="site-footer" data-od-id="footer-site">
   <div class="container footer-inner">
-    <a class="footer-brand" href="#top" data-i18n-aria="nav.brand.aria">
-      <span class="brand-dot" aria-hidden="true"></span>
-      <span data-i18n="nav.brand">Pea 系列</span>
-    </a>
-    <nav class="footer-links" aria-label="页脚导航" data-i18n-aria="footer.aria">
-      <a href="#products" data-i18n="nav.products">产品</a>
-      <a href="#download" data-i18n="nav.download">下载</a>
-      <a href="#values" data-i18n="nav.values">理念</a>
+    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 保留所有权利</span>
+    <nav class="footer-more" aria-label="更多作品" data-i18n-aria="footer.aria">
+      <span class="footer-more-label" data-i18n="footer.more.label">更多作品</span>
+      <a class="footer-ext" href="https://lyu-series.github.io/" target="_blank" rel="noopener" data-od-id="footer-lyu" data-i18n="footer.lyu">Lyu 系列</a>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <a class="footer-ext" href="https://devzhao.me/" target="_blank" rel="noopener" data-od-id="footer-home" data-i18n="footer.home">开发者主页</a>
     </nav>
-    <span class="footer-note" data-i18n="footer.note">© 2026 Pea 系列 · 独立开发者维护 · 本页为设计预览</span>
   </div>
 </footer>
 
@@ -940,7 +942,6 @@ img, svg { display: block; }
       "lang.label": "语言",
       "theme.light": "切换夜间模式",
       "theme.dark": "切换亮色模式",
-      "hero.eyebrow": "Pea 系列 · 本地优先桌面工具",
       "hero.title": "为学习与创作，<br>做安静可靠的本地工具。",
       "hero.sub": "Pea 系列是一组小而美的桌面应用——从视频里学语言，从音频里生成字幕。文件留在本地，速度即是体验。",
       "hero.browse": "浏览产品",
@@ -1008,8 +1009,11 @@ img, svg { display: block; }
       "values.card2.body": "启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
       "values.card3.title": "开放数据",
       "values.card3.body": "SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。",
-      "footer.aria": "页脚导航",
-      "footer.note": "© 2026 Pea 系列 · 独立开发者维护 · 本页为设计预览"
+      "footer.aria": "更多作品导航",
+      "footer.copy": "© 2026 Pea 系列 · 保留所有权利",
+      "footer.more.label": "更多作品",
+      "footer.lyu": "Lyu 系列",
+      "footer.home": "开发者主页"
     },
     en: {
       "meta.title": "Pea Series · Local-first Desktop Tools",
@@ -1023,7 +1027,6 @@ img, svg { display: block; }
       "lang.label": "Language",
       "theme.light": "Switch to dark mode",
       "theme.dark": "Switch to light mode",
-      "hero.eyebrow": "Pea Series · Local-first Desktop Tools",
       "hero.title": "Quiet, reliable local tools<br>for learning and creating.",
       "hero.sub": "Pea Series is a set of small desktop apps — learn a language from video, generate subtitles from audio. Files stay local; speed is the experience.",
       "hero.browse": "Browse products",
@@ -1091,8 +1094,11 @@ img, svg { display: block; }
       "values.card2.body": "Launches ready to use; transcription and playback are fast. A restrained UI leaves attention on the content, not the chrome.",
       "values.card3.title": "Open data",
       "values.card3.body": "SRT, CSV, Anki — standard formats you can take anywhere. Your progress belongs to you, always.",
-      "footer.aria": "Footer navigation",
-      "footer.note": "© 2026 Pea Series · Maintained by an indie developer · Design preview"
+      "footer.aria": "More works navigation",
+      "footer.copy": "© 2026 Pea Series · All rights reserved.",
+      "footer.more.label": "More from us",
+      "footer.lyu": "Lyu Series",
+      "footer.home": "Developer homepage"
     },
     ja: {
       "meta.title": "Pea シリーズ · ローカルファーストなデスクトップツール",
@@ -1106,7 +1112,6 @@ img, svg { display: block; }
       "lang.label": "言語",
       "theme.light": "ダークモードに切り替え",
       "theme.dark": "ライトモードに切り替え",
-      "hero.eyebrow": "Pea シリーズ · ローカルファースト",
       "hero.title": "学びと創作のために、<br>静かで頼れるローカルツール。",
       "hero.sub": "Pea シリーズは小さく美しいデスクトップアプリの集まりです。動画から言語を学び、音声から字幕を生成。ファイルはローカルに残り、速度こそが体験です。",
       "hero.browse": "プロダクトを見る",
@@ -1174,8 +1179,11 @@ img, svg { display: block; }
       "values.card2.body": "すぐ起動し、書き起こしも再生も十分速い。控えめな UI は、インターフェースではなくコンテンツに注意を向けさせます。",
       "values.card3.title": "オープンなデータ",
       "values.card3.body": "SRT・CSV・Anki — 標準フォーマットでいつでも持ち出せます。あなたの積み重ねは、いつでもあなたのもの。",
-      "footer.aria": "フッターナビゲーション",
-      "footer.note": "© 2026 Pea シリーズ · インディー開発者による運営 · デザイン・プレビュー"
+      "footer.aria": "その他の作品ナビゲーション",
+      "footer.copy": "© 2026 Pea シリーズ · 無断転載を禁じます",
+      "footer.more.label": "その他の作品",
+      "footer.lyu": "Lyu シリーズ",
+      "footer.home": "開発者のホームページ"
     }
   };
 
