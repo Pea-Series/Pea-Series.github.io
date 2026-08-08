@@ -122,14 +122,7 @@ html[data-theme="dark"] {
   --pea-scribe-soft: color-mix(in oklab, var(--pea-scribe-strong), var(--surface) 82%);
 }
 /* 暗色下需要反向的局部规则 */
-html[data-theme="dark"] .vid-surface { background: color-mix(in oklab, var(--bg), black 8%); }
-html[data-theme="dark"] .scene-sky { stop-color: var(--bg); }
-html[data-theme="dark"] .scene-sky2 { stop-color: var(--surface-warm); }
-html[data-theme="dark"] .scene-sun { fill: var(--surface-warm); stroke: var(--border); }
-html[data-theme="dark"] .scene-far { fill: color-mix(in oklab, var(--bg), black 12%); }
-html[data-theme="dark"] .scene-near { fill: var(--surface); }
 html[data-theme="dark"] .status-live { color: var(--success); }
-html[data-theme="dark"] .word-tag { color: var(--pea-player); }
 
 /* ===== 主题 / 语言切换控件 ===== */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -250,6 +243,8 @@ img, svg { display: block; }
 .nav-links { display: flex; gap: 4px; margin-left: auto; }
 .nav-links a { padding: 8px 13px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--fg-2); transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard); }
 .nav-links a:hover { color: var(--fg); background: color-mix(in oklab, var(--fg), transparent 95%); }
+.nav-inline { padding: 8px 13px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--fg-2); transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard); }
+.nav-inline:hover { color: var(--fg); background: color-mix(in oklab, var(--fg), transparent 95%); }
 .nav-cta { margin-left: 8px; }
 
 /* ===== hero ===== */
@@ -348,113 +343,244 @@ img, svg { display: block; }
 .product-ctas { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .product-platforms { font: 500 12.5px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; }
 
-/* ===== app window mock ===== */
-.window {
+/* ===== real-app replicas（真实应用界面还原）===== */
+.appwin {
+  display: flex; flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--elev-raised);
 }
-.win-bar { display: flex; align-items: center; gap: 6px; padding: 13px 16px; border-bottom: 1px solid var(--border-soft); }
-.win-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
-.win-title { margin-left: 8px; font: 500 11.5px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; }
-.win-body { padding: 0 0 16px; }
-
-/* --- player mock --- */
-.vid-surface { position: relative; aspect-ratio: 16 / 9; background: color-mix(in oklab, var(--accent), white 93%); overflow: hidden; }
-.vid-scene { position: absolute; inset: 0; }
-.scene-sky { stop-color: color-mix(in oklab, var(--accent), white 91%); }
-.scene-sky2 { stop-color: color-mix(in oklab, var(--accent), white 96%); }
-.scene-sun { fill: color-mix(in oklab, var(--accent), white 24%); stroke: color-mix(in oklab, var(--accent), white 58%); }
-.scene-far { fill: color-mix(in oklab, var(--accent), white 82%); }
-.scene-near { fill: color-mix(in oklab, var(--accent), white 87%); }
-.vid-play {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 58px; height: 58px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: color-mix(in oklab, var(--bg), transparent 12%);
-  border: 1px solid color-mix(in oklab, var(--fg), transparent 72%);
-  color: var(--fg);
-  box-shadow: 0 8px 28px color-mix(in oklab, black, transparent 50%);
+.appwin-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface);
 }
-.vid-sub {
-  position: absolute; left: 14px; right: 14px; bottom: 14px;
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
+.appwin-dots { display: flex; gap: 6px; }
+.appwin-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.appwin-dots i:nth-child(1) { background: #ff5f57; }
+.appwin-dots i:nth-child(2) { background: #febc2e; }
+.appwin-dots i:nth-child(3) { background: #28c840; }
+.appwin-title { margin-left: 6px; font: 600 12.5px var(--font-body); color: var(--fg); letter-spacing: -0.01em; }
+.appwin-title .ver { font: 500 10.5px var(--font-mono); color: var(--muted); margin-left: 7px; letter-spacing: 0.02em; }
+
+.appwin-body { position: relative; }
+.screen-tabs { display: flex; gap: 3px; padding: 9px 12px 0; border-bottom: 1px solid var(--border-soft); }
+.screen-tab {
+  appearance: none; border: none; border-bottom: 2px solid transparent;
+  background: transparent; color: var(--muted);
+  font: 550 12px/1 var(--font-body); letter-spacing: 0.02em;
+  padding: 8px 12px 10px; border-radius: 9px 9px 0 0;
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard);
+}
+.screen-tab:hover { color: var(--fg); background: var(--surface-warm); }
+.screen-tab.active { color: var(--fg); border-bottom-color: var(--accent); }
+.screen-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.appwin--player .screen-tab:focus-visible { outline-color: var(--p-accent); }
+.s-export:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app-screen { display: none; }
+.app-screen.active { display: flex; flex-direction: column; }
+.screen-body { padding: 14px; }
+.screen-foot {
+  margin-top: auto; padding: 9px 14px 11px;
+  font-size: 11.5px; line-height: 1.55; color: var(--muted);
+  border-top: 1px solid var(--border-soft);
+  letter-spacing: 0.01em;
+}
+.screen-foot b { color: var(--fg); font-weight: 600; }
+
+/* 贴在界面元素上的功能标注角标 */
+.cue {
+  position: absolute; display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface-warm); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 9px;
+  box-shadow: var(--elev-raised);
+  padding: 5px 9px; font: 550 11px var(--font-body); letter-spacing: 0.01em;
   pointer-events: none;
 }
-.vid-sub .sub-zh {
-  font: 600 15px var(--font-body); color: var(--fg); letter-spacing: 0.01em;
-  background: color-mix(in oklab, var(--bg), transparent 38%);
-  padding: 7px 15px; border-radius: 8px;
-  text-align: center;
-}
-.vid-sub .sub-en {
-  font: 500 11.5px var(--font-body); color: var(--fg-2);
-  background: color-mix(in oklab, var(--bg), transparent 58%);
-  padding: 4px 12px; border-radius: 6px;
-  letter-spacing: 0.02em;
-}
-.vid-controls { display: flex; align-items: center; gap: 13px; padding: 12px 16px; }
-.ctl { width: 26px; height: 26px; display: grid; place-items: center; color: var(--fg-2); }
-.ctl-play { color: var(--pea-player); }
-.time { margin-left: auto; font: 500 11.5px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.cue .cue-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-.word-card {
-  margin: 0 16px;
-  border: 1px solid var(--border); border-radius: var(--radius-md);
-  background: var(--surface-warm);
-  padding: 13px 15px;
+/* ---------- PeaPlayer 真实界面（Apple 暗色 · 锁定） ---------- */
+.appwin--player {
+  --p-bg: #000000;
+  --p-s1: #141416; --p-s2: #1a1a1e; --p-s3: #202024;
+  --p-fg: #f5f5f7; --p-fg2: #d6d6da;
+  --p-muted: #8e8e93; --p-meta: #6e6e73;
+  --p-border: #2c2c2e; --p-border-soft: #232326;
+  --p-accent: #4cb85c; --p-accent-ink: #1c1e22;
+  --p-ok: #32d74b; --p-warn: #ffd60a;
+  background: var(--p-bg); color: var(--p-fg);
 }
-.word-top { display: flex; align-items: center; gap: 10px; }
-.word { font: 600 17px var(--font-mono); color: var(--fg); letter-spacing: -0.01em; }
-.word-tag {
-  margin-left: auto;
-  font-size: 11px; font-weight: 550; letter-spacing: 0.04em;
-  color: color-mix(in oklab, var(--pea-player), black 22%);
-  background: var(--pea-player-soft);
-  padding: 3px 9px; border-radius: var(--radius-pill);
-}
-.word-def { font-size: 13px; color: var(--fg-2); margin: 7px 0 12px; }
-.word-bar { display: flex; align-items: center; gap: 12px; }
-.bar-label { font: 500 11px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; flex: none; }
-.bar-track { flex: 1; height: 4px; border-radius: var(--radius-pill); background: var(--border); overflow: hidden; }
-.bar-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--pea-player); }
+.appwin--player .appwin-bar { background: var(--p-s1); border-color: var(--p-border); }
+.appwin--player .appwin-title { color: var(--p-fg); }
+.appwin--player .appwin-title .ver { color: var(--p-meta); }
+.appwin--player .screen-tabs { border-color: var(--p-border); }
+.appwin--player .screen-tab { color: var(--p-muted); }
+.appwin--player .screen-tab:hover { color: var(--p-fg); background: var(--p-s2); }
+.appwin--player .screen-tab.active { color: var(--p-fg); border-bottom-color: var(--p-accent); }
+.appwin--player .screen-body { background: var(--p-bg); }
+.appwin--player .screen-foot { color: var(--p-muted); border-color: var(--p-border-soft); }
+.appwin--player .screen-foot b { color: var(--p-fg2); }
 
-/* --- scribe mock --- */
-.scribe-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 14px; }
-.scribe-file {
-  display: flex; align-items: center; gap: 9px;
-  font: 500 12px var(--font-mono); color: var(--muted);
-  background: var(--bg);
-  border: 1px solid var(--border-soft); border-radius: 10px;
-  padding: 9px 12px;
-  overflow: hidden; white-space: nowrap;
+/* player — 首页 */
+.p-eyebrow { font: 600 10.5px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--p-accent); }
+.p-home-title { margin: 8px 0 6px; font-size: 21px; font-weight: 600; line-height: 1.4; letter-spacing: 0; color: var(--p-fg); }
+.p-home-sub { font-size: 12.5px; line-height: 1.65; color: var(--p-muted); max-width: 52ch; }
+.p-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+.p-card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
+  background: var(--p-s1); border: 1px solid var(--p-border); border-radius: 14px;
+  padding: 13px 14px; text-align: left;
 }
-.scribe-file::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--pea-scribe-strong); flex: none; }
-.scribe-track { display: flex; flex-direction: column; gap: 7px; }
-.track-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--fg-2); }
-.track-label .tl-meta { font: 500 11px var(--font-mono); color: var(--muted); }
-.wave { display: block; height: 44px; }
-.scribe-progress { display: flex; align-items: center; gap: 12px; }
-.scribe-progress .bar-track { height: 5px; }
-.scribe-progress .bar-fill { background: var(--pea-scribe-strong); }
-.scribe-progress .pct { font: 600 12px var(--font-mono); color: var(--fg-2); font-variant-numeric: tabular-nums; }
-.srt-list { display: flex; flex-direction: column; gap: 6px; }
-.srt-row {
-  display: flex; align-items: baseline; gap: 12px;
-  padding: 8px 12px;
-  border: 1px solid var(--border-soft); border-radius: 10px;
-  background: var(--bg);
+.p-card .ic { width: 30px; height: 30px; border-radius: 8px; background: var(--p-s3); color: var(--p-muted); display: grid; place-items: center; margin-bottom: 2px; }
+.p-card .ic svg { width: 15px; height: 15px; }
+.p-card.primary .ic { color: var(--p-accent); background: rgba(76, 184, 92, 0.16); }
+.p-card .name { font-size: 13.5px; font-weight: 600; color: var(--p-fg); }
+.p-card .desc { font-size: 11px; line-height: 1.45; color: var(--p-muted); }
+.p-card .badge-soon { font-size: 10px; font-weight: 500; color: var(--p-warn); border: 1px dashed var(--p-border); border-radius: 999px; padding: 1px 8px; }
+
+/* player — 播放器 */
+.p-player { display: grid; grid-template-columns: 1.04fr 1fr; gap: 12px; align-items: start; }
+.p-video {
+  position: relative; aspect-ratio: 16 / 11;
+  background: #0a0a0c; border: 1px solid var(--p-border); border-radius: 12px;
+  overflow: hidden;
 }
-.srt-row .tc { font: 500 11.5px var(--font-mono); color: var(--muted); min-width: 92px; font-variant-numeric: tabular-nums; }
-.srt-row .txt { font-size: 13px; color: var(--fg-2); }
-.srt-row.active {
-  border-color: color-mix(in oklab, var(--pea-scribe-strong), transparent 55%);
-  background: var(--pea-scribe-soft);
+.p-video .play { position: absolute; inset: 0; display: grid; place-items: center; }
+.p-video .play span {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.22);
+  display: grid; place-items: center; color: #fff;
 }
-.srt-row.active .tc { color: var(--pea-scribe-strong); }
-.srt-row.active .txt { color: var(--fg); }
+.p-video .play svg { width: 16px; height: 16px; }
+.p-video .vtime {
+  position: absolute; left: 10px; bottom: 10px;
+  font: 500 10.5px var(--font-mono); color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.45); padding: 3px 8px; border-radius: 6px;
+}
+.p-video .cue { right: 10px; top: 10px; background: rgba(28, 30, 34, 0.88); border-color: rgba(255, 255, 255, 0.16); color: #f5f5f7; }
+.p-video .cue .cue-dot { background: var(--p-accent); }
+.p-subs { display: flex; flex-direction: column; gap: 7px; min-height: 0; }
+.sub-entry {
+  display: grid; grid-template-columns: 42px 1fr; gap: 9px;
+  padding: 9px 11px; border-radius: 11px;
+  background: var(--p-s1); border: 1px solid var(--p-border);
+}
+.sub-entry .time { font: 500 10.5px var(--font-mono); color: var(--p-muted); padding-top: 1px; }
+.sub-entry .tp { font-size: 12.5px; line-height: 1.45; color: var(--p-fg); }
+.sub-entry .ts { font-size: 11px; line-height: 1.5; color: var(--p-muted); margin-top: 2px; }
+.sub-entry.active { background: rgba(76, 184, 92, 0.12); border-color: rgba(76, 184, 92, 0.45); }
+.sub-entry.active .time { color: var(--p-accent); }
+.p-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.p-chip {
+  font-size: 10.5px; font-weight: 500; color: var(--p-fg2);
+  border: 1px solid var(--p-border); border-radius: 999px;
+  background: var(--p-s1); padding: 4px 10px; letter-spacing: 0.01em;
+}
+.p-chip.on { color: var(--p-accent); border-color: rgba(76, 184, 92, 0.5); background: rgba(76, 184, 92, 0.1); }
+
+/* player — 学习 · 复习 */
+.p-review { display: grid; grid-template-columns: 1fr 126px; gap: 12px; align-items: start; }
+.p-progress { background: var(--p-s1); border: 1px solid var(--p-border); border-radius: 12px; padding: 11px 13px; }
+.p-progress .top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--p-fg); }
+.p-progress .cnt { font: 600 11.5px var(--font-mono); color: var(--p-accent); }
+.p-track { height: 4px; background: var(--p-s3); border-radius: 2px; margin-top: 9px; overflow: hidden; }
+.p-track .fill { height: 100%; width: 40%; background: var(--p-accent); }
+.p-card-tabs { display: flex; gap: 2px; background: var(--p-s2); border-radius: 8px; padding: 3px; margin: 10px 0; }
+.p-card-tab { flex: 1; text-align: center; font-size: 11px; color: #a1a1a6; padding: 5px 0; border-radius: 6px; }
+.p-card-tab.on { background: var(--p-fg); color: #000; font-weight: 600; }
+.p-flash {
+  background: var(--p-s1); border: 1px solid var(--p-border); border-radius: 14px;
+  min-height: 116px; display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 14px;
+}
+.p-flash .zh { font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--p-fg); }
+.p-flash .hint { font-size: 10.5px; color: var(--p-muted); margin-top: 7px; }
+.p-flash .en { font-size: 12.5px; color: var(--p-fg2); margin-top: 2px; }
+.p-rating { display: flex; gap: 6px; margin-top: 10px; }
+.p-rate {
+  flex: 1; font-size: 11px; font-weight: 550; color: var(--p-fg2);
+  border: 1px solid var(--p-border); border-radius: 8px; background: var(--p-s2);
+  padding: 8px 0; text-align: center;
+}
+.p-rate.known { background: var(--p-accent); border-color: var(--p-accent); color: var(--p-accent-ink); font-weight: 600; }
+.p-stat {
+  background: var(--p-s1); border: 1px solid var(--p-border); border-radius: 12px;
+  padding: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.p-stat h4 { font-size: 11.5px; color: var(--p-fg); }
+.p-ring { position: relative; width: 70px; height: 70px; }
+.p-ring svg { width: 70px; height: 70px; transform: rotate(-90deg); }
+.p-ring .bg { fill: none; stroke: var(--p-s3); stroke-width: 7; }
+.p-ring .fg { fill: none; stroke: var(--p-accent); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 226; stroke-dashoffset: 136; }
+.p-ring .num { position: absolute; inset: 0; display: grid; place-items: center; font: 600 15px var(--font-mono); color: var(--p-fg); }
+.p-stat .lbl { font-size: 10px; line-height: 1.5; color: var(--p-muted); text-align: center; }
+
+/* ---------- PeaScribe 真实界面（tech-utility · 跟随站点主题） ---------- */
+.appwin--scribe { background: var(--surface); }
+.appwin--scribe .appwin-bar { background: var(--surface); }
+.appwin--scribe .screen-body { background: var(--bg); }
+.s-shell { display: grid; grid-template-columns: 146px minmax(0, 1fr) 118px; min-height: 320px; }
+.s-side { border-right: 1px solid var(--border-soft); background: var(--surface); padding: 13px 11px; overflow: hidden; }
+.s-side h5 { font: 600 11px var(--font-body); color: var(--fg); letter-spacing: 0.01em; }
+.s-side .sub { font: 500 9.5px var(--font-mono); color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin: 3px 0 9px; }
+.s-his { display: flex; flex-direction: column; gap: 6px; }
+.s-his-item { border: 1px solid var(--border-soft); border-radius: 9px; background: var(--bg); padding: 7px 9px; }
+.s-his-item.on { border-color: color-mix(in oklab, var(--accent), transparent 55%); background: color-mix(in oklab, var(--accent), transparent 90%); }
+.s-his-item .nm { font-size: 11px; font-weight: 550; color: var(--fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-his-item .mt { display: flex; gap: 8px; font: 500 9.5px var(--font-mono); color: var(--muted); margin-top: 3px; }
+.s-main { background: var(--bg); padding: 13px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.s-props { border-left: 1px solid var(--border-soft); background: var(--surface); padding: 13px 11px; font-size: 11px; color: var(--fg-2); }
+.s-props h5 { font: 600 11px var(--font-body); color: var(--fg); margin-bottom: 10px; }
+.s-prop-row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-size: 10.5px; color: var(--muted); margin-bottom: 7px; }
+.s-prop-row b { color: var(--fg-2); font-weight: 550; font-family: var(--font-mono); font-size: 10px; font-weight: 500; }
+.s-empty-prop { color: var(--muted); font-size: 10.5px; line-height: 1.7; }
+
+/* scribe — 首页 / 空状态 */
+.s-drop {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  border: 1.5px dashed var(--border); border-radius: 14px;
+  background: var(--surface); color: var(--muted); min-height: 196px; text-align: center;
+}
+.s-drop svg { color: var(--meta); }
+.s-drop .t { font-size: 13px; font-weight: 500; color: var(--fg-2); }
+.s-drop .h { font-size: 11px; color: var(--muted); }
+
+/* scribe — 转写中 */
+.s-file { display: flex; align-items: center; gap: 8px; font: 500 11px var(--font-mono); color: var(--muted); background: var(--surface); border: 1px solid var(--border-soft); border-radius: 9px; padding: 8px 10px; overflow: hidden; white-space: nowrap; }
+.s-file::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+.s-track .lbl { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; color: var(--fg-2); margin-bottom: 6px; }
+.s-track .lbl .m { font: 500 10px var(--font-mono); color: var(--muted); }
+.s-wave { display: block; height: 34px; }
+.s-prog { display: flex; align-items: center; gap: 10px; }
+.s-prog .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.s-prog .bar .fill { height: 100%; width: 67%; background: var(--accent); }
+.s-prog .pct { font: 600 11px var(--font-mono); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.s-stage { font-size: 11.5px; color: var(--fg-2); }
+.s-stage b { color: var(--fg); font-weight: 600; }
+.s-log { font: 500 10px var(--font-mono); color: var(--muted); background: var(--surface); border: 1px solid var(--border-soft); border-radius: 9px; padding: 8px 10px; line-height: 1.75; }
+
+/* scribe — 字幕编辑 */
+.s-srt-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+.s-srt-head h5 { font-size: 12px; font-weight: 600; color: var(--fg); }
+.s-export {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 600 11px var(--font-body); color: var(--accent-on);
+  background: var(--accent); border: none; border-radius: 8px; padding: 7px 13px; cursor: pointer;
+}
+.s-export:hover { background: var(--accent-hover); }
+.s-srt { border: 1px solid var(--border-soft); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.s-srt-row { display: grid; grid-template-columns: 84px 1fr; gap: 10px; align-items: baseline; padding: 8px 12px; border-top: 1px solid var(--border-soft); }
+.s-srt-row:first-child { border-top: none; }
+.s-srt-row .tc { font: 500 10.5px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.s-srt-row .tx { font-size: 11.5px; color: var(--fg-2); }
+.s-srt-row.on { background: color-mix(in oklab, var(--accent), transparent 92%); }
+.s-srt-row.on .tc { color: var(--accent); }
+.s-srt-row.on .tx { color: var(--fg); }
 
 /* ===== download ===== */
 .download-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -593,6 +719,14 @@ img, svg { display: block; }
   .platform-row { grid-template-columns: 1fr auto; }
   .pf-note { display: none; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
+  /* 真实界面还原 — 小屏堆叠，避免横向溢出 */
+  .p-cards { grid-template-columns: 1fr; }
+  .p-player { grid-template-columns: 1fr; }
+  .p-review { grid-template-columns: 1fr; }
+  .s-shell { grid-template-columns: 1fr; }
+  .s-side, .s-props { display: none; }
+  .s-main { min-height: 240px; }
+  .appwin .screen-tab { padding: 8px 10px; font-size: 11.5px; }
 }
 </style>
 </head>
@@ -606,7 +740,6 @@ img, svg { display: block; }
     </a>
     <nav class="nav-links" aria-label="主导航" data-i18n-aria="nav.aria">
       <a href="#products" data-i18n="nav.products">产品</a>
-      <a href="#values" data-i18n="nav.values">理念</a>
     </nav>
     <div class="nav-controls">
       <button class="icon-btn theme-toggle" type="button" data-theme-toggle data-i18n-aria="theme.light">
@@ -622,6 +755,7 @@ img, svg { display: block; }
         </select>
       </label>
     </div>
+    <a class="nav-inline" href="#values" data-od-id="nav-values" data-i18n="nav.values">理念</a>
     <a class="btn btn-secondary btn-sm nav-cta" href="#download" data-od-id="nav-cta-download" data-i18n="nav.download">下载</a>
   </div>
 </header>
@@ -683,12 +817,14 @@ img, svg { display: block; }
           <h3 data-i18n="player.h3">沉浸式语言学习，从一段视频开始。</h3>
           <p class="product-desc" data-i18n="player.desc">在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。</p>
           <ul class="feature-list">
-            <li class="fchip"><span class="fchip-name" data-i18n="player.f1">双语字幕</span><span class="fchip-kbd" data-i18n="player.f1k">原文 / 译文</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="player.f2">点击查词</span><span class="fchip-kbd" data-i18n="player.f2k">⌘ + 点按</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f1">双语字幕 · 逐句同步</span><span class="fchip-kbd" data-i18n="player.f1k">原文 / 译文</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f2">点击查词 · 加入生词本</span><span class="fchip-kbd" data-i18n="player.f2k">⌘ + 点按</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="player.f3">生词本 · SRS 复习</span><span class="fchip-kbd" data-i18n="player.f3k">自动收录</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="player.f4">Anki 同步</span><span class="fchip-kbd" data-i18n="player.f4k">双向</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f4">Anki / CSV 导出</span><span class="fchip-kbd" data-i18n="player.f4k">双向同步</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="player.f5">字幕搜索 · 跟随播放</span><span class="fchip-kbd" data-i18n="player.f5k">⌘F</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="player.f6">学习统计</span><span class="fchip-kbd" data-i18n="player.f6k">每日回顾</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f6">A-B 循环 · 逐句精听</span><span class="fchip-kbd" data-i18n="player.f6k">I / O</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f7">中文反向背诵</span><span class="fchip-kbd" data-i18n="player.f7k">中 → 原文</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f8">学习统计</span><span class="fchip-kbd" data-i18n="player.f8k">掌握率</span></li>
           </ul>
           <div class="product-ctas">
             <a class="btn btn-player" href="#dl-player" data-target-card="dl-player" data-od-id="cta-player" data-i18n="player.cta">下载 PeaPlayer</a>
@@ -697,50 +833,135 @@ img, svg { display: block; }
         </div>
 
         <div class="product-visual">
-          <div class="window" data-od-id="mock-player" aria-label="PeaPlayer 界面预览" data-i18n-aria="player.mock.aria">
-            <div class="win-bar">
-              <span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span>
-              <span class="win-title">PeaPlayer</span>
+          <div class="appwin appwin--player" data-od-id="mock-player" aria-label="PeaPlayer 界面预览" data-i18n-aria="player.mock.aria">
+            <div class="appwin-bar">
+              <span class="appwin-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="appwin-title">PeaPlayer<span class="ver">0.5 · 暗色</span></span>
             </div>
-            <div class="win-body">
-              <div class="vid-surface">
-                <svg class="vid-scene" viewBox="0 0 480 270" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0" class="scene-sky"/>
-                      <stop offset="1" class="scene-sky2"/>
-                    </linearGradient>
-                  </defs>
-                  <rect width="480" height="270" fill="url(#sky)"/>
-                  <circle cx="384" cy="70" r="26" class="scene-sun" stroke-width="1"/>
-                  <path d="M0 270 118 152 204 212 298 132 424 238 480 198V270Z" class="scene-far"/>
-                  <path d="M0 270 104 184 194 234 302 164 424 252 480 224V270Z" class="scene-near"/>
-                </svg>
-                <span class="vid-play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l12-7z"/></svg>
-                </span>
-                <div class="vid-sub">
-                  <span class="sub-zh" data-i18n="player.mock.sub.zh">我从来没有想过，语言可以这样学。</span>
-                  <span class="sub-en" data-i18n="player.mock.sub.en">I never thought language could be learned this way.</span>
+            <div class="screen-tabs" data-screen-tabs role="tablist" data-i18n-aria="player.tabs.aria" aria-label="PeaPlayer 界面切换">
+              <button class="screen-tab active" type="button" data-screen="home" role="tab" aria-selected="true" data-i18n="player.screens.home">首页</button>
+              <button class="screen-tab" type="button" data-screen="player" role="tab" aria-selected="false" data-i18n="player.screens.player">播放器</button>
+              <button class="screen-tab" type="button" data-screen="review" role="tab" aria-selected="false" data-i18n="player.screens.review">学习 · 复习</button>
+            </div>
+            <div class="appwin-body">
+
+              <!-- 首页 / 启动器 -->
+              <div class="app-screen active" data-screen-name="home">
+                <div class="screen-body">
+                  <div class="p-eyebrow">一部剧 · 一门语言课</div>
+                  <h4 class="p-home-title">沉浸式语言学习，从一段视频开始</h4>
+                  <p class="p-home-sub">逐句精听、词级查词、中文反向背诵，构建「看 → 懂 → 记 → 复习」的完整闭环。</p>
+                  <div class="p-cards">
+                    <div class="p-card primary">
+                      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M10 9.5v5l4.5-2.5Z"/></svg></span>
+                      <span class="name">播放器</span>
+                      <span class="desc">双语字幕 · 点击查词 · A-B 循环</span>
+                    </div>
+                    <div class="p-card">
+                      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.6 1 1.4 1 2.2V16h6v-.3c0-.8.3-1.6 1-2.2A6 6 0 0 0 12 3Z"/></svg></span>
+                      <span class="name">学习 / 复习</span>
+                      <span class="desc">中文 → 原句背诵 · 生词本 · SRS</span>
+                    </div>
+                    <div class="p-card">
+                      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                      <span class="name">社区</span>
+                      <span class="badge-soon">即将上线</span>
+                      <span class="desc">学习笔记 · 片段分享 · 打卡</span>
+                    </div>
+                    <div class="p-card">
+                      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"/><path d="M12 17h.01"/></svg></span>
+                      <span class="name">使用说明</span>
+                      <span class="desc">快速上手 · 快捷键 · 常见问题</span>
+                    </div>
+                  </div>
                 </div>
+                <div class="screen-foot" data-i18n="player.foot.home">从启动器一键进入<b>播放</b>、<b>复习</b>与<b>使用说明</b>。</div>
               </div>
-              <div class="vid-controls">
-                <span class="ctl" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M6 5v14M18 5l-8 7 8 7z"/></svg></span>
-                <span class="ctl ctl-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l12-7z"/></svg></span>
-                <span class="ctl" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 5v14M6 5l8 7-8 7z"/></svg></span>
-                <span class="time">00:12:34 / 00:45:00</span>
-              </div>
-              <div class="word-card">
-                <div class="word-top">
-                  <span class="word">never</span>
-                  <span class="word-tag" data-i18n="player.mock.tag">已加入生词本</span>
+
+              <!-- 播放器 -->
+              <div class="app-screen" data-screen-name="player">
+                <div class="screen-body">
+                  <div class="p-player">
+                    <div class="p-video">
+                      <div class="play" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg></span></div>
+                      <span class="vtime">00:04:37 / 01:39:24</span>
+                      <span class="cue"><span class="cue-dot" aria-hidden="true"></span><span data-i18n="player.cue.word">点击单词 · 即时查词</span></span>
+                    </div>
+                    <div class="p-subs">
+                      <div class="sub-entry active">
+                        <span class="time">00:12</span>
+                        <div>
+                          <p class="tp">This is my first time at the Grand Budapest.</p>
+                          <p class="ts">这是我第一次来布达佩斯大饭店。</p>
+                        </div>
+                      </div>
+                      <div class="sub-entry">
+                        <span class="time">00:17</span>
+                        <div>
+                          <p class="tp">Ah, then you're in for a treat.</p>
+                          <p class="ts">啊，那您可要大开眼界了。</p>
+                        </div>
+                      </div>
+                      <div class="sub-entry">
+                        <span class="time">00:32</span>
+                        <div>
+                          <p class="tp">The lobby alone — the frescoes, the chandeliers.</p>
+                          <p class="ts">光是那大堂——壁画、水晶吊灯。</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-chips">
+                    <span class="p-chip on">跟随播放</span>
+                    <span class="p-chip">双语</span>
+                    <span class="p-chip">字幕样式</span>
+                    <span class="p-chip">轨道配对</span>
+                    <span class="p-chip">搜索 ⌘F</span>
+                  </div>
                 </div>
-                <p class="word-def" data-i18n="player.mock.def">adv. 从未；毫不 —— 常用于「从未想过」</p>
-                <div class="word-bar">
-                  <span class="bar-label" data-i18n="player.mock.bar">复习进度</span>
-                  <span class="bar-track"><span class="bar-fill" style="width:70%"></span></span>
-                </div>
+                <div class="screen-foot" data-i18n="player.foot.player">双轨双语字幕 · 词级查词 · A-B 循环精听，<b>观看不被打断</b>。</div>
               </div>
+
+              <!-- 学习 · 复习 -->
+              <div class="app-screen" data-screen-name="review">
+                <div class="screen-body">
+                  <div class="p-review">
+                    <div>
+                      <div class="p-progress">
+                        <div class="top"><span>今日学习</span><span class="cnt">12 / 30</span></div>
+                        <div class="p-track"><div class="fill"></div></div>
+                      </div>
+                      <div class="p-card-tabs">
+                        <span class="p-card-tab on">学习</span>
+                        <span class="p-card-tab">复习</span>
+                        <span class="p-card-tab">生词本</span>
+                      </div>
+                      <div class="p-flash">
+                        <div>
+                          <div class="zh">恐怕我来了就不想走了。</div>
+                          <div class="hint">点击卡片翻转 · 回忆原句</div>
+                          <div class="en">I fear I may never leave this hotel.</div>
+                        </div>
+                      </div>
+                      <div class="p-rating">
+                        <span class="p-rate">又忘了</span>
+                        <span class="p-rate">模糊</span>
+                        <span class="p-rate known">记住了</span>
+                      </div>
+                    </div>
+                    <div class="p-stat">
+                      <h4>学习统计</h4>
+                      <div class="p-ring">
+                        <svg viewBox="0 0 72 72" aria-hidden="true"><circle class="bg" cx="36" cy="36" r="30"/><circle class="fg" cx="36" cy="36" r="30"/></svg>
+                        <span class="num">40%</span>
+                      </div>
+                      <span class="lbl">掌握率<br>已学 ≥ 3 次</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="screen-foot" data-i18n="player.foot.review">中文反向背诵 · 按记忆评级 · <b>SRS</b> 自动安排复习。</div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -760,10 +981,12 @@ img, svg { display: block; }
           <ul class="feature-list">
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f1">音轨自动探测</span><span class="fchip-kbd" data-i18n="scribe.f1k">多语言</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f2">本地 Whisper 转写</span><span class="fchip-kbd" data-i18n="scribe.f2k">离线模型</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f3">模型下载 · 进度可视</span><span class="fchip-kbd" data-i18n="scribe.f3k">base / small</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f4">逐条校对时间码</span><span class="fchip-kbd" data-i18n="scribe.f4k">表格编辑</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f5">一键导出 SRT</span><span class="fchip-kbd" data-i18n="scribe.f5k">⌘E</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f6">命令面板</span><span class="fchip-kbd" data-i18n="scribe.f6k">⌘K</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f3">模型管理 · 进度可视</span><span class="fchip-kbd" data-i18n="scribe.f3k">base / turbo</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f4">三栏工作区</span><span class="fchip-kbd" data-i18n="scribe.f4k">历史 · 文件 · 属性</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f5">逐条校对时间码</span><span class="fchip-kbd" data-i18n="scribe.f5k">表格编辑</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f6">一键导出 SRT</span><span class="fchip-kbd" data-i18n="scribe.f6k">⌘E</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f7">批量队列</span><span class="fchip-kbd" data-i18n="scribe.f7k">自动顺延</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f8">命令面板</span><span class="fchip-kbd" data-i18n="scribe.f8k">⌘K</span></li>
           </ul>
           <div class="product-ctas">
             <a class="btn btn-scribe" href="#dl-scribe" data-target-card="dl-scribe" data-od-id="cta-scribe" data-i18n="scribe.cta">下载 PeaScribe</a>
@@ -772,33 +995,128 @@ img, svg { display: block; }
         </div>
 
         <div class="product-visual">
-          <div class="window" data-od-id="mock-scribe" aria-label="PeaScribe 界面预览" data-i18n-aria="scribe.mock.aria">
-            <div class="win-bar">
-              <span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span>
-              <span class="win-title">PeaScribe</span>
+          <div class="appwin appwin--scribe" data-od-id="mock-scribe" aria-label="PeaScribe 界面预览" data-i18n-aria="scribe.mock.aria">
+            <div class="appwin-bar">
+              <span class="appwin-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="appwin-title">PeaScribe<span class="ver">0.4</span></span>
             </div>
-            <div class="scribe-body">
-              <div class="scribe-file" data-i18n="scribe.mock.file">~/media/interview_cn.mov · 45:00 · 中文</div>
-              <div class="scribe-track">
-                <div class="track-label">
-                  <span data-i18n="scribe.mock.track">音轨 1 · 中文</span>
-                  <span class="tl-meta" data-i18n="scribe.mock.model">whisper·base</span>
+            <div class="screen-tabs" data-screen-tabs role="tablist" data-i18n-aria="scribe.tabs.aria" aria-label="PeaScribe 界面切换">
+              <button class="screen-tab active" type="button" data-screen="idle" role="tab" aria-selected="true" data-i18n="scribe.screens.idle">首页</button>
+              <button class="screen-tab" type="button" data-screen="transcribing" role="tab" aria-selected="false" data-i18n="scribe.screens.transcribing">转写中</button>
+              <button class="screen-tab" type="button" data-screen="complete" role="tab" aria-selected="false" data-i18n="scribe.screens.complete">字幕编辑</button>
+            </div>
+            <div class="appwin-body">
+
+              <!-- 首页 / 空状态 -->
+              <div class="app-screen active" data-screen-name="idle">
+                <div class="screen-body" style="padding:0">
+                  <div class="s-shell">
+                    <div class="s-side">
+                      <h5>历史记录</h5>
+                      <div class="sub">最近文件</div>
+                      <div class="s-his">
+                        <div class="s-his-item on"><div class="nm">interview_cn.mov</div><div class="mt"><span>今天</span><span>45:00</span></div></div>
+                        <div class="s-his-item"><div class="nm">podcast_en.mp3</div><div class="mt"><span>昨天</span><span>28:12</span></div></div>
+                        <div class="s-his-item"><div class="nm">lecture_ja.m4a</div><div class="mt"><span>7 月 30 日</span><span>1:12:08</span></div></div>
+                      </div>
+                    </div>
+                    <div class="s-main">
+                      <div class="s-drop">
+                        <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 38h20a4 4 0 0 0 4-4V18L28 8H14a4 4 0 0 0-4 4v22a4 4 0 0 0 4 4z"/><path d="M28 8v12h12"/><path d="M24 22v10"/><path d="M20 26l4-4 4 4"/></svg>
+                        <p class="t">拖拽媒体文件到此处</p>
+                        <p class="h">或点击选择文件</p>
+                      </div>
+                    </div>
+                    <div class="s-props">
+                      <h5>文件信息</h5>
+                      <p class="s-empty-prop">选择文件后<br>显示元数据</p>
+                    </div>
+                  </div>
                 </div>
-                <svg class="wave" viewBox="0 0 96 24" preserveAspectRatio="none" aria-hidden="true">
-                  <path vector-effect="non-scaling-stroke" d="M2 20V10M6 20V6M10 20V13M14 20V8M18 20V15M22 20V5M26 20V11M30 20V16M34 20V9M38 20V14M42 20V7M46 20V12M50 20V17M54 20V6M58 20V10M62 20V15M66 20V8M70 20V13M74 20V16M78 20V11M82 20V6M86 20V14M90 20V9M94 20V12"
-                    fill="none" stroke="var(--pea-scribe-strong)" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
+                <div class="screen-foot" data-i18n="scribe.foot.idle">拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始转写。</div>
               </div>
-              <div class="scribe-progress">
-                <span class="bar-label" data-i18n="scribe.mock.progress">转写中</span>
-                <span class="bar-track"><span class="bar-fill" style="width:67%"></span></span>
-                <span class="pct">67%</span>
+
+              <!-- 转写中 -->
+              <div class="app-screen" data-screen-name="transcribing">
+                <div class="screen-body" style="padding:0">
+                  <div class="s-shell">
+                    <div class="s-side">
+                      <h5>历史记录</h5>
+                      <div class="sub">最近文件</div>
+                      <div class="s-his">
+                        <div class="s-his-item on"><div class="nm">interview_cn.mov</div><div class="mt"><span>今天</span><span>45:00</span></div></div>
+                        <div class="s-his-item"><div class="nm">podcast_en.mp3</div><div class="mt"><span>昨天</span><span>28:12</span></div></div>
+                      </div>
+                    </div>
+                    <div class="s-main">
+                      <div class="s-file">~/media/interview_cn.mov · 45:00 · 中文</div>
+                      <div class="s-track">
+                        <div class="lbl"><span>音轨 1 · 中文</span><span class="m">whisper · base</span></div>
+                        <svg class="s-wave" viewBox="0 0 96 24" preserveAspectRatio="none" aria-hidden="true">
+                          <path vector-effect="non-scaling-stroke" d="M2 20V10M6 20V6M10 20V13M14 20V8M18 20V15M22 20V5M26 20V11M30 20V16M34 20V9M38 20V14M42 20V7M46 20V12M50 20V17M54 20V6M58 20V10M62 20V15M66 20V8M70 20V13M74 20V16M78 20V11M82 20V6M86 20V14M90 20V9M94 20V12"
+                            fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                      </div>
+                      <div class="s-prog">
+                        <span class="bar"><span class="fill"></span></span>
+                        <span class="pct">67%</span>
+                      </div>
+                      <div class="s-stage">正在<b>语音识别</b>…</div>
+                      <div class="s-log">
+                        [14:32:05] 模型加载完成 (3.2s)<br>
+                        [14:32:09] PCM → 16kHz mono 转换完成<br>
+                        [14:32:16] 片段 00:01:00 - 00:01:30 处理完成
+                      </div>
+                    </div>
+                    <div class="s-props">
+                      <h5>文件信息</h5>
+                      <div class="s-prop-row"><span>时长</span><b>45:00</b></div>
+                      <div class="s-prop-row"><span>音轨</span><b>1 · 中文</b></div>
+                      <div class="s-prop-row"><span>模型</span><b>base</b></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="screen-foot" data-i18n="scribe.foot.transcribing">本地 Whisper 分片转写 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。</div>
               </div>
-              <div class="srt-list">
-                <div class="srt-row"><span class="tc">00:00:01,200</span><span class="txt" data-i18n="scribe.mock.srt1">欢迎来到 Pea 系列</span></div>
-                <div class="srt-row active"><span class="tc">00:00:03,480</span><span class="txt" data-i18n="scribe.mock.srt2">今天我们来聊聊本地工具</span></div>
-                <div class="srt-row"><span class="tc">00:00:06,120</span><span class="txt" data-i18n="scribe.mock.srt3">从视频里学一门语言</span></div>
+
+              <!-- 字幕编辑 / 完成 -->
+              <div class="app-screen" data-screen-name="complete">
+                <div class="screen-body" style="padding:0">
+                  <div class="s-shell">
+                    <div class="s-side">
+                      <h5>历史记录</h5>
+                      <div class="sub">最近文件</div>
+                      <div class="s-his">
+                        <div class="s-his-item on"><div class="nm">interview_cn.mov</div><div class="mt"><span>今天</span><span>45:00</span></div></div>
+                        <div class="s-his-item"><div class="nm">podcast_en.mp3</div><div class="mt"><span>昨天</span><span>28:12</span></div></div>
+                      </div>
+                    </div>
+                    <div class="s-main">
+                      <div class="s-srt-head">
+                        <h5>字幕 · 中文</h5>
+                        <button class="s-export" type="button" data-od-id="replica-scribe-export">
+                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"/></svg>
+                          导出 SRT
+                        </button>
+                      </div>
+                      <div class="s-srt">
+                        <div class="s-srt-row"><span class="tc">00:00:01,200</span><span class="tx">欢迎来到 Pea 系列</span></div>
+                        <div class="s-srt-row on"><span class="tc">00:00:03,480</span><span class="tx">今天我们来聊聊本地工具</span></div>
+                        <div class="s-srt-row"><span class="tc">00:00:06,120</span><span class="tx">从视频里学一门语言</span></div>
+                        <div class="s-srt-row"><span class="tc">00:00:09,040</span><span class="tx">让字幕真正可编辑、可交付</span></div>
+                      </div>
+                    </div>
+                    <div class="s-props">
+                      <h5>文件信息</h5>
+                      <div class="s-prop-row"><span>时长</span><b>45:00</b></div>
+                      <div class="s-prop-row"><span>语言</span><b>中文</b></div>
+                      <div class="s-prop-row"><span>行数</span><b>486</b></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="screen-foot" data-i18n="scribe.foot.complete">逐条校对<b>时间码</b>与<b>文本</b>，一键导出<b>SRT</b>，直接交付。</div>
               </div>
+
             </div>
           </div>
         </div>
@@ -956,32 +1274,46 @@ img, svg { display: block; }
       "player.kind": "语言学习播放器",
       "player.h3": "沉浸式语言学习，从一段视频开始。",
       "player.desc": "在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。",
-      "player.f1": "双语字幕", "player.f1k": "原文 / 译文",
-      "player.f2": "点击查词", "player.f2k": "⌘ + 点按",
+      "player.f1": "双语字幕 · 逐句同步", "player.f1k": "原文 / 译文",
+      "player.f2": "点击查词 · 加入生词本", "player.f2k": "⌘ + 点按",
       "player.f3": "生词本 · SRS 复习", "player.f3k": "自动收录",
-      "player.f4": "Anki 同步", "player.f4k": "双向",
+      "player.f4": "Anki / CSV 导出", "player.f4k": "双向同步",
       "player.f5": "字幕搜索 · 跟随播放", "player.f5k": "⌘F",
-      "player.f6": "学习统计", "player.f6k": "每日回顾",
+      "player.f6": "A-B 循环 · 逐句精听", "player.f6k": "I / O",
+      "player.f7": "中文反向背诵", "player.f7k": "中 → 原文",
+      "player.f8": "学习统计", "player.f8k": "掌握率",
       "player.cta": "下载 PeaPlayer",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer 界面预览",
-      "player.mock.sub.zh": "我从来没有想过，语言可以这样学。",
-      "player.mock.sub.en": "I never thought language could be learned this way.",
-      "player.mock.tag": "已加入生词本",
-      "player.mock.def": "adv. 从未；毫不 —— 常用于「从未想过」",
-      "player.mock.bar": "复习进度",
+      "player.tabs.aria": "PeaPlayer 界面切换",
+      "player.screens.home": "首页",
+      "player.screens.player": "播放器",
+      "player.screens.review": "学习 · 复习",
+      "player.foot.home": "从启动器一键进入<b>播放</b>、<b>复习</b>与<b>使用说明</b>。",
+      "player.foot.player": "双轨双语字幕 · 词级查词 · A-B 循环精听，<b>观看不被打断</b>。",
+      "player.foot.review": "中文反向背诵 · 按记忆评级 · <b>SRS</b> 自动安排复习。",
+      "player.cue.word": "点击单词 · 即时查词",
       "scribe.kind": "字幕生成器",
       "scribe.h3": "从音频到字幕，一次转写，直接可用。",
       "scribe.desc": "拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。",
       "scribe.f1": "音轨自动探测", "scribe.f1k": "多语言",
       "scribe.f2": "本地 Whisper 转写", "scribe.f2k": "离线模型",
-      "scribe.f3": "模型下载 · 进度可视", "scribe.f3k": "base / small",
-      "scribe.f4": "逐条校对时间码", "scribe.f4k": "表格编辑",
-      "scribe.f5": "一键导出 SRT", "scribe.f5k": "⌘E",
-      "scribe.f6": "命令面板", "scribe.f6k": "⌘K",
+      "scribe.f3": "模型管理 · 进度可视", "scribe.f3k": "base / turbo",
+      "scribe.f4": "三栏工作区", "scribe.f4k": "历史 · 文件 · 属性",
+      "scribe.f5": "逐条校对时间码", "scribe.f5k": "表格编辑",
+      "scribe.f6": "一键导出 SRT", "scribe.f6k": "⌘E",
+      "scribe.f7": "批量队列", "scribe.f7k": "自动顺延",
+      "scribe.f8": "命令面板", "scribe.f8k": "⌘K",
       "scribe.cta": "下载 PeaScribe",
       "scribe.platforms": "macOS · Windows",
       "scribe.mock.aria": "PeaScribe 界面预览",
+      "scribe.tabs.aria": "PeaScribe 界面切换",
+      "scribe.screens.idle": "首页",
+      "scribe.screens.transcribing": "转写中",
+      "scribe.screens.complete": "字幕编辑",
+      "scribe.foot.idle": "拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始转写。",
+      "scribe.foot.transcribing": "本地 Whisper 分片转写 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。",
+      "scribe.foot.complete": "逐条校对<b>时间码</b>与<b>文本</b>，一键导出<b>SRT</b>，直接交付。",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中文",
       "scribe.mock.track": "音轨 1 · 中文",
       "scribe.mock.model": "whisper·base",
@@ -1041,15 +1373,25 @@ img, svg { display: block; }
       "player.kind": "Language Player",
       "player.h3": "Immersive language learning, starting with a video.",
       "player.desc": "Overlay bilingual subtitles on any local video, tap a word to look it up instantly, auto-collect it into your wordbook, and review on schedule. Watching stays uninterrupted — you set the pace.",
-      "player.f1": "Bilingual subtitles", "player.f1k": "Source / Translation",
-      "player.f2": "Tap to look up", "player.f2k": "⌘ + Click",
+      "player.f1": "Bilingual subs · line-synced", "player.f1k": "Source / Translation",
+      "player.f2": "Tap to look up · add to wordbook", "player.f2k": "⌘ + Click",
       "player.f3": "Wordbook · SRS review", "player.f3k": "Auto-added",
-      "player.f4": "Anki sync", "player.f4k": "Two-way",
+      "player.f4": "Anki / CSV export", "player.f4k": "Two-way",
       "player.f5": "Subtitle search · follows playback", "player.f5k": "⌘F",
-      "player.f6": "Learning stats", "player.f6k": "Daily review",
+      "player.f6": "A-B loop · repeat each line", "player.f6k": "I / O",
+      "player.f7": "Reverse recital (Chinese → source)", "player.f7k": "中 → 原文",
+      "player.f8": "Learning stats", "player.f8k": "Mastery",
       "player.cta": "Download PeaPlayer",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer interface preview",
+      "player.tabs.aria": "PeaPlayer screen switcher",
+      "player.screens.home": "Home",
+      "player.screens.player": "Player",
+      "player.screens.review": "Learn · Review",
+      "player.foot.home": "Jump straight into <b>playback</b>, <b>review</b> and <b>guide</b> from the launcher.",
+      "player.foot.player": "Dual-track bilingual subs · tap any word to look it up · A-B loop. <b>Watching never stops</b>.",
+      "player.foot.review": "Reverse recital · rate your memory · <b>SRS</b> schedules reviews automatically.",
+      "player.cue.word": "Tap a word · look it up instantly",
       "player.mock.sub.zh": "我从来没有想过，语言可以这样学。",
       "player.mock.sub.en": "I never thought language could be learned this way.",
       "player.mock.tag": "Added to wordbook",
@@ -1060,13 +1402,22 @@ img, svg { display: block; }
       "scribe.desc": "Drop in a video or audio file; it detects the track, picks a language, runs a local Whisper model, and generates SRT. Fine-tune timecodes, then export.",
       "scribe.f1": "Auto track detection", "scribe.f1k": "Multi-language",
       "scribe.f2": "Local Whisper transcription", "scribe.f2k": "Offline model",
-      "scribe.f3": "Model download · live progress", "scribe.f3k": "base / small",
-      "scribe.f4": "Per-line timecode editing", "scribe.f4k": "Table editor",
-      "scribe.f5": "One-click SRT export", "scribe.f5k": "⌘E",
-      "scribe.f6": "Command palette", "scribe.f6k": "⌘K",
+      "scribe.f3": "Model manager · live progress", "scribe.f3k": "base / turbo",
+      "scribe.f4": "Three-column workspace", "scribe.f4k": "History · File · Props",
+      "scribe.f5": "Per-line timecode editing", "scribe.f5k": "Table editor",
+      "scribe.f6": "One-click SRT export", "scribe.f6k": "⌘E",
+      "scribe.f7": "Batch queue", "scribe.f7k": "Auto-advance",
+      "scribe.f8": "Command palette", "scribe.f8k": "⌘K",
       "scribe.cta": "Download PeaScribe",
       "scribe.platforms": "macOS · Windows",
       "scribe.mock.aria": "PeaScribe interface preview",
+      "scribe.tabs.aria": "PeaScribe screen switcher",
+      "scribe.screens.idle": "Home",
+      "scribe.screens.transcribing": "Transcribing",
+      "scribe.screens.complete": "Subtitle editor",
+      "scribe.foot.idle": "Drop in audio/video → auto-detect <b>track</b> and <b>language</b>, then start transcribing.",
+      "scribe.foot.transcribing": "Local Whisper, chunked transcription · <b>progress</b> and <b>log</b> visible live, cancel anytime.",
+      "scribe.foot.complete": "Fine-tune <b>timecodes</b> and <b>text</b>, export <b>SRT</b> with one click.",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chinese",
       "scribe.mock.track": "Track 1 · Chinese",
       "scribe.mock.model": "whisper·base",
@@ -1126,15 +1477,25 @@ img, svg { display: block; }
       "player.kind": "言語学習プレイヤー",
       "player.h3": "動画から始まる、没入型の言語学習。",
       "player.desc": "ローカル動画に二か国語字幕を重ね、知らない単語をタップで即座に辞書引きし、単語帳に自動保存して復習。視聴を邪魔せず、ペースはあなた次第。",
-      "player.f1": "二か国語字幕", "player.f1k": "原文 / 訳文",
-      "player.f2": "タップで辞書引き", "player.f2k": "⌘ + クリック",
+      "player.f1": "二か国語字幕 · 行同期", "player.f1k": "原文 / 訳文",
+      "player.f2": "タップで辞書引き · 単語帳へ", "player.f2k": "⌘ + クリック",
       "player.f3": "単語帳 · SRS 復習", "player.f3k": "自動保存",
-      "player.f4": "Anki 同期", "player.f4k": "双方向",
+      "player.f4": "Anki / CSV 出力", "player.f4k": "双方向",
       "player.f5": "字幕検索 · 再生に追従", "player.f5k": "⌘F",
-      "player.f6": "学習統計", "player.f6k": "毎日復習",
+      "player.f6": "A-B ループ · 一文リスニング", "player.f6k": "I / O",
+      "player.f7": "中国語から原文を暗唱", "player.f7k": "中 → 原文",
+      "player.f8": "学習統計", "player.f8k": "定着率",
       "player.cta": "PeaPlayer をダウンロード",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer インターフェースプレビュー",
+      "player.tabs.aria": "PeaPlayer 画面切り替え",
+      "player.screens.home": "ホーム",
+      "player.screens.player": "プレイヤー",
+      "player.screens.review": "学習 · 復習",
+      "player.foot.home": "ランチャーから<b>再生</b>・<b>復習</b>・<b>使い方</b>へワンタップで移動。",
+      "player.foot.player": "2トラックの二か国語字幕・単語タップ検索・A-B ループ。<b>視聴は止まらない</b>。",
+      "player.foot.review": "中国語から原文を暗唱・記憶を評価・<b>SRS</b> が復習を自動計画。",
+      "player.cue.word": "単語をタップ · 即辞書引き",
       "player.mock.sub.zh": "言語はこんなふうに学べるなんて、思ってもみなかった。",
       "player.mock.sub.en": "I never thought language could be learned this way.",
       "player.mock.tag": "単語帳に追加済み",
@@ -1145,12 +1506,21 @@ img, svg { display: block; }
       "scribe.desc": "動画や音声をドラッグすると、トラックを自動検出して言語を選び、ローカルの Whisper モデルで書き起こして SRT を生成します。タイムコードを微調整して書き出すだけ。",
       "scribe.f1": "トラック自動検出", "scribe.f1k": "多言語",
       "scribe.f2": "ローカル Whisper 書き起こし", "scribe.f2k": "オフラインモデル",
-      "scribe.f3": "モデルダウンロード・進捗表示", "scribe.f3k": "base / small",
-      "scribe.f4": "行ごとのタイムコード編集", "scribe.f4k": "表エディタ",
-      "scribe.f5": "ワンクリックで SRT 書き出し", "scribe.f5k": "⌘E",
-      "scribe.f6": "コマンドパレット", "scribe.f6k": "⌘K",
+      "scribe.f3": "モデル管理・進捗表示", "scribe.f3k": "base / turbo",
+      "scribe.f4": "3カラムワークスペース", "scribe.f4k": "履歴 · ファイル · プロパティ",
+      "scribe.f5": "行ごとのタイムコード編集", "scribe.f5k": "表エディタ",
+      "scribe.f6": "ワンクリックで SRT 書き出し", "scribe.f6k": "⌘E",
+      "scribe.f7": "バッチキュー", "scribe.f7k": "自動で順延",
+      "scribe.f8": "コマンドパレット", "scribe.f8k": "⌘K",
       "scribe.cta": "PeaScribe をダウンロード",
       "scribe.platforms": "macOS · Windows",
+      "scribe.tabs.aria": "PeaScribe 画面切り替え",
+      "scribe.screens.idle": "ホーム",
+      "scribe.screens.transcribing": "書き起こし中",
+      "scribe.screens.complete": "字幕エディタ",
+      "scribe.foot.idle": "音声・動画をドロップ → <b>トラック</b>と<b>言語</b>を自動検出して書き起こし開始。",
+      "scribe.foot.transcribing": "ローカル Whisper の分割書き起こし。<b>進捗</b>と<b>ログ</b>をリアルタイム表示、いつでもキャンセル可能。",
+      "scribe.foot.complete": "<b>タイムコード</b>と<b>テキスト</b>を校正し、<b>SRT</b> をワンクリックで書き出し。",
       "scribe.mock.aria": "PeaScribe インターフェースプレビュー",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中国語",
       "scribe.mock.track": "トラック 1 · 中国語",
@@ -1355,6 +1725,26 @@ img, svg { display: block; }
   if (langSel) {
     langSel.addEventListener("change", function () { applyLang(langSel.value, true); });
   }
+
+  /* ---------- 应用界面 Tab 切换（首页 / 播放器 / 复习 · 转写中 / 字幕编辑） ---------- */
+  document.querySelectorAll("[data-screen-tabs]").forEach(function (tabs) {
+    var tabBtns = tabs.querySelectorAll("[data-screen]");
+    var win = tabs.closest(".appwin");
+    if (!win || !tabBtns.length) return;
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var name = btn.getAttribute("data-screen");
+        tabBtns.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        win.querySelectorAll(".app-screen").forEach(function (screen) {
+          screen.classList.toggle("active", screen.getAttribute("data-screen-name") === name);
+        });
+      });
+    });
+  });
 
   document.addEventListener("click", function (e) {
     var t = e.target && e.target.closest ? e.target.closest("[data-toast]") : null;
