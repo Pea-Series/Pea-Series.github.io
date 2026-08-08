@@ -1,6 +1,12 @@
 # Pea 系列 · 官网主页
 
-PeaPlayer（语言学习播放器）与 PeaScribe（字幕生成器）的合集主页。单页自包含 HTML，亮色豌豆绿视觉（参考 PeaScribe tech-utility 设计令牌），无需构建、无依赖，部署后开箱即用。
+PeaPlayer（语言学习播放器）与 PeaScribe（字幕生成器）的合集主页。单页自包含 HTML，亮色豌豆绿视觉（参考 PeaScribe tech-utility 设计令牌），支持夜间模式与中文 / English / 日本語 三语切换，无需构建、无依赖，部署后开箱即用。
+
+## 语言与主题
+
+- 右上角图标按钮切换夜间 / 亮色模式，默认跟随系统，选择保存在浏览器 `localStorage`。
+- 右上角下拉切换 中文 / English / 日本語，同样持久化；页面标题、描述、文案与下载状态（「已上线 / 待上线」）随之翻译。
+- 全部界面文案集中在 `pea-series-home.html` 的 `window.PEA_I18N` 字典（`zh` / `en` / `ja` 三层）；新增语言只需在字典加一层。
 
 ## 文件结构
 

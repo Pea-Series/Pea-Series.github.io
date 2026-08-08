@@ -8,6 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+/* 首屏主题防闪烁：localStorage 优先，其次系统偏好 */
+(function () {
+  try {
+    var t = localStorage.getItem("pea-theme");
+    if (t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  } catch (e) {}
+})();
+</script>
 <style>
 /* ===== design-system/pea-green tokens（参考 PeaScribe tech-utility · 783c2950）===== */
 :root {
@@ -78,6 +89,77 @@
   --pea-scribe-soft: color-mix(in oklab, var(--pea-scribe-strong), white 90%);
 }
 
+/* ===== dark theme（夜间模式，参考 PeaScribe 暗色令牌）===== */
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"] {
+  --bg: oklch(16% 0.01 240);
+  --surface: oklch(20% 0.01 240);
+  --surface-warm: oklch(24% 0.012 240);
+  --fg: oklch(92% 0.005 240);
+  --fg-2: oklch(76% 0.012 240);
+  --muted: oklch(65% 0.01 240);
+  --meta: oklch(63% 0.16 145);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --accent: oklch(58% 0.16 145);
+  --accent-on: oklch(12% 0.02 240);
+  --accent-hover: oklch(63% 0.16 145);
+  --accent-active: oklch(54% 0.16 145);
+  --success: oklch(70% 0.15 145);
+  --warn: oklch(77% 0.12 85);
+  --danger: oklch(60% 0.18 25);
+  --elev-raised: 0 16px 48px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --focus-ring: 0 0 0 4px color-mix(in oklab, var(--accent), transparent 62%);
+
+  /* 产品身份色（暗色：提亮，配深色文字） */
+  --pea-player: oklch(63% 0.16 145);
+  --pea-player-ink: oklch(14% 0.02 240);
+  --pea-player-soft: color-mix(in oklab, var(--pea-player), var(--surface) 82%);
+  --pea-scribe: oklch(56% 0.13 158);
+  --pea-scribe-strong: oklch(56% 0.13 158);
+  --pea-scribe-ink: oklch(14% 0.02 240);
+  --pea-scribe-soft: color-mix(in oklab, var(--pea-scribe-strong), var(--surface) 82%);
+}
+/* 暗色下需要反向的局部规则 */
+html[data-theme="dark"] .vid-surface { background: color-mix(in oklab, var(--bg), black 8%); }
+html[data-theme="dark"] .scene-sky { stop-color: var(--bg); }
+html[data-theme="dark"] .scene-sky2 { stop-color: var(--surface-warm); }
+html[data-theme="dark"] .scene-sun { fill: var(--surface-warm); stroke: var(--border); }
+html[data-theme="dark"] .scene-far { fill: color-mix(in oklab, var(--bg), black 12%); }
+html[data-theme="dark"] .scene-near { fill: var(--surface); }
+html[data-theme="dark"] .status-live { color: var(--success); }
+html[data-theme="dark"] .word-tag { color: var(--pea-player); }
+
+/* ===== 主题 / 语言切换控件 ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.nav-controls { display: flex; align-items: center; gap: 6px; margin-left: 4px; }
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: none;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: transparent; color: var(--fg-2); cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard);
+}
+.icon-btn:hover { background: var(--surface-warm); color: var(--fg); border-color: var(--fg-2); }
+.icon-btn svg { width: 18px; height: 18px; }
+.theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+.lang-switch select {
+  appearance: none; -webkit-appearance: none;
+  height: 40px; padding: 0 30px 0 12px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background-color: var(--surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a7d85' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 14px;
+  color: var(--fg); font: 500 13.5px var(--font-body); letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard), background-color var(--motion-fast) var(--ease-standard);
+}
+.lang-switch select:hover { border-color: var(--fg-2); }
+.lang-switch select:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
 /* ===== base ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -89,6 +171,7 @@ body {
   font: 400 16px/1.7 var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
 }
 ::selection { background: color-mix(in oklab, var(--accent), transparent 70%); color: var(--fg); }
 .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-gutter-desktop); }
@@ -412,6 +495,7 @@ img, svg { display: block; }
   background: var(--success); margin-right: 8px; vertical-align: 1px;
 }
 .btn-ver { font: 500 11px var(--font-mono); opacity: .75; margin-left: 2px; letter-spacing: .03em; }
+.btn-slot { display: inline-flex; }
 .btn-pending {
   background: transparent; color: var(--muted);
   border: 1px dashed var(--border);
@@ -492,7 +576,10 @@ img, svg { display: block; }
 @media (max-width: 640px) {
   .container { padding: 0 var(--container-gutter-phone); }
   section.section { padding: var(--section-y-phone) 0; }
+  .nav-inner { gap: 12px; }
   .nav-links { display: none; }
+  .nav-controls { gap: 4px; }
+  .nav-cta { padding: 0 13px; }
   .hero { padding: 76px 0 64px; }
   .hero-launchers { grid-template-columns: 1fr; }
   .feature-list { grid-template-columns: 1fr; }
@@ -507,15 +594,29 @@ img, svg { display: block; }
 
 <header class="site-nav" data-od-id="nav-primary">
   <div class="container nav-inner">
-    <a class="brand" href="#top" aria-label="Pea 系列 首页">
+    <a class="brand" href="#top" data-i18n-aria="nav.brand.aria">
       <span class="brand-dot" aria-hidden="true"></span>
-      Pea 系列
+      <span data-i18n="nav.brand">Pea 系列</span>
     </a>
-    <nav class="nav-links" aria-label="主导航">
-      <a href="#products">产品</a>
-      <a href="#values">理念</a>
+    <nav class="nav-links" aria-label="主导航" data-i18n-aria="nav.aria">
+      <a href="#products" data-i18n="nav.products">产品</a>
+      <a href="#values" data-i18n="nav.values">理念</a>
     </nav>
-    <a class="btn btn-secondary btn-sm nav-cta" href="#download" data-od-id="nav-cta-download">下载</a>
+    <div class="nav-controls">
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle data-i18n-aria="theme.light">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.3 8.3 0 1 1 9.7 3.5a6.8 6.8 0 1 0 10.8 10.8Z"/></svg>
+      </button>
+      <label class="lang-switch">
+        <span class="sr-only" data-i18n="lang.label">语言</span>
+        <select data-lang-select data-i18n-aria="lang.label">
+          <option value="zh">中文</option>
+          <option value="en">EN</option>
+          <option value="ja">日本語</option>
+        </select>
+      </label>
+    </div>
+    <a class="btn btn-secondary btn-sm nav-cta" href="#download" data-od-id="nav-cta-download" data-i18n="nav.download">下载</a>
   </div>
 </header>
 
@@ -524,31 +625,31 @@ img, svg { display: block; }
   <section class="hero" data-od-id="page-hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <p class="eyebrow">Pea 系列 · 本地优先桌面工具</p>
-      <h1>为学习与创作，<br>做安静可靠的本地工具。</h1>
-      <p class="hero-sub">Pea 系列是一组小而美的桌面应用——从视频里学语言，从音频里生成字幕。文件留在本地，速度即是体验。</p>
+      <p class="eyebrow" data-i18n="hero.eyebrow">Pea 系列 · 本地优先桌面工具</p>
+      <h1 data-i18n="hero.title">为学习与创作，<br>做安静可靠的本地工具。</h1>
+      <p class="hero-sub" data-i18n="hero.sub">Pea 系列是一组小而美的桌面应用——从视频里学语言，从音频里生成字幕。文件留在本地，速度即是体验。</p>
       <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" href="#products" data-od-id="cta-hero-browse">浏览产品</a>
-        <a class="btn btn-ghost btn-lg" href="#download" data-od-id="cta-hero-download">直接下载</a>
+        <a class="btn btn-primary btn-lg" href="#products" data-od-id="cta-hero-browse" data-i18n="hero.browse">浏览产品</a>
+        <a class="btn btn-ghost btn-lg" href="#download" data-od-id="cta-hero-download" data-i18n="hero.download">直接下载</a>
       </div>
       <div class="hero-launchers">
-        <a class="launcher" href="#peaplayer" data-od-id="hero-launcher-player">
+        <a class="launcher" href="#peaplayer" data-od-id="hero-launcher-player" data-i18n-aria="hero.launcher.player.aria">
           <span class="picon picon-player" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l12-7z"/></svg>
           </span>
           <span class="launcher-info">
             <span class="launcher-name">PeaPlayer</span>
-            <span class="launcher-desc">语言学习播放器</span>
+            <span class="launcher-desc" data-i18n="hero.launcher.player.desc">语言学习播放器</span>
           </span>
           <svg class="launcher-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a class="launcher" href="#peascribe" data-od-id="hero-launcher-scribe">
+        <a class="launcher" href="#peascribe" data-od-id="hero-launcher-scribe" data-i18n-aria="hero.launcher.scribe.aria">
           <span class="picon picon-scribe" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="8" height="11" rx="2"/><rect x="13" y="6.5" width="8" height="11" rx="2"/><path d="M5.6 10v4M15.6 10v4"/></svg>
           </span>
           <span class="launcher-info">
             <span class="launcher-name">PeaScribe</span>
-            <span class="launcher-desc">字幕生成器</span>
+            <span class="launcher-desc" data-i18n="hero.launcher.scribe.desc">字幕生成器</span>
           </span>
           <svg class="launcher-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -560,9 +661,9 @@ img, svg { display: block; }
   <section id="products" class="section" data-od-id="section-products">
     <div class="container">
       <header class="section-head">
-        <p class="eyebrow">Products · 产品</p>
-        <h2>两个小工具，一条创作流</h2>
-        <p class="section-lead">PeaPlayer 负责「看」，PeaScribe 负责「听写」。彼此独立，搭配使用更顺手。</p>
+        <p class="eyebrow" data-i18n="products.eyebrow">Products · 产品</p>
+        <h2 data-i18n="products.title">两个小工具，一条创作流</h2>
+        <p class="section-lead" data-i18n="products.lead">PeaPlayer 负责「看」，PeaScribe 负责「听写」。彼此独立，搭配使用更顺手。</p>
       </header>
 
       <!-- PeaPlayer -->
@@ -571,27 +672,27 @@ img, svg { display: block; }
           <div class="product-id">
             <span class="product-dot dot-player" aria-hidden="true"></span>
             <h2 class="product-name">PeaPlayer</h2>
-            <span class="product-kind">语言学习播放器</span>
-            <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text">待上线</span></span>
+            <span class="product-kind" data-i18n="player.kind">语言学习播放器</span>
+            <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="player">待上线</span></span>
           </div>
-          <h3>沉浸式语言学习，从一段视频开始。</h3>
-          <p class="product-desc">在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。</p>
+          <h3 data-i18n="player.h3">沉浸式语言学习，从一段视频开始。</h3>
+          <p class="product-desc" data-i18n="player.desc">在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。</p>
           <ul class="feature-list">
-            <li class="fchip"><span class="fchip-name">双语字幕</span><span class="fchip-kbd">原文 / 译文</span></li>
-            <li class="fchip"><span class="fchip-name">点击查词</span><span class="fchip-kbd">⌘ + 点按</span></li>
-            <li class="fchip"><span class="fchip-name">生词本 · SRS 复习</span><span class="fchip-kbd">自动收录</span></li>
-            <li class="fchip"><span class="fchip-name">Anki 同步</span><span class="fchip-kbd">双向</span></li>
-            <li class="fchip"><span class="fchip-name">字幕搜索 · 跟随播放</span><span class="fchip-kbd">⌘F</span></li>
-            <li class="fchip"><span class="fchip-name">学习统计</span><span class="fchip-kbd">每日回顾</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f1">双语字幕</span><span class="fchip-kbd" data-i18n="player.f1k">原文 / 译文</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f2">点击查词</span><span class="fchip-kbd" data-i18n="player.f2k">⌘ + 点按</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f3">生词本 · SRS 复习</span><span class="fchip-kbd" data-i18n="player.f3k">自动收录</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f4">Anki 同步</span><span class="fchip-kbd" data-i18n="player.f4k">双向</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f5">字幕搜索 · 跟随播放</span><span class="fchip-kbd" data-i18n="player.f5k">⌘F</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="player.f6">学习统计</span><span class="fchip-kbd" data-i18n="player.f6k">每日回顾</span></li>
           </ul>
           <div class="product-ctas">
-            <a class="btn btn-player" href="#dl-player" data-target-card="dl-player" data-od-id="cta-player">下载 PeaPlayer</a>
-            <span class="product-platforms">macOS · Windows</span>
+            <a class="btn btn-player" href="#dl-player" data-target-card="dl-player" data-od-id="cta-player" data-i18n="player.cta">下载 PeaPlayer</a>
+            <span class="product-platforms" data-i18n="player.platforms">macOS · Windows</span>
           </div>
         </div>
 
         <div class="product-visual">
-          <div class="window" data-od-id="mock-player" aria-label="PeaPlayer 界面预览">
+          <div class="window" data-od-id="mock-player" aria-label="PeaPlayer 界面预览" data-i18n-aria="player.mock.aria">
             <div class="win-bar">
               <span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span>
               <span class="win-title">PeaPlayer</span>
@@ -614,8 +715,8 @@ img, svg { display: block; }
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l12-7z"/></svg>
                 </span>
                 <div class="vid-sub">
-                  <span class="sub-zh">我从来没有想过，语言可以这样学。</span>
-                  <span class="sub-en">I never thought language could be learned this way.</span>
+                  <span class="sub-zh" data-i18n="player.mock.sub.zh">我从来没有想过，语言可以这样学。</span>
+                  <span class="sub-en" data-i18n="player.mock.sub.en">I never thought language could be learned this way.</span>
                 </div>
               </div>
               <div class="vid-controls">
@@ -627,11 +728,11 @@ img, svg { display: block; }
               <div class="word-card">
                 <div class="word-top">
                   <span class="word">never</span>
-                  <span class="word-tag">已加入生词本</span>
+                  <span class="word-tag" data-i18n="player.mock.tag">已加入生词本</span>
                 </div>
-                <p class="word-def">adv. 从未；毫不 —— 常用于「从未想过」</p>
+                <p class="word-def" data-i18n="player.mock.def">adv. 从未；毫不 —— 常用于「从未想过」</p>
                 <div class="word-bar">
-                  <span class="bar-label">复习进度</span>
+                  <span class="bar-label" data-i18n="player.mock.bar">复习进度</span>
                   <span class="bar-track"><span class="bar-fill" style="width:70%"></span></span>
                 </div>
               </div>
@@ -646,37 +747,37 @@ img, svg { display: block; }
           <div class="product-id">
             <span class="product-dot dot-scribe" aria-hidden="true"></span>
             <h2 class="product-name">PeaScribe</h2>
-            <span class="product-kind">字幕生成器</span>
-            <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text">待上线</span></span>
+            <span class="product-kind" data-i18n="scribe.kind">字幕生成器</span>
+            <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
           </div>
-          <h3>从音频到字幕，一次转写，直接可用。</h3>
-          <p class="product-desc">拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。</p>
+          <h3 data-i18n="scribe.h3">从音频到字幕，一次转写，直接可用。</h3>
+          <p class="product-desc" data-i18n="scribe.desc">拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。</p>
           <ul class="feature-list">
-            <li class="fchip"><span class="fchip-name">音轨自动探测</span><span class="fchip-kbd">多语言</span></li>
-            <li class="fchip"><span class="fchip-name">本地 Whisper 转写</span><span class="fchip-kbd">离线模型</span></li>
-            <li class="fchip"><span class="fchip-name">模型下载 · 进度可视</span><span class="fchip-kbd">base / small</span></li>
-            <li class="fchip"><span class="fchip-name">逐条校对时间码</span><span class="fchip-kbd">表格编辑</span></li>
-            <li class="fchip"><span class="fchip-name">一键导出 SRT</span><span class="fchip-kbd">⌘E</span></li>
-            <li class="fchip"><span class="fchip-name">命令面板</span><span class="fchip-kbd">⌘K</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f1">音轨自动探测</span><span class="fchip-kbd" data-i18n="scribe.f1k">多语言</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f2">本地 Whisper 转写</span><span class="fchip-kbd" data-i18n="scribe.f2k">离线模型</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f3">模型下载 · 进度可视</span><span class="fchip-kbd" data-i18n="scribe.f3k">base / small</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f4">逐条校对时间码</span><span class="fchip-kbd" data-i18n="scribe.f4k">表格编辑</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f5">一键导出 SRT</span><span class="fchip-kbd" data-i18n="scribe.f5k">⌘E</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f6">命令面板</span><span class="fchip-kbd" data-i18n="scribe.f6k">⌘K</span></li>
           </ul>
           <div class="product-ctas">
-            <a class="btn btn-scribe" href="#dl-scribe" data-target-card="dl-scribe" data-od-id="cta-scribe">下载 PeaScribe</a>
-            <span class="product-platforms">macOS · Windows</span>
+            <a class="btn btn-scribe" href="#dl-scribe" data-target-card="dl-scribe" data-od-id="cta-scribe" data-i18n="scribe.cta">下载 PeaScribe</a>
+            <span class="product-platforms" data-i18n="scribe.platforms">macOS · Windows</span>
           </div>
         </div>
 
         <div class="product-visual">
-          <div class="window" data-od-id="mock-scribe" aria-label="PeaScribe 界面预览">
+          <div class="window" data-od-id="mock-scribe" aria-label="PeaScribe 界面预览" data-i18n-aria="scribe.mock.aria">
             <div class="win-bar">
               <span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span>
               <span class="win-title">PeaScribe</span>
             </div>
             <div class="scribe-body">
-              <div class="scribe-file">~/media/interview_cn.mov · 45:00 · 中文</div>
+              <div class="scribe-file" data-i18n="scribe.mock.file">~/media/interview_cn.mov · 45:00 · 中文</div>
               <div class="scribe-track">
                 <div class="track-label">
-                  <span>音轨 1 · 中文</span>
-                  <span class="tl-meta">whisper·base</span>
+                  <span data-i18n="scribe.mock.track">音轨 1 · 中文</span>
+                  <span class="tl-meta" data-i18n="scribe.mock.model">whisper·base</span>
                 </div>
                 <svg class="wave" viewBox="0 0 96 24" preserveAspectRatio="none" aria-hidden="true">
                   <path vector-effect="non-scaling-stroke" d="M2 20V10M6 20V6M10 20V13M14 20V8M18 20V15M22 20V5M26 20V11M30 20V16M34 20V9M38 20V14M42 20V7M46 20V12M50 20V17M54 20V6M58 20V10M62 20V15M66 20V8M70 20V13M74 20V16M78 20V11M82 20V6M86 20V14M90 20V9M94 20V12"
@@ -684,14 +785,14 @@ img, svg { display: block; }
                 </svg>
               </div>
               <div class="scribe-progress">
-                <span class="bar-label">转写中</span>
+                <span class="bar-label" data-i18n="scribe.mock.progress">转写中</span>
                 <span class="bar-track"><span class="bar-fill" style="width:67%"></span></span>
                 <span class="pct">67%</span>
               </div>
               <div class="srt-list">
-                <div class="srt-row"><span class="tc">00:00:01,200</span><span class="txt">欢迎来到 Pea 系列</span></div>
-                <div class="srt-row active"><span class="tc">00:00:03,480</span><span class="txt">今天我们来聊聊本地工具</span></div>
-                <div class="srt-row"><span class="tc">00:00:06,120</span><span class="txt">从视频里学一门语言</span></div>
+                <div class="srt-row"><span class="tc">00:00:01,200</span><span class="txt" data-i18n="scribe.mock.srt1">欢迎来到 Pea 系列</span></div>
+                <div class="srt-row active"><span class="tc">00:00:03,480</span><span class="txt" data-i18n="scribe.mock.srt2">今天我们来聊聊本地工具</span></div>
+                <div class="srt-row"><span class="tc">00:00:06,120</span><span class="txt" data-i18n="scribe.mock.srt3">从视频里学一门语言</span></div>
               </div>
             </div>
           </div>
@@ -704,9 +805,9 @@ img, svg { display: block; }
   <section id="download" class="section" data-od-id="section-download">
     <div class="container">
       <header class="section-head">
-        <p class="eyebrow">Download · 下载</p>
-        <h2>下载 Pea 系列</h2>
-        <p class="section-lead">选择产品与平台，开始使用。尚未上线的平台会显示「待上线」。</p>
+        <p class="eyebrow" data-i18n="download.eyebrow">Download · 下载</p>
+        <h2 data-i18n="download.title">下载 Pea 系列</h2>
+        <p class="section-lead" data-i18n="download.lead">选择产品与平台，开始使用。尚未上线的平台会显示「待上线」。</p>
       </header>
 
       <p class="release-summary" data-release-summary data-od-id="release-summary" hidden></p>
@@ -716,22 +817,28 @@ img, svg { display: block; }
           <div class="card-head">
             <span class="product-dot dot-player" aria-hidden="true"></span>
             <span class="product-name">PeaPlayer</span>
-            <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text">待上线</span></span>
+            <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="player">待上线</span></span>
           </div>
           <div class="platform-row" data-dl="player:macos">
             <span class="pf">macOS</span>
             <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-player-macos">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-macos" data-i18n="download.btn">下载</button>
+            </div>
           </div>
           <div class="platform-row" data-dl="player:windows">
             <span class="pf">Windows</span>
             <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-player-win">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-win" data-i18n="download.btn">下载</button>
+            </div>
           </div>
           <div class="platform-row" data-dl="player:linux">
             <span class="pf">Linux</span>
             <span class="pf-note" data-note="尚未支持">尚未支持</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-player-linux">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-linux" data-i18n="download.btn">下载</button>
+            </div>
           </div>
         </div>
 
@@ -739,22 +846,28 @@ img, svg { display: block; }
           <div class="card-head">
             <span class="product-dot dot-scribe" aria-hidden="true"></span>
             <span class="product-name">PeaScribe</span>
-            <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text">待上线</span></span>
+            <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
           </div>
           <div class="platform-row" data-dl="scribe:macos">
             <span class="pf">macOS</span>
             <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-macos">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-macos" data-i18n="download.btn">下载</button>
+            </div>
           </div>
           <div class="platform-row" data-dl="scribe:windows">
             <span class="pf">Windows</span>
             <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-win">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
+            </div>
           </div>
           <div class="platform-row" data-dl="scribe:linux">
             <span class="pf">Linux</span>
             <span class="pf-note" data-note="尚未支持">尚未支持</span>
-            <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-linux">下载</button>
+            <div class="btn-slot">
+              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-linux" data-i18n="download.btn">下载</button>
+            </div>
           </div>
         </div>
       </div>
@@ -766,25 +879,25 @@ img, svg { display: block; }
   <section id="values" class="section" data-od-id="section-values">
     <div class="container">
       <header class="section-head">
-        <p class="eyebrow">Why Pea · 理念</p>
-        <h2>为什么做本地工具</h2>
-        <p class="section-lead">你的材料是作品，也是数据。它应该留在你的设备上，而不是被上传到别处。</p>
+        <p class="eyebrow" data-i18n="values.eyebrow">Why Pea · 理念</p>
+        <h2 data-i18n="values.title">为什么做本地工具</h2>
+        <p class="section-lead" data-i18n="values.lead">你的材料是作品，也是数据。它应该留在你的设备上，而不是被上传到别处。</p>
       </header>
       <div class="value-grid">
         <div class="value-card" data-od-id="value-card-local">
           <span class="value-num">01</span>
-          <h3>本地优先</h3>
-          <p>文件与数据始终留在你的设备上。不上传、不追踪、离线可用——隐私是默认配置，而不是开关。</p>
+          <h3 data-i18n="values.card1.title">本地优先</h3>
+          <p data-i18n="values.card1.body">文件与数据始终留在你的设备上。不上传、不追踪、离线可用——隐私是默认配置，而不是开关。</p>
         </div>
         <div class="value-card" data-od-id="value-card-fast">
           <span class="value-num">02</span>
-          <h3>安静高效</h3>
-          <p>启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。</p>
+          <h3 data-i18n="values.card2.title">安静高效</h3>
+          <p data-i18n="values.card2.body">启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。</p>
         </div>
         <div class="value-card" data-od-id="value-card-open">
           <span class="value-num">03</span>
-          <h3>开放数据</h3>
-          <p>SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。</p>
+          <h3 data-i18n="values.card3.title">开放数据</h3>
+          <p data-i18n="values.card3.body">SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。</p>
         </div>
       </div>
     </div>
@@ -793,16 +906,16 @@ img, svg { display: block; }
 
 <footer class="site-footer" data-od-id="footer-site">
   <div class="container footer-inner">
-    <a class="footer-brand" href="#top">
+    <a class="footer-brand" href="#top" data-i18n-aria="nav.brand.aria">
       <span class="brand-dot" aria-hidden="true"></span>
-      Pea 系列
+      <span data-i18n="nav.brand">Pea 系列</span>
     </a>
-    <nav class="footer-links" aria-label="页脚导航">
-      <a href="#products">产品</a>
-      <a href="#download">下载</a>
-      <a href="#values">理念</a>
+    <nav class="footer-links" aria-label="页脚导航" data-i18n-aria="footer.aria">
+      <a href="#products" data-i18n="nav.products">产品</a>
+      <a href="#download" data-i18n="nav.download">下载</a>
+      <a href="#values" data-i18n="nav.values">理念</a>
     </nav>
-    <span class="footer-note">© 2026 Pea 系列 · 独立开发者维护 · 本页为设计预览</span>
+    <span class="footer-note" data-i18n="footer.note">© 2026 Pea 系列 · 独立开发者维护 · 本页为设计预览</span>
   </div>
 </footer>
 
@@ -813,6 +926,261 @@ img, svg { display: block; }
 (function () {
   "use strict";
 
+  /* ===== i18n 字典：中文 / English / 日本語 ===== */
+  window.PEA_I18N = {
+    zh: {
+      "meta.title": "Pea 系列 · 本地优先的桌面工具",
+      "meta.description": "Pea 系列是一组小而美的本地桌面应用：PeaPlayer 语言学习播放器与 PeaScribe 字幕生成器。文件留在本地，速度即是体验。",
+      "nav.brand": "Pea 系列",
+      "nav.brand.aria": "Pea 系列 首页",
+      "nav.aria": "主导航",
+      "nav.products": "产品",
+      "nav.values": "理念",
+      "nav.download": "下载",
+      "lang.label": "语言",
+      "theme.light": "切换夜间模式",
+      "theme.dark": "切换亮色模式",
+      "hero.eyebrow": "Pea 系列 · 本地优先桌面工具",
+      "hero.title": "为学习与创作，<br>做安静可靠的本地工具。",
+      "hero.sub": "Pea 系列是一组小而美的桌面应用——从视频里学语言，从音频里生成字幕。文件留在本地，速度即是体验。",
+      "hero.browse": "浏览产品",
+      "hero.download": "直接下载",
+      "hero.launcher.player.aria": "PeaPlayer — 语言学习播放器",
+      "hero.launcher.player.desc": "语言学习播放器",
+      "hero.launcher.scribe.aria": "PeaScribe — 字幕生成器",
+      "hero.launcher.scribe.desc": "字幕生成器",
+      "products.eyebrow": "Products · 产品",
+      "products.title": "两个小工具，一条创作流",
+      "products.lead": "PeaPlayer 负责「看」，PeaScribe 负责「听写」。彼此独立，搭配使用更顺手。",
+      "player.kind": "语言学习播放器",
+      "player.h3": "沉浸式语言学习，从一段视频开始。",
+      "player.desc": "在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。",
+      "player.f1": "双语字幕", "player.f1k": "原文 / 译文",
+      "player.f2": "点击查词", "player.f2k": "⌘ + 点按",
+      "player.f3": "生词本 · SRS 复习", "player.f3k": "自动收录",
+      "player.f4": "Anki 同步", "player.f4k": "双向",
+      "player.f5": "字幕搜索 · 跟随播放", "player.f5k": "⌘F",
+      "player.f6": "学习统计", "player.f6k": "每日回顾",
+      "player.cta": "下载 PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "PeaPlayer 界面预览",
+      "player.mock.sub.zh": "我从来没有想过，语言可以这样学。",
+      "player.mock.sub.en": "I never thought language could be learned this way.",
+      "player.mock.tag": "已加入生词本",
+      "player.mock.def": "adv. 从未；毫不 —— 常用于「从未想过」",
+      "player.mock.bar": "复习进度",
+      "scribe.kind": "字幕生成器",
+      "scribe.h3": "从音频到字幕，一次转写，直接可用。",
+      "scribe.desc": "拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。",
+      "scribe.f1": "音轨自动探测", "scribe.f1k": "多语言",
+      "scribe.f2": "本地 Whisper 转写", "scribe.f2k": "离线模型",
+      "scribe.f3": "模型下载 · 进度可视", "scribe.f3k": "base / small",
+      "scribe.f4": "逐条校对时间码", "scribe.f4k": "表格编辑",
+      "scribe.f5": "一键导出 SRT", "scribe.f5k": "⌘E",
+      "scribe.f6": "命令面板", "scribe.f6k": "⌘K",
+      "scribe.cta": "下载 PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe 界面预览",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中文",
+      "scribe.mock.track": "音轨 1 · 中文",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "转写中",
+      "scribe.mock.srt1": "欢迎来到 Pea 系列",
+      "scribe.mock.srt2": "今天我们来聊聊本地工具",
+      "scribe.mock.srt3": "从视频里学一门语言",
+      "download.eyebrow": "Download · 下载",
+      "download.title": "下载 Pea 系列",
+      "download.lead": "选择产品与平台，开始使用。尚未上线的平台会显示「待上线」。",
+      "download.btn": "下载",
+      "download.live": "已上线",
+      "download.soon": "待上线",
+      "download.summary": "<b>{live}</b> 个平台已上线 · <b>{pending}</b> 个待上线",
+      "download.aria": "下载 {product} · {platform}",
+      "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
+      "note.win": "Windows 10 及以上",
+      "note.linux": "尚未支持",
+      "values.eyebrow": "Why Pea · 理念",
+      "values.title": "为什么做本地工具",
+      "values.lead": "你的材料是作品，也是数据。它应该留在你的设备上，而不是被上传到别处。",
+      "values.card1.title": "本地优先",
+      "values.card1.body": "文件与数据始终留在你的设备上。不上传、不追踪、离线可用——隐私是默认配置，而不是开关。",
+      "values.card2.title": "安静高效",
+      "values.card2.body": "启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
+      "values.card3.title": "开放数据",
+      "values.card3.body": "SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。",
+      "footer.aria": "页脚导航",
+      "footer.note": "© 2026 Pea 系列 · 独立开发者维护 · 本页为设计预览"
+    },
+    en: {
+      "meta.title": "Pea Series · Local-first Desktop Tools",
+      "meta.description": "Pea Series is a set of small, polished local desktop apps: PeaPlayer language-learning player and PeaScribe subtitle generator. Files stay on your device; speed is the experience.",
+      "nav.brand": "Pea Series",
+      "nav.brand.aria": "Pea Series home",
+      "nav.aria": "Primary navigation",
+      "nav.products": "Products",
+      "nav.values": "Why Pea",
+      "nav.download": "Download",
+      "lang.label": "Language",
+      "theme.light": "Switch to dark mode",
+      "theme.dark": "Switch to light mode",
+      "hero.eyebrow": "Pea Series · Local-first Desktop Tools",
+      "hero.title": "Quiet, reliable local tools<br>for learning and creating.",
+      "hero.sub": "Pea Series is a set of small desktop apps — learn a language from video, generate subtitles from audio. Files stay local; speed is the experience.",
+      "hero.browse": "Browse products",
+      "hero.download": "Get the apps",
+      "hero.launcher.player.aria": "PeaPlayer — language-learning player",
+      "hero.launcher.player.desc": "Language-learning player",
+      "hero.launcher.scribe.aria": "PeaScribe — subtitle generator",
+      "hero.launcher.scribe.desc": "Subtitle generator",
+      "products.eyebrow": "Products",
+      "products.title": "Two small tools, one creative flow",
+      "products.lead": "PeaPlayer handles watching; PeaScribe handles transcribing. Independent — and even better together.",
+      "player.kind": "Language Player",
+      "player.h3": "Immersive language learning, starting with a video.",
+      "player.desc": "Overlay bilingual subtitles on any local video, tap a word to look it up instantly, auto-collect it into your wordbook, and review on schedule. Watching stays uninterrupted — you set the pace.",
+      "player.f1": "Bilingual subtitles", "player.f1k": "Source / Translation",
+      "player.f2": "Tap to look up", "player.f2k": "⌘ + Click",
+      "player.f3": "Wordbook · SRS review", "player.f3k": "Auto-added",
+      "player.f4": "Anki sync", "player.f4k": "Two-way",
+      "player.f5": "Subtitle search · follows playback", "player.f5k": "⌘F",
+      "player.f6": "Learning stats", "player.f6k": "Daily review",
+      "player.cta": "Download PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "PeaPlayer interface preview",
+      "player.mock.sub.zh": "我从来没有想过，语言可以这样学。",
+      "player.mock.sub.en": "I never thought language could be learned this way.",
+      "player.mock.tag": "Added to wordbook",
+      "player.mock.def": "adv. never; not at all — as in “never thought of it”",
+      "player.mock.bar": "Review progress",
+      "scribe.kind": "Subtitle Generator",
+      "scribe.h3": "From audio to subtitles — one transcription, ready to use.",
+      "scribe.desc": "Drop in a video or audio file; it detects the track, picks a language, runs a local Whisper model, and generates SRT. Fine-tune timecodes, then export.",
+      "scribe.f1": "Auto track detection", "scribe.f1k": "Multi-language",
+      "scribe.f2": "Local Whisper transcription", "scribe.f2k": "Offline model",
+      "scribe.f3": "Model download · live progress", "scribe.f3k": "base / small",
+      "scribe.f4": "Per-line timecode editing", "scribe.f4k": "Table editor",
+      "scribe.f5": "One-click SRT export", "scribe.f5k": "⌘E",
+      "scribe.f6": "Command palette", "scribe.f6k": "⌘K",
+      "scribe.cta": "Download PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe interface preview",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chinese",
+      "scribe.mock.track": "Track 1 · Chinese",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Transcribing",
+      "scribe.mock.srt1": "Welcome to Pea Series",
+      "scribe.mock.srt2": "Today, let's talk about local tools",
+      "scribe.mock.srt3": "Learn a language from video",
+      "download.eyebrow": "Download",
+      "download.title": "Download Pea Series",
+      "download.lead": "Pick a product and platform to get started. Platforms not yet released show “Coming soon”.",
+      "download.btn": "Download",
+      "download.live": "Available",
+      "download.soon": "Coming soon",
+      "download.summary": "<b>{live}</b> platform(s) available · <b>{pending}</b> coming soon",
+      "download.aria": "Download {product} · {platform}",
+      "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
+      "note.win": "Windows 10 or later",
+      "note.linux": "Not yet supported",
+      "values.eyebrow": "Why Pea",
+      "values.title": "Why local-first tools",
+      "values.lead": "Your materials are your work and your data. They should stay on your device — not uploaded elsewhere.",
+      "values.card1.title": "Local-first",
+      "values.card1.body": "Files and data always stay on your device. No uploads, no tracking, works offline — privacy is the default, not a switch.",
+      "values.card2.title": "Quietly fast",
+      "values.card2.body": "Launches ready to use; transcription and playback are fast. A restrained UI leaves attention on the content, not the chrome.",
+      "values.card3.title": "Open data",
+      "values.card3.body": "SRT, CSV, Anki — standard formats you can take anywhere. Your progress belongs to you, always.",
+      "footer.aria": "Footer navigation",
+      "footer.note": "© 2026 Pea Series · Maintained by an indie developer · Design preview"
+    },
+    ja: {
+      "meta.title": "Pea シリーズ · ローカルファーストなデスクトップツール",
+      "meta.description": "Pea シリーズは小さく美しいローカルデスクトップアプリの集まりです。PeaPlayer 言語学習プレイヤーと PeaScribe 字幕ジェネレーター。ファイルはローカルに残り、速度こそが体験です。",
+      "nav.brand": "Pea シリーズ",
+      "nav.brand.aria": "Pea シリーズ ホーム",
+      "nav.aria": "メインナビゲーション",
+      "nav.products": "プロダクト",
+      "nav.values": "理念",
+      "nav.download": "ダウンロード",
+      "lang.label": "言語",
+      "theme.light": "ダークモードに切り替え",
+      "theme.dark": "ライトモードに切り替え",
+      "hero.eyebrow": "Pea シリーズ · ローカルファースト",
+      "hero.title": "学びと創作のために、<br>静かで頼れるローカルツール。",
+      "hero.sub": "Pea シリーズは小さく美しいデスクトップアプリの集まりです。動画から言語を学び、音声から字幕を生成。ファイルはローカルに残り、速度こそが体験です。",
+      "hero.browse": "プロダクトを見る",
+      "hero.download": "ダウンロード",
+      "hero.launcher.player.aria": "PeaPlayer — 言語学習プレイヤー",
+      "hero.launcher.player.desc": "言語学習プレイヤー",
+      "hero.launcher.scribe.aria": "PeaScribe — 字幕ジェネレーター",
+      "hero.launcher.scribe.desc": "字幕ジェネレーター",
+      "products.eyebrow": "プロダクト",
+      "products.title": "小さな2つのツールで、ひとつの創作フロー",
+      "products.lead": "PeaPlayer は「観る」、PeaScribe は「書き起こす」。独立して使えて、組み合わせればさらに便利。",
+      "player.kind": "言語学習プレイヤー",
+      "player.h3": "動画から始まる、没入型の言語学習。",
+      "player.desc": "ローカル動画に二か国語字幕を重ね、知らない単語をタップで即座に辞書引きし、単語帳に自動保存して復習。視聴を邪魔せず、ペースはあなた次第。",
+      "player.f1": "二か国語字幕", "player.f1k": "原文 / 訳文",
+      "player.f2": "タップで辞書引き", "player.f2k": "⌘ + クリック",
+      "player.f3": "単語帳 · SRS 復習", "player.f3k": "自動保存",
+      "player.f4": "Anki 同期", "player.f4k": "双方向",
+      "player.f5": "字幕検索 · 再生に追従", "player.f5k": "⌘F",
+      "player.f6": "学習統計", "player.f6k": "毎日復習",
+      "player.cta": "PeaPlayer をダウンロード",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "PeaPlayer インターフェースプレビュー",
+      "player.mock.sub.zh": "言語はこんなふうに学べるなんて、思ってもみなかった。",
+      "player.mock.sub.en": "I never thought language could be learned this way.",
+      "player.mock.tag": "単語帳に追加済み",
+      "player.mock.def": "副詞。決して〜ない —— 「思ってもみなかった」のように",
+      "player.mock.bar": "復習の進捗",
+      "scribe.kind": "字幕ジェネレーター",
+      "scribe.h3": "音声から字幕まで。一度の書き起こしですぐ使える。",
+      "scribe.desc": "動画や音声をドラッグすると、トラックを自動検出して言語を選び、ローカルの Whisper モデルで書き起こして SRT を生成します。タイムコードを微調整して書き出すだけ。",
+      "scribe.f1": "トラック自動検出", "scribe.f1k": "多言語",
+      "scribe.f2": "ローカル Whisper 書き起こし", "scribe.f2k": "オフラインモデル",
+      "scribe.f3": "モデルダウンロード・進捗表示", "scribe.f3k": "base / small",
+      "scribe.f4": "行ごとのタイムコード編集", "scribe.f4k": "表エディタ",
+      "scribe.f5": "ワンクリックで SRT 書き出し", "scribe.f5k": "⌘E",
+      "scribe.f6": "コマンドパレット", "scribe.f6k": "⌘K",
+      "scribe.cta": "PeaScribe をダウンロード",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe インターフェースプレビュー",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中国語",
+      "scribe.mock.track": "トラック 1 · 中国語",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "書き起こし中",
+      "scribe.mock.srt1": "Pea シリーズへようこそ",
+      "scribe.mock.srt2": "今日はローカルツールについて話しましょう",
+      "scribe.mock.srt3": "動画から言語を学ぶ",
+      "download.eyebrow": "ダウンロード",
+      "download.title": "Pea シリーズをダウンロード",
+      "download.lead": "製品とプラットフォームを選んで始めましょう。未リリースのプラットフォームは「近日公開」と表示されます。",
+      "download.btn": "ダウンロード",
+      "download.live": "公開中",
+      "download.soon": "近日公開",
+      "download.summary": "<b>{live}</b> プラットフォーム公開中 · <b>{pending}</b> 近日公開",
+      "download.aria": "{product} · {platform} をダウンロード",
+      "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
+      "note.win": "Windows 10 以降",
+      "note.linux": "未対応",
+      "values.eyebrow": "Why Pea",
+      "values.title": "なぜローカルファーストなのか",
+      "values.lead": "あなたの素材は作品でありデータです。デバイスに残り、どこにもアップロードされません。",
+      "values.card1.title": "ローカルファースト",
+      "values.card1.body": "ファイルとデータは常にデバイス上に残ります。アップロードなし、トラッキングなし、オフラインで動作。プライバシーはデフォルトです。",
+      "values.card2.title": "静かに速く",
+      "values.card2.body": "すぐ起動し、書き起こしも再生も十分速い。控えめな UI は、インターフェースではなくコンテンツに注意を向けさせます。",
+      "values.card3.title": "オープンなデータ",
+      "values.card3.body": "SRT・CSV・Anki — 標準フォーマットでいつでも持ち出せます。あなたの積み重ねは、いつでもあなたのもの。",
+      "footer.aria": "フッターナビゲーション",
+      "footer.note": "© 2026 Pea シリーズ · インディー開発者による運営 · デザイン・プレビュー"
+    }
+  };
+
+  var DICT = window.PEA_I18N || {};
+  var currentLang = "zh";
   var cfg = (window.PEA_RELEASES && window.PEA_RELEASES.products) ? window.PEA_RELEASES.products : null;
 
   var PRODUCT = {
@@ -820,6 +1188,13 @@ img, svg { display: block; }
     scribe: { name: "PeaScribe", btn: "btn-scribe" }
   };
   var PLATFORM = { macos: "macOS", windows: "Windows", linux: "Linux" };
+
+  function t(key) {
+    var d = DICT[currentLang];
+    if (d && d[key] != null) return d[key];
+    if (DICT.zh && DICT.zh[key] != null) return DICT.zh[key];
+    return key;
+  }
 
   var toast = document.getElementById("toast-download");
   var toastTimer = null;
@@ -843,84 +1218,141 @@ img, svg { display: block; }
     return Object.keys(PLATFORM).some(function (k) { return isLive(product, k); });
   }
 
-  var liveCount = 0;
-  var totalCount = 0;
+  var DL_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"/></svg>';
 
-  /* 下载平台行：根据配置渲染为真实链接或「待上线」 */
-  var rows = document.querySelectorAll("[data-dl]");
-  Array.prototype.forEach.call(rows, function (row) {
-    var parts = row.getAttribute("data-dl").split(":");
-    var product = parts[0];
-    var platform = parts[1];
-    var prod = PRODUCT[product];
-    var btn = row.querySelector(".btn");
-    var noteEl = row.querySelector(".pf-note");
-    var pfEl = row.querySelector(".pf");
-    if (!prod || !btn) return;
+  /* 发布区渲染（幂等：语言/主题切换时清空重建）*/
+  function renderReleases() {
+    var rows = document.querySelectorAll("[data-dl]");
+    Array.prototype.forEach.call(rows, function (row) {
+      var parts = row.getAttribute("data-dl").split(":");
+      var product = parts[0], platform = parts[1];
+      var prod = PRODUCT[product];
+      var slot = row.querySelector(".btn-slot");
+      var noteEl = row.querySelector(".pf-note");
+      var pfEl = row.querySelector(".pf");
+      if (!prod || !slot) return;
 
-    totalCount++;
-    var c = platformConf(product, platform);
-    var note = noteEl ? (noteEl.getAttribute("data-note") || noteEl.textContent.trim()) : "";
-    if (c && c.note) note = String(c.note);
+      var c = platformConf(product, platform);
+      var ver = (c && c.version) ? String(c.version) : "";
+      var note;
+      if (platform === "macos") note = "Apple Silicon · Intel";
+      else note = t(platform === "windows" ? "note.win" : "note.linux");
 
-    if (isLive(product, platform)) {
-      liveCount++;
-      var url = c.url.trim();
-      var ver = c.version ? String(c.version) : "";
-      if (noteEl) noteEl.textContent = note + (ver ? " · v" + ver : "");
-
-      var a = document.createElement("a");
-      a.href = url;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.className = "btn btn-sm " + (platform === "macos" ? prod.btn : "btn-secondary");
-      a.setAttribute("data-od-id", btn.getAttribute("data-od-id") || ("dl-" + product + "-" + platform));
-      a.setAttribute("aria-label", "下载 " + prod.name + " · " + (PLATFORM[platform] || platform));
-      a.innerHTML =
-        '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"/></svg>' +
-        "下载" + (ver ? '<span class="btn-ver">v' + ver + "</span>" : "");
-      btn.parentNode.replaceChild(a, btn);
-
-      if (pfEl) pfEl.insertAdjacentHTML("afterbegin", '<span class="pf-dot" aria-hidden="true"></span>');
-    } else {
+      slot.innerHTML = "";
       if (noteEl) noteEl.textContent = note;
-      btn.classList.add("btn-pending");
-      btn.textContent = "待上线";
-      btn.setAttribute("data-toast", "「" + prod.name + " · " + (PLATFORM[platform] || platform) + "」待上线，发布后这里会自动提供下载。");
-    }
-  });
 
-  /* 状态徽章：产品面板 + 下载卡头部 */
-  Object.keys(PRODUCT).forEach(function (key) {
-    var live = productHasLive(key);
-    var pills = document.querySelectorAll('[data-status="' + key + '"]');
-    Array.prototype.forEach.call(pills, function (pill) {
-      var text = pill.querySelector(".s-text");
-      pill.classList.toggle("status-live", live);
-      pill.classList.toggle("status-soon", !live);
-      if (text) text.textContent = live ? "已上线" : "待上线";
+      if (isLive(product, platform)) {
+        var a = document.createElement("a");
+        a.href = c.url.trim();
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.className = "btn btn-sm " + (platform === "macos" ? prod.btn : "btn-secondary");
+        a.setAttribute("data-od-id", "dl-" + product + "-" + platform);
+        a.setAttribute("aria-label", t("download.aria").replace("{product}", prod.name).replace("{platform}", PLATFORM[platform] || platform));
+        a.innerHTML = DL_SVG + t("download.btn") + (ver ? '<span class="btn-ver">v' + ver + "</span>" : "");
+        slot.appendChild(a);
+        if (pfEl && !pfEl.querySelector(".pf-dot")) pfEl.insertAdjacentHTML("afterbegin", '<span class="pf-dot" aria-hidden="true"></span>');
+        if (noteEl && ver) noteEl.textContent = note + " · v" + ver;
+      } else {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "btn btn-sm btn-pending";
+        b.setAttribute("data-od-id", "dl-" + product + "-" + platform);
+        b.setAttribute("data-toast", t("download.toast.pending").replace("{product}", prod.name).replace("{platform}", PLATFORM[platform] || platform));
+        b.textContent = t("download.soon");
+        slot.appendChild(b);
+      }
     });
-  });
 
-  /* 发布状态汇总 */
-  var pendingCount = totalCount - liveCount;
-  var summary = document.querySelector("[data-release-summary]");
-  if (summary) {
-    if (liveCount > 0) {
-      summary.innerHTML = "<b>" + liveCount + "</b> 个平台已上线 · <b>" + pendingCount + "</b> 个待上线";
-      summary.hidden = false;
-    } else {
-      summary.hidden = true;
+    /* 状态徽章：产品面板 + 下载卡头部 */
+    Object.keys(PRODUCT).forEach(function (key) {
+      var live = productHasLive(key);
+      var pills = document.querySelectorAll('[data-status="' + key + '"]');
+      Array.prototype.forEach.call(pills, function (pill) {
+        var text = pill.querySelector(".s-text");
+        pill.classList.toggle("status-live", live);
+        pill.classList.toggle("status-soon", !live);
+        if (text) text.textContent = live ? t("download.live") : t("download.soon");
+      });
+    });
+
+    /* 发布状态汇总 */
+    var liveCount = 0, totalCount = 0;
+    Array.prototype.forEach.call(rows, function (row) {
+      totalCount++;
+      var parts = row.getAttribute("data-dl").split(":");
+      if (isLive(parts[0], parts[1])) liveCount++;
+    });
+    var summary = document.querySelector("[data-release-summary]");
+    if (summary) {
+      if (liveCount > 0) {
+        summary.innerHTML = t("download.summary").replace("{live}", liveCount).replace("{pending}", totalCount - liveCount);
+        summary.hidden = false;
+      } else {
+        summary.hidden = true;
+      }
     }
   }
 
-  /* 点击「待上线」按钮 → toast */
+  /* ---------- 语言应用 ---------- */
+  function applyLang(lang, save) {
+    if (!DICT[lang]) lang = "zh";
+    currentLang = lang;
+    if (save !== false) { try { localStorage.setItem("pea-lang", lang); } catch (e) {} }
+
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    var dict = DICT[lang];
+
+    var els = document.querySelectorAll("[data-i18n]");
+    Array.prototype.forEach.call(els, function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (dict[k] != null) el.innerHTML = dict[k];
+    });
+    var aels = document.querySelectorAll("[data-i18n-aria]");
+    Array.prototype.forEach.call(aels, function (el) {
+      var k = el.getAttribute("data-i18n-aria");
+      if (dict[k] != null) el.setAttribute("aria-label", dict[k]);
+    });
+
+    var sel = document.querySelector("[data-lang-select]");
+    if (sel) sel.value = lang;
+
+    if (dict["meta.title"]) document.title = dict["meta.title"];
+    var m = document.querySelector('meta[name="description"]');
+    if (m && dict["meta.description"]) m.setAttribute("content", dict["meta.description"]);
+
+    var tb = document.querySelector("[data-theme-toggle]");
+    if (tb) tb.setAttribute("aria-label", t(document.documentElement.getAttribute("data-theme") === "dark" ? "theme.light" : "theme.dark"));
+
+    renderReleases();
+  }
+
+  /* ---------- 主题 ---------- */
+  function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { localStorage.setItem("pea-theme", theme); } catch (e) {}
+    var tb = document.querySelector("[data-theme-toggle]");
+    if (tb) tb.setAttribute("aria-label", t(theme === "dark" ? "theme.light" : "theme.dark"));
+  }
+
+  /* ---------- 事件 ---------- */
+  var themeBtn = document.querySelector("[data-theme-toggle]");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      setTheme(cur === "dark" ? "light" : "dark");
+    });
+  }
+  var langSel = document.querySelector("[data-lang-select]");
+  if (langSel) {
+    langSel.addEventListener("change", function () { applyLang(langSel.value, true); });
+  }
+
   document.addEventListener("click", function (e) {
     var t = e.target && e.target.closest ? e.target.closest("[data-toast]") : null;
     if (t) showToast(t.getAttribute("data-toast"));
   });
 
-  /* 产品区 CTA → 定位并高亮下载卡 */
   document.addEventListener("click", function (e) {
     var t = e.target && e.target.closest ? e.target.closest("[data-target-card]") : null;
     if (!t) return;
@@ -932,6 +1364,11 @@ img, svg { display: block; }
       window.setTimeout(function () { card.classList.remove("highlight"); }, 2000);
     }
   });
+
+  /* ---------- 初始化 ---------- */
+  var savedLang = null;
+  try { savedLang = localStorage.getItem("pea-lang"); } catch (e) {}
+  applyLang(savedLang && DICT[savedLang] ? savedLang : "zh", false);
 })();
 </script>
 
