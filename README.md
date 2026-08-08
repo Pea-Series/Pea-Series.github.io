@@ -31,6 +31,6 @@ macos: {
 
 ## 部署
 
-推到 GitHub 后，GitHub Pages 自动启用（`.github.io` 仓库默认开启）。访问 `https://PeaPlayer.github.io/` 即可；`index.html` 会自动跳转到主页。
+推到 GitHub 后，GitHub Pages 自动启用（`.github.io` 仓库默认开启）。访问 `https://pea-series.github.io/` 即可；`index.html` 会自动跳转到主页。
 
 > 想更省事？后续可以把 `pea-releases.js` 换成读取 GitHub Releases API（`api.github.com/repos/{owner}/{repo}/releases/latest`），发版时连版本号和下载链接都自动更新，不用再手动改配置。
