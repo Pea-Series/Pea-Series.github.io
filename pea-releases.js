@@ -24,15 +24,15 @@ window.PEA_RELEASES = {
     player: {
       name: "PeaPlayer",
       /* 填入仓库后即可自动显示最新版本；未发布可留空 */
-      repo: "Pea-Series/peaplay",
+      repo: "Pea-Series/peaplayer",
       platforms: {
         macos: {
-          url: "https://github.com/Pea-Series/peaplay/releases/latest/download/PeaPlay-latest.dmg",
+          url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-macOS.zip",
           version: "",
           note: "Apple Silicon · Intel"
         },
         windows: {
-          url: "https://github.com/Pea-Series/peaplay/releases/latest/download/PeaPlay-Setup-latest.exe",
+          url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-Setup-latest.exe",
           version: "",
           note: "Windows 10 及以上"
         }
