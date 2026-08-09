@@ -548,7 +548,7 @@ img, svg { display: block; }
 .s-drop .t { font-size: 13px; font-weight: 500; color: var(--fg-2); }
 .s-drop .h { font-size: 11px; color: var(--muted); }
 
-/* scribe — 转写中 */
+/* scribe — 生成中 */
 .s-file { display: flex; align-items: center; gap: 8px; font: 500 11px var(--font-mono); color: var(--muted); background: var(--surface); border: 1px solid var(--border-soft); border-radius: 9px; padding: 8px 10px; overflow: hidden; white-space: nowrap; }
 .s-file::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
 .s-track .lbl { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; color: var(--fg-2); margin-bottom: 6px; }
@@ -616,7 +616,7 @@ img, svg { display: block; }
 /* 下载平台：已上线标识、版本号、待上线按钮 */
 .pf-dot {
   display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--success); margin-right: 8px; vertical-align: 1px;
+  background: var(--success); flex: none;
 }
 .btn-ver { font: 500 11px var(--font-mono); opacity: .75; margin-left: 2px; letter-spacing: .03em; }
 .btn-slot { display: inline-flex; }
@@ -638,14 +638,22 @@ img, svg { display: block; }
   40% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--hl), transparent 78%); }
 }
 .platform-row {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center; gap: 16px;
-  padding: 16px 22px;
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 15px;
+  padding: 17px 22px;
   border-top: 1px solid var(--border-soft);
 }
 .platform-row:first-of-type { border-top: none; }
-.pf { font-size: 14px; font-weight: 550; color: var(--fg); }
-.pf-note { font-size: 12.5px; color: var(--muted); }
+.pf-icon {
+  width: 40px; height: 40px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 11px;
+  background: var(--surface-warm); color: var(--fg-2);
+}
+.pf-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pf { font-size: 14px; font-weight: 600; color: var(--fg); display: inline-flex; align-items: center; gap: 7px; }
+.pf-note { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.btn-slot .btn { min-width: 78px; justify-content: center; }
 
 /* ===== values ===== */
 .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -720,7 +728,6 @@ img, svg { display: block; }
   .product-panel { grid-template-columns: 1fr; gap: 34px; }
   .panel-scribe .product-copy, .panel-scribe .product-visual { order: 0; }
   .product-visual { max-width: 560px; }
-  .download-grid { grid-template-columns: 1fr; }
   .value-grid { grid-template-columns: 1fr 1fr; }
   .req-grid { grid-template-columns: 1fr; }
 }
@@ -734,8 +741,10 @@ img, svg { display: block; }
   .hero-launchers { grid-template-columns: 1fr; }
   .feature-list { grid-template-columns: 1fr; }
   .value-grid { grid-template-columns: 1fr; }
-  .platform-row { grid-template-columns: 1fr auto; }
+  .download-grid { grid-template-columns: 1fr; }
+  .platform-row { grid-template-columns: auto 1fr auto; gap: 12px; padding: 14px 16px; }
   .pf-note { display: none; }
+  .pf-icon { width: 34px; height: 34px; border-radius: 9px; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
   /* 真实界面还原 — 小屏堆叠，避免横向溢出 */
   .p-cards { grid-template-columns: 1fr; }
@@ -994,11 +1003,11 @@ img, svg { display: block; }
             <span class="product-kind" data-i18n="scribe.kind">字幕生成器</span>
             <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
           </div>
-          <h3 data-i18n="scribe.h3">从音频到字幕，一次转写，直接可用。</h3>
-          <p class="product-desc" data-i18n="scribe.desc">拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。</p>
+          <h3 data-i18n="scribe.h3">从音频到字幕，一次生成，直接可用。</h3>
+          <p class="product-desc" data-i18n="scribe.desc">拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型生成字幕并导出 SRT。逐条校对时间码后，交付即可。</p>
           <ul class="feature-list">
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f1">音轨自动探测</span><span class="fchip-kbd" data-i18n="scribe.f1k">多语言</span></li>
-            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f2">本地 Whisper 转写</span><span class="fchip-kbd" data-i18n="scribe.f2k">离线模型</span></li>
+            <li class="fchip"><span class="fchip-name" data-i18n="scribe.f2">本地 Whisper 字幕生成</span><span class="fchip-kbd" data-i18n="scribe.f2k">离线模型</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f3">模型管理 · 进度可视</span><span class="fchip-kbd" data-i18n="scribe.f3k">base / turbo</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f4">三栏工作区</span><span class="fchip-kbd" data-i18n="scribe.f4k">历史 · 文件 · 属性</span></li>
             <li class="fchip"><span class="fchip-name" data-i18n="scribe.f5">逐条校对时间码</span><span class="fchip-kbd" data-i18n="scribe.f5k">表格编辑</span></li>
@@ -1020,7 +1029,7 @@ img, svg { display: block; }
             </div>
             <div class="screen-tabs" data-screen-tabs role="tablist" data-i18n-aria="scribe.tabs.aria" aria-label="PeaScribe 界面切换">
               <button class="screen-tab active" type="button" data-screen="idle" role="tab" aria-selected="true" data-i18n="scribe.screens.idle">首页</button>
-              <button class="screen-tab" type="button" data-screen="transcribing" role="tab" aria-selected="false" data-i18n="scribe.screens.transcribing">转写中</button>
+              <button class="screen-tab" type="button" data-screen="transcribing" role="tab" aria-selected="false" data-i18n="scribe.screens.transcribing">生成中</button>
               <button class="screen-tab" type="button" data-screen="complete" role="tab" aria-selected="false" data-i18n="scribe.screens.complete">字幕编辑</button>
             </div>
             <div class="appwin-body">
@@ -1051,10 +1060,10 @@ img, svg { display: block; }
                     </div>
                   </div>
                 </div>
-                <div class="screen-foot" data-i18n="scribe.foot.idle">拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始转写。</div>
+                <div class="screen-foot" data-i18n="scribe.foot.idle">拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始生成字幕。</div>
               </div>
 
-              <!-- 转写中 -->
+              <!-- 生成中 -->
               <div class="app-screen" data-screen-name="transcribing">
                 <div class="screen-body" style="padding:0">
                   <div class="s-shell">
@@ -1094,7 +1103,7 @@ img, svg { display: block; }
                     </div>
                   </div>
                 </div>
-                <div class="screen-foot" data-i18n="scribe.foot.transcribing">本地 Whisper 分片转写 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。</div>
+                <div class="screen-foot" data-i18n="scribe.foot.transcribing">本地 Whisper 分片生成字幕 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。</div>
               </div>
 
               <!-- 字幕编辑 / 完成 -->
@@ -1158,22 +1167,31 @@ img, svg { display: block; }
             <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="player">待上线</span></span>
           </div>
           <div class="platform-row" data-dl="player:macos">
-            <span class="pf">macOS</span>
-            <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">macOS</span>
+              <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-player-macos" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="player:windows">
-            <span class="pf">Windows</span>
-            <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">Windows</span>
+              <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-player-win" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="player:linux">
-            <span class="pf">Linux</span>
-            <span class="pf-note" data-note="尚未支持">尚未支持</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">Linux</span>
+              <span class="pf-note" data-note="尚未支持">尚未支持</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-player-linux" data-i18n="download.btn">下载</button>
             </div>
@@ -1187,22 +1205,31 @@ img, svg { display: block; }
             <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
           </div>
           <div class="platform-row" data-dl="scribe:macos">
-            <span class="pf">macOS</span>
-            <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">macOS</span>
+              <span class="pf-note" data-note="macOS 10.15+ · Intel / Apple Silicon">macOS 10.15+ · Intel / Apple Silicon</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-macos" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="scribe:windows">
-            <span class="pf">Windows</span>
-            <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">Windows</span>
+              <span class="pf-note" data-note="Windows 10 1809+ · x64">Windows 10 1809+ · x64</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="scribe:linux">
-            <span class="pf">Linux</span>
-            <span class="pf-note" data-note="尚未支持">尚未支持</span>
+            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+            <span class="pf-info">
+              <span class="pf">Linux</span>
+              <span class="pf-note" data-note="Ubuntu 20.04+ · x64">Ubuntu 20.04+ · x64</span>
+            </span>
             <div class="btn-slot">
               <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-linux" data-i18n="download.btn">下载</button>
             </div>
@@ -1266,7 +1293,7 @@ img, svg { display: block; }
         <div class="value-card" data-od-id="value-card-fast">
           <span class="value-num">02</span>
           <h3 data-i18n="values.card2.title">安静高效</h3>
-          <p data-i18n="values.card2.body">启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。</p>
+          <p data-i18n="values.card2.body">启动即用，字幕生成与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。</p>
         </div>
         <div class="value-card" data-od-id="value-card-open">
           <span class="value-num">03</span>
@@ -1345,10 +1372,10 @@ img, svg { display: block; }
       "player.foot.review": "中文反向背诵 · 按记忆评级 · <b>SRS</b> 自动安排复习。",
       "player.cue.word": "点击单词 · 即时查词",
       "scribe.kind": "字幕生成器",
-      "scribe.h3": "从音频到字幕，一次转写，直接可用。",
-      "scribe.desc": "拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型转写并生成 SRT。逐条校对时间码后，导出即可交付。",
+      "scribe.h3": "从音频到字幕，一次生成，直接可用。",
+      "scribe.desc": "拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型生成字幕并导出 SRT。逐条校对时间码后，交付即可。",
       "scribe.f1": "音轨自动探测", "scribe.f1k": "多语言",
-      "scribe.f2": "本地 Whisper 转写", "scribe.f2k": "离线模型",
+      "scribe.f2": "本地 Whisper 字幕生成", "scribe.f2k": "离线模型",
       "scribe.f3": "模型管理 · 进度可视", "scribe.f3k": "base / turbo",
       "scribe.f4": "三栏工作区", "scribe.f4k": "历史 · 文件 · 属性",
       "scribe.f5": "逐条校对时间码", "scribe.f5k": "表格编辑",
@@ -1360,15 +1387,15 @@ img, svg { display: block; }
       "scribe.mock.aria": "PeaScribe 界面预览",
       "scribe.tabs.aria": "PeaScribe 界面切换",
       "scribe.screens.idle": "首页",
-      "scribe.screens.transcribing": "转写中",
+      "scribe.screens.transcribing": "生成中",
       "scribe.screens.complete": "字幕编辑",
-      "scribe.foot.idle": "拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始转写。",
-      "scribe.foot.transcribing": "本地 Whisper 分片转写 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。",
+      "scribe.foot.idle": "拖入音视频 → 自动探测<b>音轨</b>与<b>语言</b>，一键开始生成字幕。",
+      "scribe.foot.transcribing": "本地 Whisper 分片生成字幕 · <b>进度</b>与<b>日志</b>实时可见，可随时取消。",
       "scribe.foot.complete": "逐条校对<b>时间码</b>与<b>文本</b>，一键导出<b>SRT</b>，直接交付。",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中文",
       "scribe.mock.track": "音轨 1 · 中文",
       "scribe.mock.model": "whisper·base",
-      "scribe.mock.progress": "转写中",
+      "scribe.mock.progress": "生成中",
       "scribe.mock.srt1": "欢迎来到 Pea 系列",
       "scribe.mock.srt2": "今天我们来聊聊本地工具",
       "scribe.mock.srt3": "从视频里学一门语言",
@@ -1398,7 +1425,7 @@ img, svg { display: block; }
       "values.card1.title": "本地优先",
       "values.card1.body": "文件与数据始终留在你的设备上。不上传、不追踪、离线可用——隐私是默认配置，而不是开关。",
       "values.card2.title": "安静高效",
-      "values.card2.body": "启动即用，转写与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
+      "values.card2.body": "启动即用，字幕生成与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
       "values.card3.title": "开放数据",
       "values.card3.body": "SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。",
       "footer.aria": "更多作品导航",
@@ -1458,10 +1485,10 @@ img, svg { display: block; }
       "player.mock.def": "adv. never; not at all — as in “never thought of it”",
       "player.mock.bar": "Review progress",
       "scribe.kind": "Subtitle Generator",
-      "scribe.h3": "From audio to subtitles — one transcription, ready to use.",
+      "scribe.h3": "From audio to subtitles — one pass, ready to use.",
       "scribe.desc": "Drop in a video or audio file; it detects the track, picks a language, runs a local Whisper model, and generates SRT. Fine-tune timecodes, then export.",
       "scribe.f1": "Auto track detection", "scribe.f1k": "Multi-language",
-      "scribe.f2": "Local Whisper transcription", "scribe.f2k": "Offline model",
+      "scribe.f2": "Local Whisper subtitle generation", "scribe.f2k": "Offline model",
       "scribe.f3": "Model manager · live progress", "scribe.f3k": "base / turbo",
       "scribe.f4": "Three-column workspace", "scribe.f4k": "History · File · Props",
       "scribe.f5": "Per-line timecode editing", "scribe.f5k": "Table editor",
@@ -1473,15 +1500,15 @@ img, svg { display: block; }
       "scribe.mock.aria": "PeaScribe interface preview",
       "scribe.tabs.aria": "PeaScribe screen switcher",
       "scribe.screens.idle": "Home",
-      "scribe.screens.transcribing": "Transcribing",
+      "scribe.screens.transcribing": "Generating",
       "scribe.screens.complete": "Subtitle editor",
-      "scribe.foot.idle": "Drop in audio/video → auto-detect <b>track</b> and <b>language</b>, then start transcribing.",
-      "scribe.foot.transcribing": "Local Whisper, chunked transcription · <b>progress</b> and <b>log</b> visible live, cancel anytime.",
+      "scribe.foot.idle": "Drop in audio/video → auto-detect <b>track</b> and <b>language</b>, then start generating subtitles.",
+      "scribe.foot.transcribing": "Local Whisper, chunked subtitle generation · <b>progress</b> and <b>log</b> visible live, cancel anytime.",
       "scribe.foot.complete": "Fine-tune <b>timecodes</b> and <b>text</b>, export <b>SRT</b> with one click.",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chinese",
       "scribe.mock.track": "Track 1 · Chinese",
       "scribe.mock.model": "whisper·base",
-      "scribe.mock.progress": "Transcribing",
+      "scribe.mock.progress": "Generating",
       "scribe.mock.srt1": "Welcome to Pea Series",
       "scribe.mock.srt2": "Today, let's talk about local tools",
       "scribe.mock.srt3": "Learn a language from video",
@@ -1691,7 +1718,8 @@ img, svg { display: block; }
       var c = platformConf(product, platform);
       var ver = (c && c.version) ? String(c.version) : "";
       var note;
-      if (platform === "macos") note = "Apple Silicon · Intel";
+      if (c && c.note) note = c.note;
+      else if (platform === "macos") note = "Apple Silicon · Intel";
       else note = t(platform === "windows" ? "note.win" : "note.linux");
 
       slot.innerHTML = "";
