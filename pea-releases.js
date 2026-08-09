@@ -54,7 +54,7 @@ window.PEA_RELEASES = {
         },
         windows: {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/PeaScribe-Setup-latest.exe",
-          version: "0.5.7", // scribe-version
+          version: "0.5.8", // scribe-version
           note: "Windows 10 1809+ · x64"
         }
       }
