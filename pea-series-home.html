@@ -627,8 +627,6 @@ img, svg { display: block; }
 .btn-pending:hover { color: var(--fg-2); border-color: var(--fg-2); background: var(--surface-warm); }
 
 /* 发布状态汇总 */
-.release-summary { margin-bottom: 22px; font-size: 13.5px; color: var(--fg-2); }
-.release-summary b { font-weight: 600; color: var(--fg); }
 
 /* 下载卡高亮（点击产品区 CTA 后定位） */
 .download-card { --hl: var(--accent); }
@@ -1150,10 +1148,7 @@ img, svg { display: block; }
       <header class="section-head">
         <p class="eyebrow" data-i18n="download.eyebrow">Download · 下载</p>
         <h2 data-i18n="download.title">下载 Pea 系列</h2>
-        <p class="section-lead" data-i18n="download.lead">选择产品与平台，开始使用。尚未上线的平台会显示「待上线」。</p>
       </header>
-
-      <p class="release-summary" data-release-summary data-od-id="release-summary" hidden></p>
 
       <div class="download-grid">
         <div class="download-card" id="dl-player" data-od-id="download-card-player" data-hl-player>
@@ -1379,11 +1374,9 @@ img, svg { display: block; }
       "scribe.mock.srt3": "从视频里学一门语言",
       "download.eyebrow": "Download · 下载",
       "download.title": "下载 Pea 系列",
-      "download.lead": "选择产品与平台，开始使用。尚未上线的平台会显示「待上线」。",
       "download.btn": "下载",
       "download.live": "已上线",
       "download.soon": "待上线",
-      "download.summary": "<b>{live}</b> 个平台已上线 · <b>{pending}</b> 个待上线",
       "download.aria": "下载 {product} · {platform}",
       "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
       "note.win": "Windows 10 及以上",
@@ -1494,11 +1487,9 @@ img, svg { display: block; }
       "scribe.mock.srt3": "Learn a language from video",
       "download.eyebrow": "Download",
       "download.title": "Download Pea Series",
-      "download.lead": "Pick a product and platform to get started. Platforms not yet released show “Coming soon”.",
       "download.btn": "Download",
       "download.live": "Available",
       "download.soon": "Coming soon",
-      "download.summary": "<b>{live}</b> platform(s) available · <b>{pending}</b> coming soon",
       "download.aria": "Download {product} · {platform}",
       "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
       "note.win": "Windows 10 or later",
@@ -1609,11 +1600,9 @@ img, svg { display: block; }
       "scribe.mock.srt3": "動画から言語を学ぶ",
       "download.eyebrow": "ダウンロード",
       "download.title": "Pea シリーズをダウンロード",
-      "download.lead": "製品とプラットフォームを選んで始めましょう。未リリースのプラットフォームは「近日公開」と表示されます。",
       "download.btn": "ダウンロード",
       "download.live": "公開中",
       "download.soon": "近日公開",
-      "download.summary": "<b>{live}</b> プラットフォーム公開中 · <b>{pending}</b> 近日公開",
       "download.aria": "{product} · {platform} をダウンロード",
       "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
       "note.win": "Windows 10 以降",
@@ -1743,22 +1732,6 @@ img, svg { display: block; }
       });
     });
 
-    /* 发布状态汇总 */
-    var liveCount = 0, totalCount = 0;
-    Array.prototype.forEach.call(rows, function (row) {
-      totalCount++;
-      var parts = row.getAttribute("data-dl").split(":");
-      if (isLive(parts[0], parts[1])) liveCount++;
-    });
-    var summary = document.querySelector("[data-release-summary]");
-    if (summary) {
-      if (liveCount > 0) {
-        summary.innerHTML = t("download.summary").replace("{live}", liveCount).replace("{pending}", totalCount - liveCount);
-        summary.hidden = false;
-      } else {
-        summary.hidden = true;
-      }
-    }
   }
 
   /* ---------- 语言应用 ---------- */
