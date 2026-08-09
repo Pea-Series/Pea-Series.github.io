@@ -1686,18 +1686,21 @@ img, svg { display: block; }
     if (!cfg || !cfg[product]) return null;
     return cfg[product].platforms[platform] || null;
   }
-  /* 平台是否已发布：优先按 GitHub Releases 返回的资源列表判定（链接真实可下载才算「已上线」）。
-     未配置 repo 的产品回退到「url 已填即上线」。 */
+  /* 平台是否已发布：
+     · 公开仓库且 API 可用 —— 以 GitHub Releases 返回的资源列表为准（链接真实可下载才算「已上线」）；
+     · 私有仓库（API 拉不到）或未配置仓库 —— 以发布流程写入的静态版本号为准，
+       版本号非空即视为已发布上线（见 pea-releases.js 顶部注释）。 */
   function isLive(product, platform) {
     var c = platformConf(product, platform);
     if (!c || typeof c.url !== "string" || !c.url.trim()) return false;
     var repo = cfg[product] && cfg[product].repo;
-    if (!repo) return true; /* 无仓库配置 → 沿用「填了直链即已上线」 */
     var assets = releaseAssets[product];
-    if (!assets) return false; /* 仓库已配置但未确认发布（私有 / 无 release / 拉取失败）→ 待上线 */
     var fname = c.url.split("/").pop();
-    if (!fname) return false;
-    return assets.indexOf(fname) !== -1;
+    if (repo && Array.isArray(assets)) {
+      return fname ? assets.indexOf(fname) !== -1 : false;
+    }
+    if (repo) return staticVersion(product) !== "";
+    return true; /* 无仓库配置 → 沿用「填了直链即已上线」 */
   }
   function productHasLive(product) {
     return Object.keys(PLATFORM).some(function (k) { return isLive(product, k); });
