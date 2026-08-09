@@ -695,6 +695,28 @@ img, svg { display: block; }
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+/* ===== system requirements ===== */
+.req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.req-card {
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--surface); padding: 22px 20px;
+}
+.req-card h4 {
+  font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.req-card h4 .pf-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex: none; }
+.req-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.req-card li {
+  font-size: 13px; line-height: 1.55; color: var(--fg-2);
+  padding-left: 14px; position: relative;
+}
+.req-card li::before {
+  content: ""; position: absolute; left: 0; top: 7px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--border);
+}
+
 /* ===== responsive ===== */
 @media (max-width: 960px) {
   .container { padding: 0 var(--container-gutter-tablet); }
@@ -704,6 +726,7 @@ img, svg { display: block; }
   .product-visual { max-width: 560px; }
   .download-grid { grid-template-columns: 1fr; }
   .value-grid { grid-template-columns: 1fr 1fr; }
+  .req-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .container { padding: 0 var(--container-gutter-phone); }
@@ -1198,6 +1221,42 @@ img, svg { display: block; }
     </div>
   </section>
 
+  <!-- ===== System Requirements ===== -->
+  <section id="requirements" class="section" data-od-id="section-requirements">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow" data-i18n="req.eyebrow">Requirements · 系统要求</p>
+        <h2 data-i18n="req.title">PeaScribe 系统要求</h2>
+      </header>
+      <div class="req-grid">
+        <div class="req-card" data-od-id="req-windows">
+          <h4><span class="pf-dot" aria-hidden="true"></span> Windows</h4>
+          <ul>
+            <li data-i18n="req.win.os">Windows 10 (1809+) 或 Windows 11</li>
+            <li data-i18n="req.win.arch">64 位 (x64)</li>
+            <li data-i18n="req.win.gpu">NVIDIA 显卡可启用 CUDA 加速</li>
+          </ul>
+        </div>
+        <div class="req-card" data-od-id="req-macos">
+          <h4><span class="pf-dot" aria-hidden="true"></span> macOS</h4>
+          <ul>
+            <li data-i18n="req.mac.os">macOS 10.15 Catalina 或更高</li>
+            <li data-i18n="req.mac.chip">Intel / Apple Silicon 均支持</li>
+            <li data-i18n="req.mac.gpu">Apple Silicon 自动启用 Metal 加速</li>
+          </ul>
+        </div>
+        <div class="req-card" data-od-id="req-linux">
+          <h4><span class="pf-dot" aria-hidden="true"></span> Linux</h4>
+          <ul>
+            <li data-i18n="req.linux.os">Ubuntu 20.04+ / Debian 11+</li>
+            <li data-i18n="req.linux.arch">64 位 (x64)</li>
+            <li data-i18n="req.linux.gpu">NVIDIA 显卡可启用 CUDA 加速</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Values ===== -->
   <section id="values" class="section" data-od-id="section-values">
     <div class="container">
@@ -1332,6 +1391,17 @@ img, svg { display: block; }
       "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
       "note.win": "Windows 10 及以上",
       "note.linux": "尚未支持",
+      "req.eyebrow": "Requirements · 系统要求",
+      "req.title": "PeaScribe 系统要求",
+      "req.win.os": "Windows 10 (1809+) 或 Windows 11",
+      "req.win.arch": "64 位 (x64)",
+      "req.win.gpu": "NVIDIA 显卡可启用 CUDA 加速",
+      "req.mac.os": "macOS 10.15 Catalina 或更高",
+      "req.mac.chip": "Intel / Apple Silicon 均支持",
+      "req.mac.gpu": "Apple Silicon 自动启用 Metal 加速",
+      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
+      "req.linux.arch": "64 位 (x64)",
+      "req.linux.gpu": "NVIDIA 显卡可启用 CUDA 加速",
       "values.eyebrow": "Why Pea · 理念",
       "values.title": "为什么做本地工具",
       "values.lead": "你的材料是作品，也是数据。它应该留在你的设备上，而不是被上传到别处。",
@@ -1436,6 +1506,17 @@ img, svg { display: block; }
       "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
       "note.win": "Windows 10 or later",
       "note.linux": "Not yet supported",
+      "req.eyebrow": "Requirements",
+      "req.title": "PeaScribe Requirements",
+      "req.win.os": "Windows 10 (1809+) or Windows 11",
+      "req.win.arch": "64-bit (x64)",
+      "req.win.gpu": "NVIDIA GPU for CUDA acceleration",
+      "req.mac.os": "macOS 10.15 Catalina or later",
+      "req.mac.chip": "Intel or Apple Silicon",
+      "req.mac.gpu": "Apple Silicon uses Metal acceleration automatically",
+      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
+      "req.linux.arch": "64-bit (x64)",
+      "req.linux.gpu": "NVIDIA GPU for CUDA acceleration",
       "values.eyebrow": "Why Pea",
       "values.title": "Why local-first tools",
       "values.lead": "Your materials are your work and your data. They should stay on your device — not uploaded elsewhere.",
@@ -1540,6 +1621,17 @@ img, svg { display: block; }
       "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
       "note.win": "Windows 10 以降",
       "note.linux": "未対応",
+      "req.eyebrow": "システム要件",
+      "req.title": "PeaScribe のシステム要件",
+      "req.win.os": "Windows 10 (1809+) または Windows 11",
+      "req.win.arch": "64ビット (x64)",
+      "req.win.gpu": "NVIDIA GPU で CUDA アクセラレーション対応",
+      "req.mac.os": "macOS 10.15 Catalina 以降",
+      "req.mac.chip": "Intel / Apple Silicon 対応",
+      "req.mac.gpu": "Apple Silicon は Metal アクセラレーションを自動有効化",
+      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
+      "req.linux.arch": "64ビット (x64)",
+      "req.linux.gpu": "NVIDIA GPU で CUDA アクセラレーション対応",
       "values.eyebrow": "Why Pea",
       "values.title": "なぜローカルファーストなのか",
       "values.lead": "あなたの素材は作品でありデータです。デバイスに残り、どこにもアップロードされません。",

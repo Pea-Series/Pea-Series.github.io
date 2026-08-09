@@ -18,18 +18,18 @@ window.PEA_RELEASES = {
       name: "PeaPlayer",
       platforms: {
         macos: {
-          url: "",              // 例：https://example.com/PeaPlayer-0.1.0.dmg
-          version: "0.1.0",     // 显示在下载按钮与说明文字里
+          url: "",
+          version: "",
           note: "Apple Silicon · Intel"
         },
         windows: {
           url: "",
-          version: "0.1.0",
+          version: "",
           note: "Windows 10 及以上"
         },
         linux: {
           url: "",
-          version: "",          // 留空则不显示版本号
+          version: "",
           note: "尚未支持"
         }
       }
@@ -40,18 +40,18 @@ window.PEA_RELEASES = {
       platforms: {
         macos: {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-macos.zip",
-          version: "0.1.0",
-          note: "Apple Silicon · Intel"
+          version: "",
+          note: "macOS 10.15+ · Intel / Apple Silicon"
         },
         windows: {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-windows.zip",
-          version: "0.1.0",
-          note: "Windows 10 及以上"
+          version: "",
+          note: "Windows 10 1809+ · x64"
         },
         linux: {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-linux.zip",
           version: "",
-          note: "尚未支持"
+          note: "Ubuntu 20.04+ · x64"
         }
       }
     }
