@@ -43,16 +43,18 @@ window.PEA_RELEASES = {
 
     scribe: {
       name: "PeaScribe",
-      repo: "Pea-Series/peascribe",
+      /* 私有仓库：不依赖 GitHub API，版本号由 CI 在每次发布时改写
+         （见 pea-releases.js 中的 "// scribe-version" 标记） */
       platforms: {
         macos: {
-          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/PeaScribe-latest.dmg",
+          /* macOS 暂未发布 → 待上线 */
+          url: "",
           version: "",
-          note: "macOS 10.15+ · Intel / Apple Silicon"
+          note: "macOS 待上线"
         },
         windows: {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/PeaScribe-Setup-latest.exe",
-          version: "",
+          version: "0.5.6", // scribe-version
           note: "Windows 10 1809+ · x64"
         }
       }
