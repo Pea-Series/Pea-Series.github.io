@@ -1211,7 +1211,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="macOS 10.15+ · Intel / Apple Silicon">macOS 10.15+ · Intel / Apple Silicon</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-macos" data-i18n="download.btn">下载</button>
+              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-macos" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="scribe:windows">
@@ -1221,7 +1221,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="Windows 10 1809+ · x64">Windows 10 1809+ · x64</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
+              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
             </div>
           </div>
           <div class="platform-row" data-dl="scribe:linux">
@@ -1231,7 +1231,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="Ubuntu 20.04+ · x64">Ubuntu 20.04+ · x64</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-scribe-linux" data-i18n="download.btn">下载</button>
+              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-linux" data-i18n="download.btn">下载</button>
             </div>
           </div>
         </div>
@@ -1730,7 +1730,7 @@ img, svg { display: block; }
         a.href = c.url.trim();
         a.target = "_blank";
         a.rel = "noopener";
-        a.className = "btn btn-sm " + (platform === "macos" ? prod.btn : "btn-secondary");
+        a.className = "btn btn-sm " + prod.btn;
         a.setAttribute("data-od-id", "dl-" + product + "-" + platform);
         a.setAttribute("aria-label", t("download.aria").replace("{product}", prod.name).replace("{platform}", PLATFORM[platform] || platform));
         a.innerHTML = DL_SVG + t("download.btn") + (ver ? '<span class="btn-ver">v' + ver + "</span>" : "");
