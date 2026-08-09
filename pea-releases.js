@@ -26,11 +26,6 @@ window.PEA_RELEASES = {
           url: "",
           version: "",
           note: "Windows 10 及以上"
-        },
-        linux: {
-          url: "",
-          version: "",
-          note: "尚未支持"
         }
       }
     },
@@ -39,7 +34,7 @@ window.PEA_RELEASES = {
       name: "PeaScribe",
       platforms: {
         macos: {
-          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-macos.zip",
+          url: "",
           version: "",
           note: "macOS 10.15+ · Intel / Apple Silicon"
         },
@@ -47,11 +42,6 @@ window.PEA_RELEASES = {
           url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-windows.zip",
           version: "",
           note: "Windows 10 1809+ · x64"
-        },
-        linux: {
-          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-linux.zip",
-          version: "",
-          note: "Ubuntu 20.04+ · x64"
         }
       }
     }

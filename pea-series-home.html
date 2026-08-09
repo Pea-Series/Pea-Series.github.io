@@ -700,7 +700,7 @@ img, svg { display: block; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* ===== system requirements ===== */
-.req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.req-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .req-card {
   border: 1px solid var(--border); border-radius: var(--radius-md);
   background: var(--surface); padding: 22px 20px;
@@ -1186,16 +1186,6 @@ img, svg { display: block; }
               <button class="btn btn-secondary btn-sm" data-od-id="dl-player-win" data-i18n="download.btn">下载</button>
             </div>
           </div>
-          <div class="platform-row" data-dl="player:linux">
-            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
-            <span class="pf-info">
-              <span class="pf">Linux</span>
-              <span class="pf-note" data-note="尚未支持">尚未支持</span>
-            </span>
-            <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-linux" data-i18n="download.btn">下载</button>
-            </div>
-          </div>
         </div>
 
         <div class="download-card" id="dl-scribe" data-od-id="download-card-scribe" data-hl-scribe>
@@ -1222,16 +1212,6 @@ img, svg { display: block; }
             </span>
             <div class="btn-slot">
               <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
-            </div>
-          </div>
-          <div class="platform-row" data-dl="scribe:linux">
-            <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
-            <span class="pf-info">
-              <span class="pf">Linux</span>
-              <span class="pf-note" data-note="Ubuntu 20.04+ · x64">Ubuntu 20.04+ · x64</span>
-            </span>
-            <div class="btn-slot">
-              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-linux" data-i18n="download.btn">下载</button>
             </div>
           </div>
         </div>
@@ -1262,14 +1242,6 @@ img, svg { display: block; }
             <li data-i18n="req.mac.os">macOS 10.15 Catalina 或更高</li>
             <li data-i18n="req.mac.chip">Intel / Apple Silicon 均支持</li>
             <li data-i18n="req.mac.gpu">Apple Silicon 自动启用 Metal 加速</li>
-          </ul>
-        </div>
-        <div class="req-card" data-od-id="req-linux">
-          <h4><span class="pf-dot" aria-hidden="true"></span> Linux</h4>
-          <ul>
-            <li data-i18n="req.linux.os">Ubuntu 20.04+ / Debian 11+</li>
-            <li data-i18n="req.linux.arch">64 位 (x64)</li>
-            <li data-i18n="req.linux.gpu">NVIDIA 显卡可启用 CUDA 加速</li>
           </ul>
         </div>
       </div>
@@ -1407,7 +1379,6 @@ img, svg { display: block; }
       "download.aria": "下载 {product} · {platform}",
       "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
       "note.win": "Windows 10 及以上",
-      "note.linux": "尚未支持",
       "req.eyebrow": "Requirements · 系统要求",
       "req.title": "PeaScribe 系统要求",
       "req.win.os": "Windows 10 (1809+) 或 Windows 11",
@@ -1416,9 +1387,6 @@ img, svg { display: block; }
       "req.mac.os": "macOS 10.15 Catalina 或更高",
       "req.mac.chip": "Intel / Apple Silicon 均支持",
       "req.mac.gpu": "Apple Silicon 自动启用 Metal 加速",
-      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
-      "req.linux.arch": "64 位 (x64)",
-      "req.linux.gpu": "NVIDIA 显卡可启用 CUDA 加速",
       "values.eyebrow": "Why Pea · 理念",
       "values.title": "为什么做本地工具",
       "values.lead": "你的材料是作品，也是数据。它应该留在你的设备上，而不是被上传到别处。",
@@ -1520,7 +1488,6 @@ img, svg { display: block; }
       "download.aria": "Download {product} · {platform}",
       "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
       "note.win": "Windows 10 or later",
-      "note.linux": "Not yet supported",
       "req.eyebrow": "Requirements",
       "req.title": "PeaScribe Requirements",
       "req.win.os": "Windows 10 (1809+) or Windows 11",
@@ -1529,9 +1496,6 @@ img, svg { display: block; }
       "req.mac.os": "macOS 10.15 Catalina or later",
       "req.mac.chip": "Intel or Apple Silicon",
       "req.mac.gpu": "Apple Silicon uses Metal acceleration automatically",
-      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
-      "req.linux.arch": "64-bit (x64)",
-      "req.linux.gpu": "NVIDIA GPU for CUDA acceleration",
       "values.eyebrow": "Why Pea",
       "values.title": "Why local-first tools",
       "values.lead": "Your materials are your work and your data. They should stay on your device — not uploaded elsewhere.",
@@ -1633,7 +1597,6 @@ img, svg { display: block; }
       "download.aria": "{product} · {platform} をダウンロード",
       "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
       "note.win": "Windows 10 以降",
-      "note.linux": "未対応",
       "req.eyebrow": "システム要件",
       "req.title": "PeaScribe のシステム要件",
       "req.win.os": "Windows 10 (1809+) または Windows 11",
@@ -1642,9 +1605,6 @@ img, svg { display: block; }
       "req.mac.os": "macOS 10.15 Catalina 以降",
       "req.mac.chip": "Intel / Apple Silicon 対応",
       "req.mac.gpu": "Apple Silicon は Metal アクセラレーションを自動有効化",
-      "req.linux.os": "Ubuntu 20.04+ / Debian 11+",
-      "req.linux.arch": "64ビット (x64)",
-      "req.linux.gpu": "NVIDIA GPU で CUDA アクセラレーション対応",
       "values.eyebrow": "Why Pea",
       "values.title": "なぜローカルファーストなのか",
       "values.lead": "あなたの素材は作品でありデータです。デバイスに残り、どこにもアップロードされません。",
@@ -1670,7 +1630,7 @@ img, svg { display: block; }
     player: { name: "PeaPlayer", btn: "btn-player" },
     scribe: { name: "PeaScribe", btn: "btn-scribe" }
   };
-  var PLATFORM = { macos: "macOS", windows: "Windows", linux: "Linux" };
+  var PLATFORM = { macos: "macOS", windows: "Windows" };
 
   function t(key) {
     var d = DICT[currentLang];
@@ -1720,7 +1680,7 @@ img, svg { display: block; }
       var note;
       if (c && c.note) note = c.note;
       else if (platform === "macos") note = "Apple Silicon · Intel";
-      else note = t(platform === "windows" ? "note.win" : "note.linux");
+      else note = t("note.win");
 
       slot.innerHTML = "";
       if (noteEl) noteEl.textContent = note;
