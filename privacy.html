@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>隐私政策 · Pea 系列</title>
-<meta name="description" content="Pea 系列的隐私政策：本地优先，文件与数据始终留在你的设备上，不上传、不追踪。">
+<meta name="description" content="Pea 系列隐私政策：我们坚持最小必要原则，文件与数据默认留在你的设备上。适用于 macOS 与 Windows 桌面应用。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -38,7 +38,6 @@
   --font-display: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --border-soft: oklch(94% 0.006 240);
   --focus-ring: 0 0 0 4px color-mix(in oklab, var(--accent), transparent 74%);
   --motion-fast: 150ms;
   --motion-base: 240ms;
@@ -128,12 +127,32 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 .nav-links a:hover { color: var(--fg); background: color-mix(in oklab, var(--fg), transparent 95%); }
 
 /* ===== privacy page ===== */
-.privacy-page { padding: 76px 0 104px; }
-.privacy-wrap { max-width: 760px; margin: 0 auto; }
-.privacy-head { margin-bottom: 12px; }
-.privacy-head h1 { margin: 16px 0 10px; font-size: clamp(30px, 4vw, 44px); font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--fg); }
-.privacy-meta { font: 500 13px var(--font-mono); color: var(--muted); letter-spacing: 0.03em; }
-.privacy-lead { margin-top: 22px; font-size: 17px; line-height: 1.72; color: var(--fg-2); max-width: 60ch; }
+.eyebrow {
+  font: 600 12px var(--font-mono);
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.privacy-page { padding: 68px 0 104px; }
+.privacy-wrap { max-width: 800px; margin: 0 auto; }
+.privacy-head { margin-bottom: 14px; }
+.privacy-head h1 { margin: 14px 0 10px; font-size: clamp(30px, 4vw, 44px); font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--fg); }
+.privacy-meta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font: 500 13px var(--font-mono); color: var(--muted); letter-spacing: 0.03em; }
+.privacy-meta-row .scope-chip {
+  font: 550 12px var(--font-mono); color: var(--fg-2); letter-spacing: 0.05em;
+  border: 1px solid var(--border); border-radius: var(--radius-pill, 999px);
+  padding: 3px 11px;
+}
+.privacy-notice {
+  margin-top: 24px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 16px 20px;
+  font-size: 15px; line-height: 1.75; color: var(--fg-2);
+}
+.privacy-notice b { color: var(--fg); font-weight: 600; }
 
 .privacy-section {
   display: grid; grid-template-columns: 56px 1fr; column-gap: 22px;
@@ -142,10 +161,11 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 }
 .psec-num { font: 600 13px var(--font-mono); color: var(--muted); letter-spacing: 0.08em; padding-top: 5px; }
 .privacy-section h2 { grid-column: 2; font-size: 20px; font-weight: 600; line-height: 1.35; letter-spacing: 0; color: var(--fg); margin-bottom: 12px; }
-.privacy-section p { grid-column: 2; font-size: 15px; line-height: 1.75; color: var(--fg-2); max-width: 62ch; }
-.privacy-section ul { grid-column: 2; list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0 22px; }
+.privacy-section p { grid-column: 2; font-size: 15px; line-height: 1.75; color: var(--fg-2); max-width: 64ch; }
+.privacy-section ul { grid-column: 2; list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 12px 0 22px; }
 .privacy-section li { font-size: 15px; line-height: 1.7; color: var(--fg-2); padding-left: 18px; position: relative; }
 .privacy-section li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+.privacy-section li b { color: var(--fg); font-weight: 600; }
 .privacy-section .psec-note { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .privacy-section a {
   color: var(--accent); font-weight: 550;
@@ -153,6 +173,33 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
   transition: border-color var(--motion-fast) var(--ease-standard);
 }
 .privacy-section a:hover { border-bottom-color: var(--accent); }
+
+/* ===== privacy tables ===== */
+.tbl-wrap { grid-column: 2; margin: 6px 0 20px; overflow-x: auto; }
+.privacy-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px; line-height: 1.6;
+}
+.privacy-table th {
+  text-align: left; font: 600 12px var(--font-body); color: var(--muted);
+  letter-spacing: 0.03em; padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.privacy-table td {
+  padding: 11px 12px; vertical-align: top;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--fg-2);
+}
+.privacy-table td:first-child { color: var(--fg); font-weight: 550; }
+.privacy-table tr:last-child td { border-bottom: none; }
+.privacy-table .t-ok { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.privacy-table .t-na { color: var(--muted); white-space: nowrap; }
+.privacy-table th[scope="row"] {
+  font-weight: 550; color: var(--fg);
+  border-right: 1px solid var(--border-soft); width: 34%;
+  white-space: normal;
+}
 
 /* ===== footer（参考 Lyu 系列 · 单行居中）===== */
 .site-footer { border-top: 1px solid var(--border-soft); padding: 36px 0 44px; }
@@ -176,10 +223,13 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
   .nav-inner { gap: 12px; }
   .nav-links { display: none; }
   .nav-controls { gap: 4px; margin-left: auto; }
-  .privacy-page { padding: 56px 0 72px; }
+  .privacy-page { padding: 52px 0 72px; }
   .privacy-section { grid-template-columns: 1fr; gap: 4px; }
   .psec-num { grid-column: 1; }
-  .privacy-section h2, .privacy-section p, .privacy-section ul { grid-column: 1; }
+  .privacy-section h2, .privacy-section p, .privacy-section ul, .tbl-wrap { grid-column: 1; }
+  .privacy-table { font-size: 13px; }
+  .privacy-table th { padding: 8px 10px; }
+  .privacy-table td { padding: 10px; }
   .footer-inner { flex-direction: column; align-items: center; }
 }
 </style>
@@ -221,73 +271,191 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       <header class="privacy-head">
         <p class="eyebrow mono" data-i18n="privacy.eyebrow">Privacy · 隐私</p>
         <h1 data-i18n="privacy.title">隐私政策</h1>
-        <p class="privacy-meta" data-i18n="privacy.effective">生效日期：2026-08-09</p>
-        <p class="privacy-lead" data-i18n="privacy.lead">一句话：你的文件属于你，始终留在你的设备上。</p>
+        <div class="privacy-meta-row">
+          <span class="scope-chip" data-i18n="privacy.scope">适用于 macOS · Windows</span>
+          <span data-i18n="privacy.effective">生效日期：2026-08-09</span>
+        </div>
+        <div class="privacy-notice" data-od-id="privacy-notice" data-i18n="privacy.notice">我们坚持<b>最小必要原则</b>：只在为向你提供功能所必需时，才处理最少必要的信息。继续使用本产品即表示你已阅读并同意本政策；如不同意，请停止使用。</div>
       </header>
 
+      <!-- 01 · 收集的信息类型与用途 -->
       <section class="privacy-section" data-od-id="privacy-s1">
         <span class="psec-num">01</span>
-        <h2 data-i18n="privacy.s1.title">本地处理</h2>
-        <p data-i18n="privacy.s1.body">PeaPlayer 与 PeaScribe 都是本地优先的桌面应用。字幕由本地 Whisper 模型生成，查词、复习与统计同样在本机完成，不依赖任何云端服务。</p>
-        <ul>
-          <li data-i18n="privacy.s1.li1">音视频文件、字幕、生词本与学习记录全部存储在你的设备上。</li>
-          <li data-i18n="privacy.s1.li2">字幕生成、词典查询、复习排程全部在本机完成。</li>
-          <li data-i18n="privacy.s1.li3">应用无需登录，不创建云端账户。</li>
-        </ul>
+        <h2 data-i18n="privacy.s1.title">我们收集的信息类型与用途</h2>
+        <p data-i18n="privacy.s1.body">Pea 系列均为本地优先的桌面应用。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。</p>
+        <div class="tbl-wrap">
+          <table class="privacy-table">
+            <thead>
+              <tr>
+                <th data-i18n="privacy.t1.col1" scope="col">信息类型</th>
+                <th data-i18n="privacy.t1.col2" scope="col">用途与场景</th>
+                <th data-i18n="privacy.t1.col3" scope="col">是否必要</th>
+                <th data-i18n="privacy.t1.col4" scope="col">处理方式与保存期限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-i18n="privacy.t1.r1c1">设备信息（系统版本、芯片架构）</td>
+                <td data-i18n="privacy.t1.r1c2">检查更新、兼容性适配</td>
+                <td class="t-ok" data-i18n="privacy.t1.r1c3">必要</td>
+                <td data-i18n="privacy.t1.r1c4">仅在本机判断；联网检查更新时只携带当前版本号，不记录设备标识。</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t1.r2c1">崩溃日志与运行日志</td>
+                <td data-i18n="privacy.t1.r2c2">排查稳定性问题</td>
+                <td class="t-na" data-i18n="privacy.t1.r2c3">不适用</td>
+                <td data-i18n="privacy.t1.r2c4">不采集。应用无遥测、无远程日志上报。</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t1.r3c1">账户与联系方式</td>
+                <td data-i18n="privacy.t1.r3c2">登录、通知</td>
+                <td class="t-na" data-i18n="privacy.t1.r3c3">不适用</td>
+                <td data-i18n="privacy.t1.r3c4">应用无需登录，不创建云端账户。</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t1.r4c1">媒体文件与字幕内容</td>
+                <td data-i18n="privacy.t1.r4c2">播放、转写、学习等核心功能</td>
+                <td class="t-ok" data-i18n="privacy.t1.r4c3">必要（仅本地）</td>
+                <td data-i18n="privacy.t1.r4c4">全部在你设备上处理，不上传、不存储。</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t1.r5c1">去标识化统计数据</td>
+                <td data-i18n="privacy.t1.r5c2">产品改进</td>
+                <td class="t-na" data-i18n="privacy.t1.r5c3">不适用</td>
+                <td data-i18n="privacy.t1.r5c4">不采集。无行为分析、无广告跟踪器。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
+      <!-- 02 · 存储与保护 -->
       <section class="privacy-section" data-od-id="privacy-s2">
         <span class="psec-num">02</span>
-        <h2 data-i18n="privacy.s2.title">我们不收集的内容</h2>
-        <p data-i18n="privacy.s2.body">我们的设计原则是：不收集，就没有泄露。Pea 系列不采集任何使用数据。</p>
+        <h2 data-i18n="privacy.s2.title">存储与保护</h2>
         <ul>
-          <li data-i18n="privacy.s2.li1">不收集姓名、邮箱等个人身份信息。</li>
-          <li data-i18n="privacy.s2.li2">不上传、不存储你的媒体文件或字幕内容。</li>
-          <li data-i18n="privacy.s2.li3">无遥测、无行为分析、无广告跟踪器。</li>
+          <li data-i18n="privacy.s2.li1"><b>本地优先存储</b>：你的文件、字幕、生词本与学习记录默认全部保存在你的设备上。</li>
+          <li data-i18n="privacy.s2.li2"><b>最短保存期限</b>：仅保留完成任务所必需的时间；本地数据由你随时清理。</li>
+          <li data-i18n="privacy.s2.li3"><b>安全措施</b>：网络传输走 HTTPS 加密通道；应用以最小权限访问文件。</li>
+          <li data-i18n="privacy.s2.li4"><b>数据跨境</b>：不涉及个人信息跨境传输。</li>
         </ul>
       </section>
 
+      <!-- 03 · 共享、转让与公开披露 -->
       <section class="privacy-section" data-od-id="privacy-s3">
         <span class="psec-num">03</span>
-        <h2 data-i18n="privacy.s3.title">网络连接</h2>
-        <p data-i18n="privacy.s3.body">应用仅在两种情况下联网，且都由你主动发起：</p>
+        <h2 data-i18n="privacy.s3.title">共享、转让与公开披露</h2>
         <ul>
-          <li data-i18n="privacy.s3.li1">检查应用更新——只携带当前版本号。</li>
-          <li data-i18n="privacy.s3.li2">下载 Whisper 模型——只请求对应模型文件，不含任何媒体内容。</li>
+          <li data-i18n="privacy.s3.li1">默认<b>不与任何第三方共享个人信息，不出售个人信息</b>。</li>
+          <li data-i18n="privacy.s3.li2">仅在法律要求、或事先征得你明确同意的情况下，才可能进行共享。</li>
+          <li data-i18n="privacy.s3.li3">因合并、收购等原因涉及数据转让时，我们将要求接收方继续遵守本政策。</li>
         </ul>
-        <p class="psec-note" data-i18n="privacy.s3.note">除此之外，应用默认离线运行。</p>
       </section>
 
+      <!-- 04 · 第三方服务与 SDK -->
       <section class="privacy-section" data-od-id="privacy-s4">
         <span class="psec-num">04</span>
-        <h2 data-i18n="privacy.s4.title">第三方服务</h2>
-        <p data-i18n="privacy.s4.body">应用不内嵌任何第三方 SDK、统计或追踪组件。</p>
-        <ul>
-          <li data-i18n="privacy.s4.li1">可选的 Anki 导出在本地完成，数据不经过网络。</li>
-          <li data-i18n="privacy.s4.li2">安装包托管在 GitHub Releases，下载由 GitHub 提供。</li>
-        </ul>
+        <h2 data-i18n="privacy.s4.title">第三方服务与 SDK</h2>
+        <p data-i18n="privacy.s4.body">应用不内嵌任何第三方 SDK、统计或追踪组件。下表列出分发与运行所涉及的外部服务。</p>
+        <div class="tbl-wrap">
+          <table class="privacy-table">
+            <thead>
+              <tr>
+                <th data-i18n="privacy.t2.col1" scope="col">名称</th>
+                <th data-i18n="privacy.t2.col2" scope="col">用途</th>
+                <th data-i18n="privacy.t2.col3" scope="col">涉及的数据</th>
+                <th data-i18n="privacy.t2.col4" scope="col">网络与加密</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-i18n="privacy.t2.r1c1">GitHub Releases</td>
+                <td data-i18n="privacy.t2.r1c2">安装包托管与下载</td>
+                <td data-i18n="privacy.t2.r1c3">下载请求，不含个人信息</td>
+                <td class="t-ok" data-i18n="privacy.t2.r1c4">HTTPS 加密</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t2.r2c1">Whisper 模型</td>
+                <td data-i18n="privacy.t2.r2c2">本地字幕生成</td>
+                <td data-i18n="privacy.t2.r2c3">模型文件，由你主动下载</td>
+                <td class="t-ok" data-i18n="privacy.t2.r2c4">本地运行，不联网</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
+      <!-- 05 · 设备权限使用说明 -->
       <section class="privacy-section" data-od-id="privacy-s5">
         <span class="psec-num">05</span>
-        <h2 data-i18n="privacy.s5.title">你的数据与权利</h2>
-        <p data-i18n="privacy.s5.body">你的积累属于你，随时可以带走。</p>
+        <h2 data-i18n="privacy.s5.title">设备权限使用说明</h2>
+        <p data-i18n="privacy.s5.body">应用仅在首次使用对应功能时申请权限，并说明用途。你可随时在系统设置中授予或撤回。</p>
+        <div class="tbl-wrap">
+          <table class="privacy-table">
+            <thead>
+              <tr>
+                <th data-i18n="privacy.t3.col1" scope="col">权限</th>
+                <th data-i18n="privacy.t3.col2" scope="col">用途</th>
+                <th data-i18n="privacy.t3.col3" scope="col">是否可选</th>
+                <th data-i18n="privacy.t3.col4" scope="col">撤回方式</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-i18n="privacy.t3.r1c1">文件读取 / 导入</td>
+                <td data-i18n="privacy.t3.r1c2">导入音视频、字幕文件</td>
+                <td class="t-ok" data-i18n="privacy.t3.r1c3">可选</td>
+                <td data-i18n="privacy.t3.r1c4">系统设置中随时撤销</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t3.r2c1">文件写入 / 导出</td>
+                <td data-i18n="privacy.t3.r2c2">导出 SRT / CSV / Anki 文件</td>
+                <td class="t-ok" data-i18n="privacy.t3.r2c3">可选</td>
+                <td data-i18n="privacy.t3.r2c4">系统设置中随时撤销</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t3.r3c1">其他敏感权限（如需）</td>
+                <td data-i18n="privacy.t3.r3c2">对应特定功能</td>
+                <td class="t-ok" data-i18n="privacy.t3.r3c3">可选</td>
+                <td data-i18n="privacy.t3.r3c4">使用前弹窗说明，可随时撤回</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 06 · 未成年人保护 -->
+      <section class="privacy-section" data-od-id="privacy-s6">
+        <span class="psec-num">06</span>
+        <h2 data-i18n="privacy.s6.title">未成年人保护</h2>
+        <p data-i18n="privacy.s6.body">本产品面向一般公众，不针对未成年人。若未成年人使用，建议在监护人指导下进行。我们不以知情的方式收集未成年人个人信息；监护人如需删除相关信息，可通过文末联系方式提出。</p>
+      </section>
+
+      <!-- 07 · 您的权利与行使方式 -->
+      <section class="privacy-section" data-od-id="privacy-s7">
+        <span class="psec-num">07</span>
+        <h2 data-i18n="privacy.s7.title">您的权利与行使方式</h2>
         <ul>
-          <li data-i18n="privacy.s5.li1">SRT、CSV、Anki 等标准格式随时可导出。</li>
-          <li data-i18n="privacy.s5.li2">删除应用即删除全部本地数据，无需额外申请。</li>
+          <li data-i18n="privacy.s7.li1"><b>访问与更正</b>：本地数据由你直接管理，随时查看、修改。</li>
+          <li data-i18n="privacy.s7.li2"><b>删除</b>：删除应用或本地文件即可彻底删除全部数据，无需申请。</li>
+          <li data-i18n="privacy.s7.li3"><b>撤回同意</b>：在系统设置中撤回文件访问等权限。</li>
+          <li data-i18n="privacy.s7.li4"><b>导出与携带</b>：SRT、CSV、Anki 等标准格式随时可导出。</li>
         </ul>
       </section>
 
-      <section class="privacy-section" data-od-id="privacy-s6">
-        <span class="psec-num">06</span>
-        <h2 data-i18n="privacy.s6.title">政策更新</h2>
-        <p data-i18n="privacy.s6.body">若本政策发生实质变更，我们会在此页面更新，并注明新的生效日期。建议偶尔回来看看。</p>
+      <!-- 08 · 政策更新 -->
+      <section class="privacy-section" data-od-id="privacy-s8">
+        <span class="psec-num">08</span>
+        <h2 data-i18n="privacy.s8.title">本政策的更新</h2>
+        <p data-i18n="privacy.s8.body">若本政策发生实质性变更，我们会在此页面更新，并注明新的生效日期。涉及数据处理方式的重要变更，将在应用内再次提示你确认。</p>
       </section>
 
-      <section class="privacy-section" data-od-id="privacy-s7">
-        <span class="psec-num">07</span>
-        <h2 data-i18n="privacy.s7.title">联系</h2>
-        <p data-i18n="privacy.s7.body">如有任何疑问，欢迎通过 <a href="https://devzhao.me/" target="_blank" rel="noopener" data-od-id="privacy-contact-dev">开发者主页</a> 或 <a href="https://github.com/Pea-Series/peascribe" target="_blank" rel="noopener" data-od-id="privacy-contact-github">GitHub</a> 与我们联系。</p>
+      <!-- 09 · 联系我们 -->
+      <section class="privacy-section" data-od-id="privacy-s9">
+        <span class="psec-num">09</span>
+        <h2 data-i18n="privacy.s9.title">联系我们</h2>
+        <p data-i18n="privacy.s9.body">如有任何疑问、意见或投诉，欢迎通过电子邮件与我们联系：<a href="mailto:PeaDevTeam@icloud.com" data-od-id="privacy-contact-mail">PeaDevTeam@icloud.com</a>，我们会在合理期限内回复。</p>
+        <p class="psec-note mono" data-i18n="privacy.updated">最后更新：2026-08-09</p>
       </section>
     </div>
   </div>
@@ -295,7 +463,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 
 <footer class="site-footer" data-od-id="footer-site">
   <div class="container footer-inner">
-    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 本地优先，隐私即默认</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 看剧学语言，两不误</span>
     <span class="footer-sep" aria-hidden="true">|</span>
     <a class="footer-privacy" href="privacy.html" data-od-id="footer-privacy" data-i18n="footer.privacy">隐私政策</a>
   </div>
@@ -309,7 +477,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
   window.PEA_I18N = {
     zh: {
       "meta.title": "隐私政策 · Pea 系列",
-      "meta.description": "Pea 系列的隐私政策：本地优先，文件与数据始终留在你的设备上，不上传、不追踪。",
+      "meta.description": "Pea 系列隐私政策：我们坚持最小必要原则，文件与数据默认留在你的设备上。适用于 macOS 与 Windows 桌面应用。",
       "nav.brand": "Pea 系列",
       "nav.brand.aria": "Pea 系列 首页",
       "nav.aria": "主导航",
@@ -322,41 +490,55 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "theme.dark": "切换亮色模式",
       "privacy.eyebrow": "Privacy · 隐私",
       "privacy.title": "隐私政策",
+      "privacy.scope": "适用于 macOS · Windows",
       "privacy.effective": "生效日期：2026-08-09",
-      "privacy.lead": "一句话：你的文件属于你，始终留在你的设备上。",
-      "privacy.s1.title": "本地处理",
-      "privacy.s1.body": "PeaPlayer 与 PeaScribe 都是本地优先的桌面应用。字幕由本地 Whisper 模型生成，查词、复习与统计同样在本机完成，不依赖任何云端服务。",
-      "privacy.s1.li1": "音视频文件、字幕、生词本与学习记录全部存储在你的设备上。",
-      "privacy.s1.li2": "字幕生成、词典查询、复习排程全部在本机完成。",
-      "privacy.s1.li3": "应用无需登录，不创建云端账户。",
-      "privacy.s2.title": "我们不收集的内容",
-      "privacy.s2.body": "我们的设计原则是：不收集，就没有泄露。Pea 系列不采集任何使用数据。",
-      "privacy.s2.li1": "不收集姓名、邮箱等个人身份信息。",
-      "privacy.s2.li2": "不上传、不存储你的媒体文件或字幕内容。",
-      "privacy.s2.li3": "无遥测、无行为分析、无广告跟踪器。",
-      "privacy.s3.title": "网络连接",
-      "privacy.s3.body": "应用仅在两种情况下联网，且都由你主动发起：",
-      "privacy.s3.li1": "检查应用更新——只携带当前版本号。",
-      "privacy.s3.li2": "下载 Whisper 模型——只请求对应模型文件，不含任何媒体内容。",
-      "privacy.s3.note": "除此之外，应用默认离线运行。",
-      "privacy.s4.title": "第三方服务",
-      "privacy.s4.body": "应用不内嵌任何第三方 SDK、统计或追踪组件。",
-      "privacy.s4.li1": "可选的 Anki 导出在本地完成，数据不经过网络。",
-      "privacy.s4.li2": "安装包托管在 GitHub Releases，下载由 GitHub 提供。",
-      "privacy.s5.title": "你的数据与权利",
-      "privacy.s5.body": "你的积累属于你，随时可以带走。",
-      "privacy.s5.li1": "SRT、CSV、Anki 等标准格式随时可导出。",
-      "privacy.s5.li2": "删除应用即删除全部本地数据，无需额外申请。",
-      "privacy.s6.title": "政策更新",
-      "privacy.s6.body": "若本政策发生实质变更，我们会在此页面更新，并注明新的生效日期。建议偶尔回来看看。",
-      "privacy.s7.title": "联系",
-      "privacy.s7.body": "如有任何疑问，欢迎通过 <a href=\"https://devzhao.me/\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-dev\">开发者主页</a> 或 <a href=\"https://github.com/Pea-Series/peascribe\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-github\">GitHub</a> 与我们联系。",
-      "footer.copy": "© 2026 Pea 系列 · 本地优先，隐私即默认",
+      "privacy.notice": "我们坚持<b>最小必要原则</b>：只在为向你提供功能所必需时，才处理最少必要的信息。继续使用本产品即表示你已阅读并同意本政策；如不同意，请停止使用。",
+      "privacy.s1.title": "我们收集的信息类型与用途",
+      "privacy.s1.body": "Pea 系列均为本地优先的桌面应用。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。",
+      "privacy.t1.col1": "信息类型", "privacy.t1.col2": "用途与场景", "privacy.t1.col3": "是否必要", "privacy.t1.col4": "处理方式与保存期限",
+      "privacy.t1.r1c1": "设备信息（系统版本、芯片架构）", "privacy.t1.r1c2": "检查更新、兼容性适配", "privacy.t1.r1c3": "必要", "privacy.t1.r1c4": "仅在本机判断；联网检查更新时只携带当前版本号，不记录设备标识。",
+      "privacy.t1.r2c1": "崩溃日志与运行日志", "privacy.t1.r2c2": "排查稳定性问题", "privacy.t1.r2c3": "不适用", "privacy.t1.r2c4": "不采集。应用无遥测、无远程日志上报。",
+      "privacy.t1.r3c1": "账户与联系方式", "privacy.t1.r3c2": "登录、通知", "privacy.t1.r3c3": "不适用", "privacy.t1.r3c4": "应用无需登录，不创建云端账户。",
+      "privacy.t1.r4c1": "媒体文件与字幕内容", "privacy.t1.r4c2": "播放、转写、学习等核心功能", "privacy.t1.r4c3": "必要（仅本地）", "privacy.t1.r4c4": "全部在你设备上处理，不上传、不存储。",
+      "privacy.t1.r5c1": "去标识化统计数据", "privacy.t1.r5c2": "产品改进", "privacy.t1.r5c3": "不适用", "privacy.t1.r5c4": "不采集。无行为分析、无广告跟踪器。",
+      "privacy.s2.title": "存储与保护",
+      "privacy.s2.li1": "<b>本地优先存储</b>：你的文件、字幕、生词本与学习记录默认全部保存在你的设备上。",
+      "privacy.s2.li2": "<b>最短保存期限</b>：仅保留完成任务所必需的时间；本地数据由你随时清理。",
+      "privacy.s2.li3": "<b>安全措施</b>：网络传输走 HTTPS 加密通道；应用以最小权限访问文件。",
+      "privacy.s2.li4": "<b>数据跨境</b>：不涉及个人信息跨境传输。",
+      "privacy.s3.title": "共享、转让与公开披露",
+      "privacy.s3.li1": "默认<b>不与任何第三方共享个人信息，不出售个人信息</b>。",
+      "privacy.s3.li2": "仅在法律要求、或事先征得你明确同意的情况下，才可能进行共享。",
+      "privacy.s3.li3": "因合并、收购等原因涉及数据转让时，我们将要求接收方继续遵守本政策。",
+      "privacy.s4.title": "第三方服务与 SDK",
+      "privacy.s4.body": "应用不内嵌任何第三方 SDK、统计或追踪组件。下表列出分发与运行所涉及的外部服务。",
+      "privacy.t2.col1": "名称", "privacy.t2.col2": "用途", "privacy.t2.col3": "涉及的数据", "privacy.t2.col4": "网络与加密",
+      "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "安装包托管与下载", "privacy.t2.r1c3": "下载请求，不含个人信息", "privacy.t2.r1c4": "HTTPS 加密",
+      "privacy.t2.r2c1": "Whisper 模型", "privacy.t2.r2c2": "本地字幕生成", "privacy.t2.r2c3": "模型文件，由你主动下载", "privacy.t2.r2c4": "本地运行，不联网",
+      "privacy.s5.title": "设备权限使用说明",
+      "privacy.s5.body": "应用仅在首次使用对应功能时申请权限，并说明用途。你可随时在系统设置中授予或撤回。",
+      "privacy.t3.col1": "权限", "privacy.t3.col2": "用途", "privacy.t3.col3": "是否可选", "privacy.t3.col4": "撤回方式",
+      "privacy.t3.r1c1": "文件读取 / 导入", "privacy.t3.r1c2": "导入音视频、字幕文件", "privacy.t3.r1c3": "可选", "privacy.t3.r1c4": "系统设置中随时撤销",
+      "privacy.t3.r2c1": "文件写入 / 导出", "privacy.t3.r2c2": "导出 SRT / CSV / Anki 文件", "privacy.t3.r2c3": "可选", "privacy.t3.r2c4": "系统设置中随时撤销",
+      "privacy.t3.r3c1": "其他敏感权限（如需）", "privacy.t3.r3c2": "对应特定功能", "privacy.t3.r3c3": "可选", "privacy.t3.r3c4": "使用前弹窗说明，可随时撤回",
+      "privacy.s6.title": "未成年人保护",
+      "privacy.s6.body": "本产品面向一般公众，不针对未成年人。若未成年人使用，建议在监护人指导下进行。我们不以知情的方式收集未成年人个人信息；监护人如需删除相关信息，可通过文末联系方式提出。",
+      "privacy.s7.title": "您的权利与行使方式",
+      "privacy.s7.li1": "<b>访问与更正</b>：本地数据由你直接管理，随时查看、修改。",
+      "privacy.s7.li2": "<b>删除</b>：删除应用或本地文件即可彻底删除全部数据，无需申请。",
+      "privacy.s7.li3": "<b>撤回同意</b>：在系统设置中撤回文件访问等权限。",
+      "privacy.s7.li4": "<b>导出与携带</b>：SRT、CSV、Anki 等标准格式随时可导出。",
+      "privacy.s8.title": "本政策的更新",
+      "privacy.s8.body": "若本政策发生实质性变更，我们会在此页面更新，并注明新的生效日期。涉及数据处理方式的重要变更，将在应用内再次提示你确认。",
+      "privacy.s9.title": "联系我们",
+      "privacy.s9.body": "如有任何疑问、意见或投诉，欢迎通过电子邮件与我们联系：<a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>，我们会在合理期限内回复。",
+      "privacy.updated": "最后更新：2026-08-09",
+      "footer.copy": "© 2026 Pea 系列 · 看剧学语言，两不误",
       "footer.privacy": "隐私政策"
     },
     en: {
       "meta.title": "Privacy Policy · Pea Series",
-      "meta.description": "Pea Series privacy policy: local-first. Your files and data stay on your device — no uploads, no tracking.",
+      "meta.description": "Pea Series privacy policy: we follow the minimum-necessary principle. Files and data stay on your device by default. Applies to our macOS and Windows desktop apps.",
       "nav.brand": "Pea Series",
       "nav.brand.aria": "Pea Series home",
       "nav.aria": "Primary navigation",
@@ -369,41 +551,55 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "theme.dark": "Switch to light mode",
       "privacy.eyebrow": "Privacy",
       "privacy.title": "Privacy Policy",
+      "privacy.scope": "Applies to macOS · Windows",
       "privacy.effective": "Effective date: August 9, 2026",
-      "privacy.lead": "In one sentence: your files are yours, and they stay on your device.",
-      "privacy.s1.title": "Local processing",
-      "privacy.s1.body": "PeaPlayer and PeaScribe are local-first desktop apps. Subtitles are generated by a local Whisper model; lookup, review, and stats run on your machine too, with no cloud dependency.",
-      "privacy.s1.li1": "Media files, subtitles, wordbooks, and learning history all stay on your device.",
-      "privacy.s1.li2": "Transcription, dictionary lookup, and review scheduling all run locally.",
-      "privacy.s1.li3": "No login required, no cloud account created.",
-      "privacy.s2.title": "What we don't collect",
-      "privacy.s2.body": "Our design principle: nothing collected, nothing to leak. Pea Series does not collect any usage data.",
-      "privacy.s2.li1": "No name, email, or other personal identifiers.",
-      "privacy.s2.li2": "No uploads or storage of your media files or subtitles.",
-      "privacy.s2.li3": "No telemetry, no behavior analytics, no ad trackers.",
-      "privacy.s3.title": "Network usage",
-      "privacy.s3.body": "The apps connect to the network in only two cases, and both are initiated by you:",
-      "privacy.s3.li1": "Checking for app updates — sends only the current version number.",
-      "privacy.s3.li2": "Downloading a Whisper model — requests only the model file, never any media content.",
-      "privacy.s3.note": "Otherwise, the apps run fully offline.",
-      "privacy.s4.title": "Third-party services",
-      "privacy.s4.body": "No third-party SDKs, analytics, or tracking components are embedded in the apps.",
-      "privacy.s4.li1": "Optional Anki export happens locally; data never leaves your device.",
-      "privacy.s4.li2": "Install packages are hosted on GitHub Releases, served by GitHub.",
-      "privacy.s5.title": "Your data & rights",
-      "privacy.s5.body": "Your work is yours — take it anywhere, anytime.",
-      "privacy.s5.li1": "Export SRT, CSV, Anki, or other standard formats whenever you like.",
-      "privacy.s5.li2": "Deleting the app removes all local data. Nothing else to request.",
-      "privacy.s6.title": "Policy updates",
-      "privacy.s6.body": "If this policy changes materially, we will update this page with a new effective date. Worth checking back occasionally.",
-      "privacy.s7.title": "Contact",
-      "privacy.s7.body": "Questions? Reach us via the <a href=\"https://devzhao.me/\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-dev\">developer homepage</a> or <a href=\"https://github.com/Pea-Series/peascribe\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-github\">GitHub</a>.",
-      "footer.copy": "© 2026 Pea Series · Local-first, privacy by default.",
+      "privacy.notice": "We follow the <b>minimum-necessary principle</b>: we only process the least information required to deliver a feature. By continuing to use this product you agree to this policy. If you do not agree, please stop using it.",
+      "privacy.s1.title": "Information we collect and how it's used",
+      "privacy.s1.body": "Pea Series apps are local-first desktop applications. The table below describes the information types, their purpose, necessity, and how long they are kept.",
+      "privacy.t1.col1": "Information type", "privacy.t1.col2": "Purpose", "privacy.t1.col3": "Required?", "privacy.t1.col4": "Processing & retention",
+      "privacy.t1.r1c1": "Device info (OS version, chip architecture)", "privacy.t1.r1c2": "Update checks, compatibility", "privacy.t1.r1c3": "Required", "privacy.t1.r1c4": "Judged locally; update checks only send the current version number, no device identifiers are recorded.",
+      "privacy.t1.r2c1": "Crash & runtime logs", "privacy.t1.r2c2": "Stability troubleshooting", "privacy.t1.r2c3": "N/A", "privacy.t1.r2c4": "Not collected. No telemetry or remote log upload.",
+      "privacy.t1.r3c1": "Account & contact info", "privacy.t1.r3c2": "Login, notifications", "privacy.t1.r3c3": "N/A", "privacy.t1.r3c4": "No login required; no cloud account is created.",
+      "privacy.t1.r4c1": "Media files & subtitle content", "privacy.t1.r4c2": "Playback, transcription, learning", "privacy.t1.r4c3": "Required (local only)", "privacy.t1.r4c4": "Processed entirely on your device; never uploaded or stored.",
+      "privacy.t1.r5c1": "De-identified analytics", "privacy.t1.r5c2": "Product improvement", "privacy.t1.r5c3": "N/A", "privacy.t1.r5c4": "Not collected. No behavior analytics or ad trackers.",
+      "privacy.s2.title": "Storage & protection",
+      "privacy.s2.li1": "<b>Local-first storage</b>: your files, subtitles, wordbook, and learning history stay on your device by default.",
+      "privacy.s2.li2": "<b>Minimum retention</b>: data is kept only as long as needed to complete a task; local data is always under your control.",
+      "privacy.s2.li3": "<b>Security</b>: network transfers use HTTPS encryption; the apps request the minimum file access needed.",
+      "privacy.s2.li4": "<b>Cross-border transfer</b>: no personal information is transferred across borders.",
+      "privacy.s3.title": "Sharing, transfer & disclosure",
+      "privacy.s3.li1": "By default we <b>share no personal information with third parties and never sell it</b>.",
+      "privacy.s3.li2": "Sharing happens only when required by law or with your explicit prior consent.",
+      "privacy.s3.li3": "If data is transferred due to a merger or acquisition, we will require the recipient to continue honoring this policy.",
+      "privacy.s4.title": "Third-party services & SDKs",
+      "privacy.s4.body": "No third-party SDKs, analytics, or tracking components are embedded. The table below lists the external services involved in distribution and operation.",
+      "privacy.t2.col1": "Name", "privacy.t2.col2": "Purpose", "privacy.t2.col3": "Data involved", "privacy.t2.col4": "Network & encryption",
+      "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "Package hosting & download", "privacy.t2.r1c3": "Download request, no personal info", "privacy.t2.r1c4": "HTTPS",
+      "privacy.t2.r2c1": "Whisper model", "privacy.t2.r2c2": "Local subtitle generation", "privacy.t2.r2c3": "Model file, downloaded by you", "privacy.t2.r2c4": "Runs offline",
+      "privacy.s5.title": "Device permissions",
+      "privacy.s5.body": "Permissions are requested only the first time a feature is used, with an explanation. You can grant or revoke them anytime in system settings.",
+      "privacy.t3.col1": "Permission", "privacy.t3.col2": "Purpose", "privacy.t3.col3": "Optional?", "privacy.t3.col4": "How to revoke",
+      "privacy.t3.r1c1": "File read / import", "privacy.t3.r1c2": "Import media & subtitle files", "privacy.t3.r1c3": "Optional", "privacy.t3.r1c4": "Revoke anytime in system settings",
+      "privacy.t3.r2c1": "File write / export", "privacy.t3.r2c2": "Export SRT / CSV / Anki files", "privacy.t3.r2c3": "Optional", "privacy.t3.r2c4": "Revoke anytime in system settings",
+      "privacy.t3.r3c1": "Other sensitive permissions (if needed)", "privacy.t3.r3c2": "Feature-specific", "privacy.t3.r3c3": "Optional", "privacy.t3.r3c4": "Explained before use, revocable anytime",
+      "privacy.s6.title": "Children's privacy",
+      "privacy.s6.body": "This product is intended for the general public, not children. Minors should use it under a guardian's guidance. We do not knowingly collect children's personal information; guardians may request deletion through the contact details below.",
+      "privacy.s7.title": "Your rights",
+      "privacy.s7.li1": "<b>Access & correction</b>: your local data is managed directly by you, viewable and editable anytime.",
+      "privacy.s7.li2": "<b>Deletion</b>: uninstalling the app or deleting local files permanently removes all data — no request needed.",
+      "privacy.s7.li3": "<b>Withdraw consent</b>: revoke file-access or other permissions in system settings.",
+      "privacy.s7.li4": "<b>Export & portability</b>: SRT, CSV, Anki, and other standard formats can be exported anytime.",
+      "privacy.s8.title": "Policy updates",
+      "privacy.s8.body": "If this policy changes materially, we will update this page with a new effective date. Important changes to how data is processed will be flagged for your confirmation in the apps.",
+      "privacy.s9.title": "Contact",
+      "privacy.s9.body": "Questions or feedback? Email us at <a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>. We aim to reply within a reasonable period.",
+      "privacy.updated": "Last updated: August 9, 2026",
+      "footer.copy": "© 2026 Pea Series · Learn languages while you watch.",
       "footer.privacy": "Privacy Policy"
     },
     ja: {
       "meta.title": "プライバシーポリシー · Pea シリーズ",
-      "meta.description": "Pea シリーズのプライバシーポリシー：ローカルファースト。ファイルとデータは常にデバイスに残ります。アップロードなし、トラッキングなし。",
+      "meta.description": "Pea シリーズのプライバシーポリシー：最小必要の原則に従い、ファイルとデータはデフォルトでデバイス上に残ります。macOS と Windows のデスクトップアプリに適用されます。",
       "nav.brand": "Pea シリーズ",
       "nav.brand.aria": "Pea シリーズ ホーム",
       "nav.aria": "メインナビゲーション",
@@ -416,36 +612,50 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "theme.dark": "ライトモードに切り替え",
       "privacy.eyebrow": "プライバシー",
       "privacy.title": "プライバシーポリシー",
+      "privacy.scope": "対象：macOS · Windows",
       "privacy.effective": "発効日：2026-08-09",
-      "privacy.lead": "ひとことで：あなたのファイルはあなたのもの。常にデバイスに残ります。",
-      "privacy.s1.title": "ローカル処理",
-      "privacy.s1.body": "PeaPlayer と PeaScribe はローカルファーストのデスクトップアプリです。字幕はローカルの Whisper モデルで生成し、辞書引き・復習・統計もすべてデバイス上で完結します。クラウド依存はありません。",
-      "privacy.s1.li1": "動画・音声ファイル、字幕、単語帳、学習履歴はすべてデバイス上に残ります。",
-      "privacy.s1.li2": "書き起こし、辞書引き、復習スケジュールはすべてローカルで動作。",
-      "privacy.s1.li3": "ログイン不要、クラウドアカウントは作成されません。",
-      "privacy.s2.title": "収集しないもの",
-      "privacy.s2.body": "私たちの設計原則：集めなければ、漏れることもない。Pea シリーズは利用データを一切収集しません。",
-      "privacy.s2.li1": "氏名・メールなどの個人識別情報を収集しません。",
-      "privacy.s2.li2": "メディアファイルや字幕をアップロード・保存しません。",
-      "privacy.s2.li3": "テレメトリなし、行動分析なし、広告トラッカーなし。",
-      "privacy.s3.title": "ネットワーク利用",
-      "privacy.s3.body": "アプリがネットワークに接続するのは次の 2 つの場合のみ。いずれもあなたの操作がきっかけです。",
-      "privacy.s3.li1": "アップデート確認 — 現在のバージョン番号のみ送信。",
-      "privacy.s3.li2": "Whisper モデルのダウンロード — モデルファイルのみを要求し、メディア内容は含まれません。",
-      "privacy.s3.note": "それ以外は、アプリはオフラインで動作します。",
-      "privacy.s4.title": "サードパーティサービス",
-      "privacy.s4.body": "サードパーティ SDK・解析・トラッカーはアプリに埋め込まれていません。",
-      "privacy.s4.li1": "Anki 出力はローカルで完結し、データがネットワークを経由しません。",
-      "privacy.s4.li2": "配布パッケージは GitHub Releases でホストされ、GitHub が提供します。",
-      "privacy.s5.title": "あなたのデータと権利",
-      "privacy.s5.body": "あなたの積み重ねはあなたのもの。いつでも持ち出せます。",
-      "privacy.s5.li1": "SRT・CSV・Anki など標準フォーマットでいつでも出力可能。",
-      "privacy.s5.li2": "アプリを削除すればローカルデータもすべて削除されます。手続きは不要です。",
-      "privacy.s6.title": "方針の更新",
-      "privacy.s6.body": "重要な変更がある場合は、このページを更新し、新しい発効日を記載します。たまに確認することをおすすめします。",
-      "privacy.s7.title": "お問い合わせ",
-      "privacy.s7.body": "ご質問は<a href=\"https://devzhao.me/\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-dev\">開発者ホームページ</a>または<a href=\"https://github.com/Pea-Series/peascribe\" target=\"_blank\" rel=\"noopener\" data-od-id=\"privacy-contact-github\">GitHub</a>からどうぞ。",
-      "footer.copy": "© 2026 Pea シリーズ · ローカルファースト、プライバシーはデフォルト",
+      "privacy.notice": "私たちは<b>最小必要の原則</b>に従います：機能の提供に必要な最小限の情報だけを処理します。本製品の利用を続けることで、このポリシーに同意したものとみなされます。同意できない場合はご利用をおやめください。",
+      "privacy.s1.title": "収集する情報の種類と用途",
+      "privacy.s1.body": "Pea シリーズはローカルファーストのデスクトップアプリです。以下の表は、情報の種類、用途、必要性、処理方法と保存期間を示します。",
+      "privacy.t1.col1": "情報の種類", "privacy.t1.col2": "用途", "privacy.t1.col3": "必要性", "privacy.t1.col4": "処理方法と保存期間",
+      "privacy.t1.r1c1": "デバイス情報（OS バージョン、アーキテクチャ）", "privacy.t1.r1c2": "アップデート確認、互換性", "privacy.t1.r1c3": "必要", "privacy.t1.r1c4": "ローカルで判断。更新確認時は現在のバージョンのみ送信し、デバイス識別子は記録しません。",
+      "privacy.t1.r2c1": "クラッシュログ・実行ログ", "privacy.t1.r2c2": "安定性の調査", "privacy.t1.r2c3": "該当なし", "privacy.t1.r2c4": "収集しません。テレメトリなし、リモートログなし。",
+      "privacy.t1.r3c1": "アカウント・連絡先", "privacy.t1.r3c2": "ログイン、通知", "privacy.t1.r3c3": "該当なし", "privacy.t1.r3c4": "ログイン不要、クラウドアカウントは作成されません。",
+      "privacy.t1.r4c1": "メディアファイル・字幕内容", "privacy.t1.r4c2": "再生、書き起こし、学習など", "privacy.t1.r4c3": "必要（ローカルのみ）", "privacy.t1.r4c4": "すべてデバイス上で処理。アップロード・保存はありません。",
+      "privacy.t1.r5c1": "匿名化統計データ", "privacy.t1.r5c2": "製品改善", "privacy.t1.r5c3": "該当なし", "privacy.t1.r5c4": "収集しません。行動分析・広告トラッカーなし。",
+      "privacy.s2.title": "保存と保護",
+      "privacy.s2.li1": "<b>ローカルファースト</b>：ファイル、字幕、単語帳、学習履歴はデフォルトでデバイス上に保存されます。",
+      "privacy.s2.li2": "<b>最短保存期間</b>：タスク完了に必要な期間のみ保持。ローカルデータはいつでも整理できます。",
+      "privacy.s2.li3": "<b>セキュリティ</b>：ネットワーク通信は HTTPS で暗号化。アプリは最小限のファイルアクセス権限のみ使用します。",
+      "privacy.s2.li4": "<b>越境移転</b>：個人情報の越境移転はありません。",
+      "privacy.s3.title": "共有・移転・開示",
+      "privacy.s3.li1": "デフォルトでは<b>第三者と個人情報を共有せず、販売もしません</b>。",
+      "privacy.s3.li2": "共有は法律で要求される場合、または事前の明確な同意を得た場合のみです。",
+      "privacy.s3.li3": "合併・買収などでデータ移転が生じる場合、受領者に本ポリシーの遵守を求めます。",
+      "privacy.s4.title": "第三者サービスと SDK",
+      "privacy.s4.body": "第三者 SDK・統計・トラッカーは埋め込まれていません。以下の表は、配布と運用に関わる外部サービスを示します。",
+      "privacy.t2.col1": "名称", "privacy.t2.col2": "用途", "privacy.t2.col3": "対象データ", "privacy.t2.col4": "通信と暗号化",
+      "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "パッケージ配布・ダウンロード", "privacy.t2.r1c3": "ダウンロード要求のみ、個人情報なし", "privacy.t2.r1c4": "HTTPS",
+      "privacy.t2.r2c1": "Whisper モデル", "privacy.t2.r2c2": "ローカル字幕生成", "privacy.t2.r2c3": "モデルファイル（自分でダウンロード）", "privacy.t2.r2c4": "オフラインで動作",
+      "privacy.s5.title": "デバイス権限について",
+      "privacy.s5.body": "権限は機能を初めて使うときのみ、目的を説明して要求します。システム設定でいつでも許可・拒否できます。",
+      "privacy.t3.col1": "権限", "privacy.t3.col2": "用途", "privacy.t3.col3": "任意か", "privacy.t3.col4": "取り消し方法",
+      "privacy.t3.r1c1": "ファイル読み込み / インポート", "privacy.t3.r1c2": "動画・字幕ファイルの読み込み", "privacy.t3.r1c3": "任意", "privacy.t3.r1c4": "システム設定でいつでも取り消し",
+      "privacy.t3.r2c1": "ファイル書き込み / エクスポート", "privacy.t3.r2c2": "SRT / CSV / Anki の書き出し", "privacy.t3.r2c3": "任意", "privacy.t3.r2c4": "システム設定でいつでも取り消し",
+      "privacy.t3.r3c1": "その他の機微な権限（必要な場合）", "privacy.t3.r3c2": "特定機能向け", "privacy.t3.r3c3": "任意", "privacy.t3.r3c4": "使用前に説明、いつでも取り消し可能",
+      "privacy.s6.title": "未成年者の保護",
+      "privacy.s6.body": "本製品は一般向けであり、未成年者を対象としていません。未成年者が利用する場合は保護者の指導のもとでお願いします。未成年者の個人情報を意図的に収集することはなく、削除を希望される場合は下記の連絡先からご請求ください。",
+      "privacy.s7.title": "あなたの権利",
+      "privacy.s7.li1": "<b>アクセス・訂正</b>：ローカルデータは自分で直接管理でき、いつでも閲覧・修正できます。",
+      "privacy.s7.li2": "<b>削除</b>：アプリやローカルファイルを削除すれば、すべてのデータが完全に消去されます。申請は不要です。",
+      "privacy.s7.li3": "<b>同意の撤回</b>：システム設定でファイルアクセスなどの権限を取り消せます。",
+      "privacy.s7.li4": "<b>エクスポート・持ち運び</b>：SRT・CSV・Anki などの標準形式でいつでも書き出せます。",
+      "privacy.s8.title": "本ポリシーの更新",
+      "privacy.s8.body": "本ポリシーに実質的な変更があった場合は、このページを更新し、新しい発効日を記載します。データ処理に重要な変更がある場合は、アプリ内で再確認を求めます。",
+      "privacy.s9.title": "お問い合わせ",
+      "privacy.s9.body": "ご質問・ご意見・苦情は、<a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>までご連絡ください。合理的な期間内に返信いたします。",
+      "privacy.updated": "最終更新：2026-08-09",
+      "footer.copy": "© 2026 Pea シリーズ · ドラマを見ながら語学も",
       "footer.privacy": "プライバシーポリシー"
     }
   };

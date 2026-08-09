@@ -591,7 +591,7 @@ img, svg { display: block; }
 .download-card:hover { border-color: var(--fg-2); transform: translateY(-2px); }
 .card-head { display: flex; align-items: center; gap: 12px; padding: 19px 22px; border-bottom: 1px solid var(--border-soft); }
 .card-head .product-name { font-size: 17px; }
-.card-head .status { margin-left: auto; }
+.card-head .ver-chip { margin-left: auto; }
 
 /* 发布状态徽章：待上线 / 已上线 */
 .status {
@@ -612,6 +612,20 @@ img, svg { display: block; }
   background: color-mix(in oklab, var(--success), transparent 90%);
 }
 .status-live .s-dot { box-shadow: 0 0 8px color-mix(in oklab, var(--success), transparent 40%); }
+
+/* 最新版本徽章（应用名旁，GitHub Releases 自动拉取） */
+.ver-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 500 12px var(--font-mono);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px 11px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.ver-chip .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+.ver-chip .chip-num { font-weight: 600; color: var(--fg); font-variant-numeric: tabular-nums; letter-spacing: 0; }
 
 /* 下载平台：已上线标识、版本号、待上线按钮 */
 .pf-dot {
@@ -837,6 +851,7 @@ img, svg { display: block; }
           <div class="product-id">
             <span class="product-dot dot-player" aria-hidden="true"></span>
             <h2 class="product-name">PeaPlayer</h2>
+            <span class="ver-chip" data-ver="player" hidden><span class="chip-dot" aria-hidden="true"></span><span data-i18n="ver.label">最新版本</span> <b class="chip-num" data-ver-num="player">—</b></span>
             <span class="product-kind" data-i18n="player.kind">语言学习播放器</span>
             <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="player">待上线</span></span>
           </div>
@@ -999,6 +1014,7 @@ img, svg { display: block; }
           <div class="product-id">
             <span class="product-dot dot-scribe" aria-hidden="true"></span>
             <h2 class="product-name">PeaScribe</h2>
+            <span class="ver-chip" data-ver="scribe" hidden><span class="chip-dot" aria-hidden="true"></span><span data-i18n="ver.label">最新版本</span> <b class="chip-num" data-ver-num="scribe">—</b></span>
             <span class="product-kind" data-i18n="scribe.kind">字幕生成器</span>
             <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
           </div>
@@ -1163,7 +1179,7 @@ img, svg { display: block; }
           <div class="card-head">
             <span class="product-dot dot-player" aria-hidden="true"></span>
             <span class="product-name">PeaPlayer</span>
-            <span class="status" data-status="player"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="player">待上线</span></span>
+            <span class="ver-chip" data-ver="player" data-od-id="dl-player-version" hidden><span class="chip-dot" aria-hidden="true"></span><span data-i18n="ver.label">最新版本</span> <b class="chip-num" data-ver-num="player">—</b></span>
           </div>
           <div class="platform-row" data-dl="player:macos">
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
@@ -1172,7 +1188,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-macos" data-i18n="download.btn">下载</button>
+              <button class="btn btn-sm btn-pending" data-od-id="dl-player-macos" data-i18n="download.soon">待上线</button>
             </div>
           </div>
           <div class="platform-row" data-dl="player:windows">
@@ -1182,7 +1198,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-secondary btn-sm" data-od-id="dl-player-win" data-i18n="download.btn">下载</button>
+              <button class="btn btn-sm btn-pending" data-od-id="dl-player-win" data-i18n="download.soon">待上线</button>
             </div>
           </div>
         </div>
@@ -1191,7 +1207,7 @@ img, svg { display: block; }
           <div class="card-head">
             <span class="product-dot dot-scribe" aria-hidden="true"></span>
             <span class="product-name">PeaScribe</span>
-            <span class="status" data-status="scribe"><span class="s-dot" aria-hidden="true"></span><span class="s-text" data-status-text="scribe">待上线</span></span>
+            <span class="ver-chip" data-ver="scribe" data-od-id="dl-scribe-version" hidden><span class="chip-dot" aria-hidden="true"></span><span data-i18n="ver.label">最新版本</span> <b class="chip-num" data-ver-num="scribe">—</b></span>
           </div>
           <div class="platform-row" data-dl="scribe:macos">
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
@@ -1200,7 +1216,7 @@ img, svg { display: block; }
               <span class="pf-note" data-note="macOS 10.15+ · Intel / Apple Silicon">macOS 10.15+ · Intel / Apple Silicon</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-macos" data-i18n="download.btn">下载</button>
+              <button class="btn btn-sm btn-pending" data-od-id="dl-scribe-macos" data-i18n="download.soon">待上线</button>
             </div>
           </div>
           <div class="platform-row" data-dl="scribe:windows">
@@ -1278,7 +1294,7 @@ img, svg { display: block; }
 
 <footer class="site-footer" data-od-id="footer-site">
   <div class="container footer-inner">
-    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 本地优先，隐私即默认</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 看剧学语言，两不误</span>
     <span class="footer-sep" aria-hidden="true">|</span>
     <a class="footer-privacy" href="privacy.html" data-od-id="footer-privacy" data-i18n="footer.privacy">隐私政策</a>
   </div>
@@ -1372,6 +1388,7 @@ img, svg { display: block; }
       "download.btn": "下载",
       "download.live": "已上线",
       "download.soon": "待上线",
+      "ver.label": "最新版本",
       "download.aria": "下载 {product} · {platform}",
       "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
       "note.win": "Windows 10 及以上",
@@ -1392,7 +1409,7 @@ img, svg { display: block; }
       "values.card2.body": "启动即用，字幕生成与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
       "values.card3.title": "开放数据",
       "values.card3.body": "SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。",
-      "footer.copy": "© 2026 Pea 系列 · 本地优先，隐私即默认",
+      "footer.copy": "© 2026 Pea 系列 · 看剧学语言，两不误",
       "footer.privacy": "隐私政策"
     },
     en: {
@@ -1479,6 +1496,7 @@ img, svg { display: block; }
       "download.btn": "Download",
       "download.live": "Available",
       "download.soon": "Coming soon",
+      "ver.label": "Latest",
       "download.aria": "Download {product} · {platform}",
       "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
       "note.win": "Windows 10 or later",
@@ -1499,7 +1517,7 @@ img, svg { display: block; }
       "values.card2.body": "Launches ready to use; transcription and playback are fast. A restrained UI leaves attention on the content, not the chrome.",
       "values.card3.title": "Open data",
       "values.card3.body": "SRT, CSV, Anki — standard formats you can take anywhere. Your progress belongs to you, always.",
-      "footer.copy": "© 2026 Pea Series · Local-first, privacy by default.",
+      "footer.copy": "© 2026 Pea Series · Learn languages while you watch.",
       "footer.privacy": "Privacy Policy"
     },
     ja: {
@@ -1586,6 +1604,7 @@ img, svg { display: block; }
       "download.btn": "ダウンロード",
       "download.live": "公開中",
       "download.soon": "近日公開",
+      "ver.label": "最新版",
       "download.aria": "{product} · {platform} をダウンロード",
       "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
       "note.win": "Windows 10 以降",
@@ -1606,7 +1625,7 @@ img, svg { display: block; }
       "values.card2.body": "すぐ起動し、書き起こしも再生も十分速い。控えめな UI は、インターフェースではなくコンテンツに注意を向けさせます。",
       "values.card3.title": "オープンなデータ",
       "values.card3.body": "SRT・CSV・Anki — 標準フォーマットでいつでも持ち出せます。あなたの積み重ねは、いつでもあなたのもの。",
-      "footer.copy": "© 2026 Pea シリーズ · ローカルファースト、プライバシーはデフォルト",
+      "footer.copy": "© 2026 Pea シリーズ · ドラマを見ながら語学も",
       "footer.privacy": "プライバシーポリシー"
     }
   };
@@ -1620,6 +1639,31 @@ img, svg { display: block; }
     scribe: { name: "PeaScribe", btn: "btn-scribe" }
   };
   var PLATFORM = { macos: "macOS", windows: "Windows" };
+
+  /* 自动拉取的最新版本号：{ player: "0.4.2", scribe: "…" }，优先于配置文件中的静态 version */
+  var latestVersions = {};
+  /* GitHub Releases 返回的资源名列表：{ player: ["PeaPlay-latest.dmg", …] }，用于判定各平台是否真实可下载 */
+  var releaseAssets = {};
+
+  function fetchLatestVersions() {
+    if (!cfg || typeof fetch !== "function") return;
+    Object.keys(PRODUCT).forEach(function (key) {
+      var repo = cfg[key] && cfg[key].repo;
+      if (!repo) return;
+      fetch("https://api.github.com/repos/" + repo + "/releases/latest", {
+        headers: { Accept: "application/vnd.github+json" }
+      })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (data) {
+          var tag = data && data.tag_name ? String(data.tag_name).replace(/^v/i, "") : "";
+          var assets = (data && Array.isArray(data.assets)) ? data.assets.map(function (a) { return a.name; }) : [];
+          releaseAssets[key] = assets;
+          if (tag) { latestVersions[key] = tag; }
+          renderReleases();
+        })
+        .catch(function () { /* 静默失败：保持「待上线」状态，直到真实可下载 */ });
+    });
+  }
 
   function t(key) {
     var d = DICT[currentLang];
@@ -1642,12 +1686,32 @@ img, svg { display: block; }
     if (!cfg || !cfg[product]) return null;
     return cfg[product].platforms[platform] || null;
   }
+  /* 平台是否已发布：优先按 GitHub Releases 返回的资源列表判定（链接真实可下载才算「已上线」）。
+     未配置 repo 的产品回退到「url 已填即上线」。 */
   function isLive(product, platform) {
     var c = platformConf(product, platform);
-    return !!(c && typeof c.url === "string" && c.url.trim());
+    if (!c || typeof c.url !== "string" || !c.url.trim()) return false;
+    var repo = cfg[product] && cfg[product].repo;
+    if (!repo) return true; /* 无仓库配置 → 沿用「填了直链即已上线」 */
+    var assets = releaseAssets[product];
+    if (!assets) return false; /* 仓库已配置但未确认发布（私有 / 无 release / 拉取失败）→ 待上线 */
+    var fname = c.url.split("/").pop();
+    if (!fname) return false;
+    return assets.indexOf(fname) !== -1;
   }
   function productHasLive(product) {
     return Object.keys(PLATFORM).some(function (k) { return isLive(product, k); });
+  }
+  /* 静态版本：从配置中取任一平台填写的版本号（自动拉取失败时的兜底） */
+  function staticVersion(product) {
+    if (!cfg || !cfg[product] || !cfg[product].platforms) return "";
+    var platforms = cfg[product].platforms;
+    var keys = Object.keys(platforms);
+    for (var i = 0; i < keys.length; i++) {
+      var v = platforms[keys[i]].version;
+      if (v) return String(v);
+    }
+    return "";
   }
 
   var DL_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"/></svg>';
@@ -1665,7 +1729,7 @@ img, svg { display: block; }
       if (!prod || !slot) return;
 
       var c = platformConf(product, platform);
-      var ver = (c && c.version) ? String(c.version) : "";
+      var ver = latestVersions[product] || ((c && c.version) ? String(c.version) : "");
       var note;
       if (c && c.note) note = c.note;
       else if (platform === "macos") note = "Apple Silicon · Intel";
@@ -1697,7 +1761,7 @@ img, svg { display: block; }
       }
     });
 
-    /* 状态徽章：产品面板 + 下载卡头部 */
+    /* 状态徽章：产品面板（下载卡右上角已改为版本徽章） */
     Object.keys(PRODUCT).forEach(function (key) {
       var live = productHasLive(key);
       var pills = document.querySelectorAll('[data-status="' + key + '"]');
@@ -1706,6 +1770,22 @@ img, svg { display: block; }
         pill.classList.toggle("status-live", live);
         pill.classList.toggle("status-soon", !live);
         if (text) text.textContent = live ? t("download.live") : t("download.soon");
+      });
+    });
+
+    /* 最新版本徽章：右上角（自动拉取优先，其次静态版本）；未发布则留空 */
+    Object.keys(PRODUCT).forEach(function (key) {
+      var ver = latestVersions[key] || staticVersion(key);
+      var live = productHasLive(key);
+      var nums = document.querySelectorAll('[data-ver-num="' + key + '"]');
+      Array.prototype.forEach.call(nums, function (b) {
+        var chip = b.closest(".ver-chip");
+        if (live && ver) {
+          b.textContent = ver;
+          if (chip) chip.hidden = false;
+        } else if (chip) {
+          chip.hidden = true;
+        }
       });
     });
 
@@ -1806,6 +1886,7 @@ img, svg { display: block; }
   var savedLang = null;
   try { savedLang = localStorage.getItem("pea-lang"); } catch (e) {}
   applyLang(savedLang && DICT[savedLang] ? savedLang : "zh", false);
+  fetchLatestVersions();
 })();
 </script>
 

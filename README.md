@@ -46,10 +46,25 @@ macos: {
 - 产品标题旁的徽章（绿色=已上线 / 灰色虚线=待上线）与下载区按钮状态都是根据同一份配置自动生成的。
 - 每个平台独立判断：可以只上线 Windows，macOS 继续「待上线」。
 
+## 自动获取最新版本（GitHub Releases API）
+
+每个产品还支持一个 `repo` 字段（仓库名，如 `"Pea-Series/peascribe"`）。填上后，页面启动时会自动请求
+`https://api.github.com/repos/{repo}/releases/latest`，把最新 `tag_name` 显示在应用名旁的「最新版本」徽章上，并优先用于下载按钮的版本号：
+
+```js
+player: {
+  name: "PeaPlayer",
+  repo: "Pea-Series/peaplayer",   // 留空 → 不自动拉取，用平台 version 字段兜底
+  platforms: { … }
+}
+```
+
+- **仓库必须是 Public 且有 release** 才能拉到版本号；私有仓库或没有 release 时 API 返回 404，页面静默回退到平台 `version` 字段（也没有就不显示徽章）。
+- GitHub API 是公开接口、支持 CORS，纯静态页面可以直接请求，无需后端或 CI。
+- 徽章默认隐藏，拉到版本后自动出现；发新 release 后刷新页面即更新。
+
 ## 部署
 
 推到 GitHub 后，GitHub Pages 自动启用（`.github.io` 仓库默认开启）。访问 `https://pea-series.github.io/` 即可；`index.html` 会自动跳转到主页。
 
 > **⚠️ 404「Site not found」排障**：`.github.io` 仓库必须在 **Settings → 仓库可见性 → 设为 Public** 后才能部署 Pages。仓库为私有时，Pages 不会构建，整站显示 GitHub 的「Site not found」404 页。公开后无需其他配置，Pages 会自动用 `main` 分支根目录构建（`.nojekyll` 已确保不走 Jekyll）。
-
-> 想更省事？后续可以把 `pea-releases.js` 换成读取 GitHub Releases API（`api.github.com/repos/{owner}/{repo}/releases/latest`），发版时连版本号和下载链接都自动更新，不用再手动改配置。
