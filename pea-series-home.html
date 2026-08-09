@@ -1688,8 +1688,8 @@ img, svg { display: block; }
   }
   /* 平台是否已发布：
      · 公开仓库且 API 可用 —— 以 GitHub Releases 返回的资源列表为准（链接真实可下载才算「已上线」）；
-     · 私有仓库（API 拉不到）或未配置仓库 —— 以发布流程写入的静态版本号为准，
-       版本号非空即视为已发布上线（见 pea-releases.js 顶部注释）。 */
+     · 私有仓库（API 拉不到）或未配置仓库 —— 以该平台 version 字段为准：
+       version 非空 = 该平台已发布上线（由发布流程 tool/update_homepage.py 写入）。 */
   function isLive(product, platform) {
     var c = platformConf(product, platform);
     if (!c || typeof c.url !== "string" || !c.url.trim()) return false;
@@ -1699,7 +1699,7 @@ img, svg { display: block; }
     if (repo && Array.isArray(assets)) {
       return fname ? assets.indexOf(fname) !== -1 : false;
     }
-    if (repo) return staticVersion(product) !== "";
+    if (repo) return (c.version && String(c.version).trim()) !== "";
     return true; /* 无仓库配置 → 沿用「填了直链即已上线」 */
   }
   function productHasLive(product) {
