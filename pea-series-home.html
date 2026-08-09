@@ -126,7 +126,7 @@ html[data-theme="dark"] .status-live { color: var(--success); }
 
 /* ===== 主题 / 语言切换控件 ===== */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.nav-controls { display: flex; align-items: center; gap: 6px; margin-left: 4px; }
+.nav-controls { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; flex: none;
@@ -240,12 +240,10 @@ img, svg { display: block; }
 .nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 650; font-size: 16px; color: var(--fg); letter-spacing: -0.01em; }
 .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px color-mix(in oklab, var(--accent), transparent 40%); }
-.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-links { display: flex; gap: 4px; }
 .nav-links a { padding: 8px 13px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--fg-2); transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard); }
 .nav-links a:hover { color: var(--fg); background: color-mix(in oklab, var(--fg), transparent 95%); }
-.nav-inline { padding: 8px 13px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--fg-2); transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard); }
-.nav-inline:hover { color: var(--fg); background: color-mix(in oklab, var(--fg), transparent 95%); }
-.nav-cta { margin-left: 8px; }
+.nav-controls { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 
 /* ===== hero ===== */
 .hero { position: relative; padding: 112px 0 88px; overflow: hidden; }
@@ -733,8 +731,7 @@ img, svg { display: block; }
   section.section { padding: var(--section-y-phone) 0; }
   .nav-inner { gap: 12px; }
   .nav-links { display: none; }
-  .nav-controls { gap: 4px; }
-  .nav-cta { padding: 0 13px; }
+  .nav-controls { gap: 4px; margin-left: auto; }
   .hero { padding: 76px 0 64px; }
   .hero-launchers { grid-template-columns: 1fr; }
   .feature-list { grid-template-columns: 1fr; }
@@ -763,6 +760,8 @@ img, svg { display: block; }
     </a>
     <nav class="nav-links" aria-label="主导航" data-i18n-aria="nav.aria">
       <a href="#products" data-i18n="nav.products">产品</a>
+      <a href="#download" data-i18n="nav.download">下载</a>
+      <a href="#values" data-i18n="nav.values">理念</a>
     </nav>
     <div class="nav-controls">
       <button class="icon-btn theme-toggle" type="button" data-theme-toggle data-i18n-aria="theme.light">
@@ -778,8 +777,6 @@ img, svg { display: block; }
         </select>
       </label>
     </div>
-    <a class="nav-inline" href="#values" data-od-id="nav-values" data-i18n="nav.values">理念</a>
-    <a class="btn btn-secondary btn-sm nav-cta" href="#download" data-od-id="nav-cta-download" data-i18n="nav.download">下载</a>
   </div>
 </header>
 
