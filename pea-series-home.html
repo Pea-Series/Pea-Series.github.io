@@ -668,20 +668,18 @@ img, svg { display: block; }
 .value-card h3 { margin: 16px 0 9px; font-size: 19px; font-weight: 600; line-height: 1.35; letter-spacing: 0; color: var(--fg); }
 .value-card p { font-size: 14px; line-height: 1.72; color: var(--fg-2); }
 
-/* ===== footer ===== */
-.site-footer { border-top: 1px solid var(--border-soft); padding: 40px 0 48px; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+/* ===== footer（参考 Lyu 系列 · 单行居中）===== */
+.site-footer { border-top: 1px solid var(--border-soft); padding: 36px 0 44px; }
+.footer-inner { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; text-align: center; }
 .footer-copy { font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
-.footer-more { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.footer-more-label { font-size: 13px; color: var(--muted); margin-right: 2px; }
-.footer-sep { color: var(--border); }
-.footer-ext {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 14px; font-weight: 550; color: var(--fg-2);
+.footer-sep { color: var(--muted); opacity: .5; font-size: 13px; }
+.footer-privacy {
+  display: inline-flex; align-items: center;
+  font-size: 13px; font-weight: 550; color: var(--fg-2);
   padding: 6px 10px; border-radius: 10px;
   transition: color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard);
 }
-.footer-ext:hover { color: var(--accent); background: var(--surface-warm); }
+.footer-privacy:hover { color: var(--accent); background: var(--surface-warm); }
 
 /* ===== toast ===== */
 .toast {
@@ -745,7 +743,7 @@ img, svg { display: block; }
   .platform-row { grid-template-columns: auto 1fr auto; gap: 12px; padding: 14px 16px; }
   .pf-note { display: none; }
   .pf-icon { width: 34px; height: 34px; border-radius: 9px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-inner { flex-direction: column; align-items: center; }
   /* 真实界面还原 — 小屏堆叠，避免横向溢出 */
   .p-cards { grid-template-columns: 1fr; }
   .p-player { grid-template-columns: 1fr; }
@@ -769,6 +767,7 @@ img, svg { display: block; }
       <a href="#products" data-i18n="nav.products">产品</a>
       <a href="#download" data-i18n="nav.download">下载</a>
       <a href="#values" data-i18n="nav.values">理念</a>
+      <a href="https://devzhao.me/" target="_blank" rel="noopener" data-od-id="nav-developer" data-i18n="nav.developer">关于开发者</a>
     </nav>
     <div class="nav-controls">
       <button class="icon-btn theme-toggle" type="button" data-theme-toggle data-i18n-aria="theme.light">
@@ -1279,13 +1278,9 @@ img, svg { display: block; }
 
 <footer class="site-footer" data-od-id="footer-site">
   <div class="container footer-inner">
-    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 保留所有权利</span>
-    <nav class="footer-more" aria-label="更多作品" data-i18n-aria="footer.aria">
-      <span class="footer-more-label" data-i18n="footer.more.label">更多作品</span>
-      <a class="footer-ext" href="https://lyu-series.github.io/" target="_blank" rel="noopener" data-od-id="footer-lyu" data-i18n="footer.lyu">Lyu 系列</a>
-      <span class="footer-sep" aria-hidden="true">·</span>
-      <a class="footer-ext" href="https://devzhao.me/" target="_blank" rel="noopener" data-od-id="footer-home" data-i18n="footer.home">开发者主页</a>
-    </nav>
+    <span class="footer-copy" data-i18n="footer.copy">© 2026 Pea 系列 · 本地优先，隐私即默认</span>
+    <span class="footer-sep" aria-hidden="true">|</span>
+    <a class="footer-privacy" href="privacy.html" data-od-id="footer-privacy" data-i18n="footer.privacy">隐私政策</a>
   </div>
 </footer>
 
@@ -1307,6 +1302,7 @@ img, svg { display: block; }
       "nav.products": "产品",
       "nav.values": "理念",
       "nav.download": "下载",
+      "nav.developer": "关于开发者",
       "lang.label": "语言",
       "theme.light": "切换夜间模式",
       "theme.dark": "切换亮色模式",
@@ -1396,11 +1392,8 @@ img, svg { display: block; }
       "values.card2.body": "启动即用，字幕生成与播放都足够快。克制的界面把注意力留给内容本身，而不是界面。",
       "values.card3.title": "开放数据",
       "values.card3.body": "SRT、CSV、Anki——标准格式随取随用。你的积累属于你，任何时候都可以带走。",
-      "footer.aria": "更多作品导航",
-      "footer.copy": "© 2026 Pea 系列 · 保留所有权利",
-      "footer.more.label": "更多作品",
-      "footer.lyu": "Lyu 系列",
-      "footer.home": "开发者主页"
+      "footer.copy": "© 2026 Pea 系列 · 本地优先，隐私即默认",
+      "footer.privacy": "隐私政策"
     },
     en: {
       "meta.title": "Pea Series — Learn languages while watching",
@@ -1411,6 +1404,7 @@ img, svg { display: block; }
       "nav.products": "Products",
       "nav.values": "Why Pea",
       "nav.download": "Download",
+      "nav.developer": "About the developer",
       "lang.label": "Language",
       "theme.light": "Switch to dark mode",
       "theme.dark": "Switch to light mode",
@@ -1505,11 +1499,8 @@ img, svg { display: block; }
       "values.card2.body": "Launches ready to use; transcription and playback are fast. A restrained UI leaves attention on the content, not the chrome.",
       "values.card3.title": "Open data",
       "values.card3.body": "SRT, CSV, Anki — standard formats you can take anywhere. Your progress belongs to you, always.",
-      "footer.aria": "More works navigation",
-      "footer.copy": "© 2026 Pea Series · All rights reserved.",
-      "footer.more.label": "More from us",
-      "footer.lyu": "Lyu Series",
-      "footer.home": "Developer homepage"
+      "footer.copy": "© 2026 Pea Series · Local-first, privacy by default.",
+      "footer.privacy": "Privacy Policy"
     },
     ja: {
       "meta.title": "Pea シリーズ — ドラマを見ながら語学も",
@@ -1520,6 +1511,7 @@ img, svg { display: block; }
       "nav.products": "プロダクト",
       "nav.values": "理念",
       "nav.download": "ダウンロード",
+      "nav.developer": "開発者について",
       "lang.label": "言語",
       "theme.light": "ダークモードに切り替え",
       "theme.dark": "ライトモードに切り替え",
@@ -1614,11 +1606,8 @@ img, svg { display: block; }
       "values.card2.body": "すぐ起動し、書き起こしも再生も十分速い。控えめな UI は、インターフェースではなくコンテンツに注意を向けさせます。",
       "values.card3.title": "オープンなデータ",
       "values.card3.body": "SRT・CSV・Anki — 標準フォーマットでいつでも持ち出せます。あなたの積み重ねは、いつでもあなたのもの。",
-      "footer.aria": "その他の作品ナビゲーション",
-      "footer.copy": "© 2026 Pea シリーズ · 無断転載を禁じます",
-      "footer.more.label": "その他の作品",
-      "footer.lyu": "Lyu シリーズ",
-      "footer.home": "開発者のホームページ"
+      "footer.copy": "© 2026 Pea シリーズ · ローカルファースト、プライバシーはデフォルト",
+      "footer.privacy": "プライバシーポリシー"
     }
   };
 

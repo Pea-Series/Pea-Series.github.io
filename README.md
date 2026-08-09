@@ -23,6 +23,7 @@ PeaPlayer（语言学习播放器）与 PeaScribe（字幕生成器）的合集�
 |---|---|
 | `index.html` | GitHub Pages 入口，自动跳转到 `pea-series-home.html` |
 | `pea-series-home.html` | 主页本体（所有样式与交互内联在单文件中） |
+| `privacy.html` | 隐私政策页（与主页共享设计系统、主题、三语、导航与底栏） |
 | `pea-releases.js` | **下载链接唯一配置源**，决定每个产品/平台的发布状态 |
 | `.nojekyll` | 禁用 Jekyll 构建，纯静态部署 |
 
