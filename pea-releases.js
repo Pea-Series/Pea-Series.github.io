@@ -11,7 +11,7 @@
    ========================================================================= */
 window.PEA_RELEASES = {
   /* 最近更新时间，仅作记录，展示用 */
-  updatedAt: "2026-08-08",
+  updatedAt: "2026-08-09",
 
   products: {
     player: {
@@ -39,17 +39,17 @@ window.PEA_RELEASES = {
       name: "PeaScribe",
       platforms: {
         macos: {
-          url: "",
+          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-macos.zip",
           version: "0.1.0",
           note: "Apple Silicon · Intel"
         },
         windows: {
-          url: "",
+          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-windows.zip",
           version: "0.1.0",
           note: "Windows 10 及以上"
         },
         linux: {
-          url: "",
+          url: "https://github.com/Pea-Series/peascribe/releases/latest/download/peascribe-linux.zip",
           version: "",
           note: "尚未支持"
         }
