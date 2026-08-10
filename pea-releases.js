@@ -20,7 +20,7 @@
    ========================================================================= */
 window.PEA_RELEASES = {
   /* 最近更新时间，仅作记录，展示用 */
-  updatedAt: "2026-08-09",
+  updatedAt: "2026-08-10",
 
   products: {
     player: {
@@ -30,12 +30,12 @@ window.PEA_RELEASES = {
       platforms: {
         macos: {
           url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-macOS.zip",
-          version: "",
+          version: "0.1.8",
           note: "Apple Silicon · Intel"
         },
         windows: {
           url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-Setup-latest.exe",
-          version: "",
+          version: "0.1.8",
           note: "Windows 10 及以上"
         }
       }
