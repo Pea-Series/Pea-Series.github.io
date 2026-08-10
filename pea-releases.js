@@ -29,7 +29,7 @@ window.PEA_RELEASES = {
       repo: "Pea-Series/peaplayer",
       platforms: {
         macos: {
-          url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-macOS.zip",
+          url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-macOS.dmg",
           version: "0.1.8",
           note: "Apple Silicon · Intel"
         },
