@@ -30,12 +30,12 @@ window.PEA_RELEASES = {
       platforms: {
         macos: {
           url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-macOS.dmg",
-          version: "0.1.10",
+          version: "0.1.12",
           note: "Apple Silicon · Intel"
         },
         windows: {
           url: "https://github.com/Pea-Series/peaplayer/releases/latest/download/PeaPlayer-Setup-latest.exe",
-          version: "0.1.10",
+          version: "0.1.12",
           note: "Windows 10 及以上"
         }
       }
