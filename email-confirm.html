@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>确认你的邮箱 · Pea 系列</title>
+  <!--[if mso]>
+  <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+  <![endif]-->
+  <style>
+    /* ===== Pea 系列 · 注册确认邮件 =====
+       模板变量（Go / GoTrue）：
+         {{ .ConfirmationURL }} —— 确认链接（必需）
+         {{ .Email }}           —— 待确认邮箱（若你的服务不提供此项，可删除对应行）
+       邮箱客户端不支持 oklch()/var()，全部使用 hex。 */
+    html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+    body { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+    img { border: 0; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+    @media (max-width: 620px) {
+      .od-outer { padding: 20px 14px !important; }
+      .od-card { width: 100% !important; }
+      .od-content { padding: 26px 22px !important; }
+      .od-h1 { font-size: 21px !important; line-height: 1.35 !important; }
+      .od-body { font-size: 14px !important; line-height: 1.7 !important; }
+      .od-btn-table { width: 100% !important; }
+      .od-btn-cell { display: block !important; width: 100% !important; }
+      .od-btn { display: block !important; width: 100% !important; padding: 16px 20px !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .od-bg { background-color: #0f1519 !important; }
+      .od-card { background-color: #1a2228 !important; border-color: #2a343c !important; }
+      .od-hairline { border-color: #2a343c !important; }
+      .od-fg { color: #e8edf0 !important; }
+      .od-fg-2 { color: #c3cdd4 !important; }
+      .od-muted { color: #94a1ab !important; }
+      .od-panel { background-color: #141b20 !important; border-color: #2a343c !important; }
+      .od-chip { background-color: #141b20 !important; border-color: #2a343c !important; }
+      .od-url { color: #94a1ab !important; }
+      .od-btn-cell { background-color: #299236 !important; }
+      .od-btn { color: #f4fbf4 !important; }
+    }
+  </style>
+</head>
+<body class="od-bg" style="background-color:#f6f9fc; margin:0; padding:0;">
+  <!-- Preheader：列表页摘要文本 -->
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#f6f9fc;">
+    确认你的邮箱地址，完成 Pea 系列注册 · Confirm your email address to finish signing up to Pea Series
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#f6f9fc" class="od-bg" style="background-color:#f6f9fc;">
+    <tr>
+      <td align="center" class="od-outer" style="padding:36px 16px;">
+
+        <!-- ===== 卡片 ===== -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="od-card" style="width:560px; max-width:560px; background-color:#ffffff; border:1px solid #e3e9ed; border-radius:16px;">
+
+          <!-- 品牌头 -->
+          <tr>
+            <td class="od-hairline" style="border-bottom:1px solid #eef2f5; padding:22px 34px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="left" valign="middle">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="middle" style="padding-right:10px;">
+                          <span style="display:inline-block; width:11px; height:11px; border-radius:50%; background-color:#00791B; vertical-align:middle;">&nbsp;</span>
+                        </td>
+                        <td valign="middle">
+                          <span class="od-fg" style="font-size:16px; font-weight:650; letter-spacing:-0.01em; color:#121c23;">Pea 系列</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span class="od-muted" style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#5a656d;">Pea Series</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- 内容 -->
+          <tr>
+            <td class="od-content" style="padding:36px 34px 30px 34px;" data-od-id="email-card">
+
+              <!-- 眉题 -->
+              <p style="margin:0 0 12px 0; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#00791B;">账户确认 · Account Confirmation</p>
+
+              <!-- 主标题（中英） -->
+              <h1 class="od-h1 od-fg" style="margin:0 0 6px 0; font-size:24px; line-height:1.4; font-weight:700; color:#121c23;">确认你的邮箱地址</h1>
+              <p class="od-fg-2" style="margin:0 0 24px 0; font-size:14px; line-height:1.5; color:#44525c;">Confirm your email address</p>
+
+              <!-- 正文 -->
+              <p class="od-body od-fg" style="margin:0 0 8px 0; font-size:15px; line-height:1.7; color:#2a3440;">欢迎注册 Pea 系列。请点击下方按钮确认你的邮箱地址，以完成注册。</p>
+              <p class="od-body od-muted" style="margin:0 0 26px 0; font-size:14px; line-height:1.6; color:#5a656d;">Welcome to Pea Series. Please confirm your email address to finish signing up.</p>
+
+              <!-- 待确认邮箱 -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom:26px;">
+                <tr>
+                  <td class="od-chip" style="background-color:#f6f9fc; border:1px solid #e3e9ed; border-radius:10px; padding:12px 16px;">
+                    <span class="od-muted" style="font-size:13px; color:#5a656d;">确认邮箱 · Confirming for&nbsp;</span>
+                    <span class="od-fg" style="font-size:14px; font-weight:600; color:#121c23;">{{ .Email }}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- 主按钮（防弹 · 双语两行） -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" class="od-btn-table" style="margin:0 auto 26px auto;">
+                <tr>
+                  <td class="od-btn-cell" align="center" bgcolor="#00791B" style="border-radius:14px; background-color:#00791B;">
+                    <a href="{{ .ConfirmationURL }}" target="_blank" rel="noopener" class="od-btn" data-od-id="email-confirm-button"
+                       style="display:inline-block; padding:15px 36px; border-radius:14px; font-size:16px; font-weight:600; line-height:1.35; color:#ffffff; text-decoration:none;">
+                      确认邮箱地址
+                      <span style="display:block; margin-top:3px; font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; opacity:.82;">Confirm email address</span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- 链接回退 -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom:26px;">
+                <tr>
+                  <td class="od-panel" style="background-color:#f6f9fc; border:1px solid #e3e9ed; border-radius:12px; padding:16px 18px;">
+                    <p style="margin:0 0 8px 0; font-size:13px; line-height:1.6; color:#5a656d;">按钮无法点击？请将下方链接复制到浏览器地址栏打开。</p>
+                    <p style="margin:0 0 10px 0; font-size:13px; line-height:1.6; color:#5a656d;">If the button above doesn't work, copy and paste this link into your browser.</p>
+                    <a href="{{ .ConfirmationURL }}" target="_blank" rel="noopener" class="od-url"
+                       style="font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; line-height:1.6; color:#5a656d; text-decoration:underline; word-break:break-all;">{{ .ConfirmationURL }}</a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- 时效说明 -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td class="od-panel" style="background-color:#f6f9fc; border:1px solid #e3e9ed; border-radius:12px; padding:16px 18px;">
+                    <p style="margin:0; font-size:13px; line-height:1.7; color:#5a656d;">此链接具有时效性。如果你没有发起注册，请忽略此邮件，你的邮箱不会收到后续邮件。</p>
+                    <p style="margin:6px 0 0 0; font-size:13px; line-height:1.7; color:#5a656d;">This link expires after a short time. If you didn't create a Pea Series account, you can safely ignore this email.</p>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- 页脚 -->
+          <tr>
+            <td class="od-hairline" style="border-top:1px solid #eef2f5; padding:20px 34px 22px 34px;" data-od-id="email-footer">
+              <p class="od-fg" style="margin:0 0 4px 0; font-size:13px; font-weight:600; color:#2a3440; text-align:center;">Pea 系列 · 看剧学语言，两不误</p>
+              <p class="od-muted" style="margin:0 0 8px 0; font-size:12px; line-height:1.6; color:#5a656d; text-align:center;">Pea Series · Watch shows, learn languages</p>
+              <p class="od-muted" style="margin:0 0 10px 0; font-size:12px; letter-spacing:0.04em; color:#5a656d; text-align:center;">PeaPlayer&ensp;·&ensp;PeaScribe</p>
+              <p class="od-muted" style="margin:0; font-size:12px; color:#5a656d; text-align:center;">© 2026 Pea 系列 &nbsp;·&nbsp; 需要帮助？直接回复此邮件</p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /卡片 -->
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

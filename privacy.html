@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>隐私政策 · Pea 系列</title>
-<meta name="description" content="Pea 系列隐私政策：我们坚持最小必要原则，文件与数据默认留在你的设备上。适用于 macOS 与 Windows 桌面应用。">
+<meta name="description" content="Pea 系列隐私政策：媒体文件与字幕内容默认留在你的设备上；账户、支付、崩溃上报与匿名统计等信息仅在必要时处理。适用于 macOS 与 Windows 桌面应用。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -273,7 +273,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
         <h1 data-i18n="privacy.title">隐私政策</h1>
         <div class="privacy-meta-row">
           <span class="scope-chip" data-i18n="privacy.scope">适用于 macOS · Windows</span>
-          <span data-i18n="privacy.effective">生效日期：2026-08-09</span>
+          <span data-i18n="privacy.effective">生效日期：2026-08-16</span>
         </div>
         <div class="privacy-notice" data-od-id="privacy-notice" data-i18n="privacy.notice">我们坚持<b>最小必要原则</b>：只在为向你提供功能所必需时，才处理最少必要的信息。继续使用本产品即表示你已阅读并同意本政策；如不同意，请停止使用。</div>
       </header>
@@ -282,7 +282,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       <section class="privacy-section" data-od-id="privacy-s1">
         <span class="psec-num">01</span>
         <h2 data-i18n="privacy.s1.title">我们收集的信息类型与用途</h2>
-        <p data-i18n="privacy.s1.body">Pea 系列均为本地优先的桌面应用。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。</p>
+        <p data-i18n="privacy.s1.body">Pea 系列是本地优先的桌面应用：你的媒体文件与字幕内容始终留在设备上；账户、支付、崩溃上报与匿名统计等信息仅在必要时处理。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。</p>
         <div class="tbl-wrap">
           <table class="privacy-table">
             <thead>
@@ -301,16 +301,16 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
                 <td data-i18n="privacy.t1.r1c4">仅在本机判断；联网检查更新时只携带当前版本号，不记录设备标识。</td>
               </tr>
               <tr>
-                <td data-i18n="privacy.t1.r2c1">崩溃日志与运行日志</td>
+                <td data-i18n="privacy.t1.r2c1">崩溃与错误信息</td>
                 <td data-i18n="privacy.t1.r2c2">排查稳定性问题</td>
-                <td class="t-na" data-i18n="privacy.t1.r2c3">不适用</td>
-                <td data-i18n="privacy.t1.r2c4">不采集。应用无遥测、无远程日志上报。</td>
+                <td class="t-na" data-i18n="privacy.t1.r2c3">可选（默认开启）</td>
+                <td data-i18n="privacy.t1.r2c4">仅在崩溃或错误发生时自动上报错误信息，包含错误堆栈、系统与应用版本，不含你的媒体文件内容；可在应用设置中关闭。</td>
               </tr>
               <tr>
-                <td data-i18n="privacy.t1.r3c1">账户与联系方式</td>
-                <td data-i18n="privacy.t1.r3c2">登录、通知</td>
-                <td class="t-na" data-i18n="privacy.t1.r3c3">不适用</td>
-                <td data-i18n="privacy.t1.r3c4">应用无需登录，不创建云端账户。</td>
+                <td data-i18n="privacy.t1.r3c1">账户信息（邮箱地址、账户标识）</td>
+                <td data-i18n="privacy.t1.r3c2">登录、账户管理、订阅</td>
+                <td class="t-ok" data-i18n="privacy.t1.r3c3">必要</td>
+                <td data-i18n="privacy.t1.r3c4">用于创建与登录账户、管理订阅；邮箱仅在账户相关事务时使用，不用于营销推广。</td>
               </tr>
               <tr>
                 <td data-i18n="privacy.t1.r4c1">媒体文件与字幕内容</td>
@@ -319,10 +319,16 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
                 <td data-i18n="privacy.t1.r4c4">全部在你设备上处理，不上传、不存储。</td>
               </tr>
               <tr>
-                <td data-i18n="privacy.t1.r5c1">去标识化统计数据</td>
+                <td data-i18n="privacy.t1.r5c1">匿名使用统计</td>
                 <td data-i18n="privacy.t1.r5c2">产品改进</td>
-                <td class="t-na" data-i18n="privacy.t1.r5c3">不适用</td>
-                <td data-i18n="privacy.t1.r5c4">不采集。无行为分析、无广告跟踪器。</td>
+                <td class="t-na" data-i18n="privacy.t1.r5c3">可选（默认开启）</td>
+                <td data-i18n="privacy.t1.r5c4">以去标识化的汇总数据统计功能使用频率与崩溃率，不含你的文件内容或可识别身份的信息；可在应用设置中关闭。</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t1.r6c1">支付信息（账单地址、订阅状态）</td>
+                <td data-i18n="privacy.t1.r6c2">处理购买与订阅</td>
+                <td class="t-ok" data-i18n="privacy.t1.r6c3">必要（支付时）</td>
+                <td data-i18n="privacy.t1.r6c4">由经认证的第三方支付服务商处理，我们不在自己服务器上保存你的完整卡号。</td>
               </tr>
             </tbody>
           </table>
@@ -336,8 +342,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
         <ul>
           <li data-i18n="privacy.s2.li1"><b>本地优先存储</b>：你的文件、字幕、生词本与学习记录默认全部保存在你的设备上。</li>
           <li data-i18n="privacy.s2.li2"><b>最短保存期限</b>：仅保留完成任务所必需的时间；本地数据由你随时清理。</li>
-          <li data-i18n="privacy.s2.li3"><b>安全措施</b>：网络传输走 HTTPS 加密通道；应用以最小权限访问文件。</li>
-          <li data-i18n="privacy.s2.li4"><b>数据跨境</b>：不涉及个人信息跨境传输。</li>
+          <li data-i18n="privacy.s2.li3"><b>安全措施</b>：网络传输走 HTTPS 加密通道；支付由经认证的支付服务商处理；应用以最小权限访问文件。</li>
+          <li data-i18n="privacy.s2.li4"><b>存储位置</b>：崩溃上报与匿名统计数据存储于欧盟境内的服务商；你的媒体文件与字幕内容始终留在设备上，不上传。</li>
         </ul>
       </section>
 
@@ -346,8 +352,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
         <span class="psec-num">03</span>
         <h2 data-i18n="privacy.s3.title">共享、转让与公开披露</h2>
         <ul>
-          <li data-i18n="privacy.s3.li1">默认<b>不与任何第三方共享个人信息，不出售个人信息</b>。</li>
-          <li data-i18n="privacy.s3.li2">仅在法律要求、或事先征得你明确同意的情况下，才可能进行共享。</li>
+          <li data-i18n="privacy.s3.li1">我们<b>不出售个人信息</b>；仅在提供账户、支付、崩溃上报与统计等必要功能时，与受约束的服务商共享最小必要信息。</li>
+          <li data-i18n="privacy.s3.li2">上述服务商只能按我们的指示处理数据，不得用于其他用途；除此之外，仅在法律要求或事先征得你明确同意时才可能共享。</li>
           <li data-i18n="privacy.s3.li3">因合并、收购等原因涉及数据转让时，我们将要求接收方继续遵守本政策。</li>
         </ul>
       </section>
@@ -356,7 +362,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       <section class="privacy-section" data-od-id="privacy-s4">
         <span class="psec-num">04</span>
         <h2 data-i18n="privacy.s4.title">第三方服务与 SDK</h2>
-        <p data-i18n="privacy.s4.body">应用不内嵌任何第三方 SDK、统计或追踪组件。下表列出分发与运行所涉及的外部服务。</p>
+        <p data-i18n="privacy.s4.body">为实现账户、支付、崩溃上报与匿名统计等功能，应用内嵌了必要的第三方服务。下表列出分发与运行所涉及的外部服务。</p>
         <div class="tbl-wrap">
           <table class="privacy-table">
             <thead>
@@ -379,6 +385,30 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
                 <td data-i18n="privacy.t2.r2c2">本地字幕生成</td>
                 <td data-i18n="privacy.t2.r2c3">模型文件，由你主动下载</td>
                 <td class="t-ok" data-i18n="privacy.t2.r2c4">本地运行，不联网</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t2.r3c1">账户与认证服务</td>
+                <td data-i18n="privacy.t2.r3c2">账户注册、登录与账户数据存储</td>
+                <td data-i18n="privacy.t2.r3c3">邮箱、账户标识、订阅状态</td>
+                <td class="t-ok" data-i18n="privacy.t2.r3c4">HTTPS 加密存储</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t2.r4c1">支付服务商</td>
+                <td data-i18n="privacy.t2.r4c2">处理购买与订阅扣款</td>
+                <td data-i18n="privacy.t2.r4c3">账单信息、支付结果；不包含完整卡号</td>
+                <td class="t-ok" data-i18n="privacy.t2.r4c4">HTTPS 加密 · 经认证合规</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t2.r5c1">崩溃与错误上报</td>
+                <td data-i18n="privacy.t2.r5c2">故障诊断与稳定性改进</td>
+                <td data-i18n="privacy.t2.r5c3">错误堆栈、系统与应用版本，不含文件内容</td>
+                <td class="t-ok" data-i18n="privacy.t2.r5c4">HTTPS 加密 · 欧盟境内存储</td>
+              </tr>
+              <tr>
+                <td data-i18n="privacy.t2.r6c1">匿名统计服务</td>
+                <td data-i18n="privacy.t2.r6c2">功能使用情况与崩溃率统计</td>
+                <td data-i18n="privacy.t2.r6c3">去标识化汇总数据</td>
+                <td class="t-ok" data-i18n="privacy.t2.r6c4">HTTPS 加密 · 欧盟境内存储</td>
               </tr>
             </tbody>
           </table>
@@ -436,9 +466,9 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
         <span class="psec-num">07</span>
         <h2 data-i18n="privacy.s7.title">您的权利与行使方式</h2>
         <ul>
-          <li data-i18n="privacy.s7.li1"><b>访问与更正</b>：本地数据由你直接管理，随时查看、修改。</li>
-          <li data-i18n="privacy.s7.li2"><b>删除</b>：删除应用或本地文件即可彻底删除全部数据，无需申请。</li>
-          <li data-i18n="privacy.s7.li3"><b>撤回同意</b>：在系统设置中撤回文件访问等权限。</li>
+          <li data-i18n="privacy.s7.li1"><b>访问与更正</b>：本地数据由你直接管理，随时查看、修改；账户信息可在应用内或通过联系我们查看、更正。</li>
+          <li data-i18n="privacy.s7.li2"><b>删除</b>：删除应用或本地文件即可删除本地数据；账户及其相关云端数据可申请注销并删除。</li>
+          <li data-i18n="privacy.s7.li3"><b>撤回同意</b>：在系统设置中撤回文件访问等权限；在应用设置中可关闭匿名统计与崩溃上报。</li>
           <li data-i18n="privacy.s7.li4"><b>导出与携带</b>：SRT、CSV、Anki 等标准格式随时可导出。</li>
         </ul>
       </section>
@@ -455,7 +485,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
         <span class="psec-num">09</span>
         <h2 data-i18n="privacy.s9.title">联系我们</h2>
         <p data-i18n="privacy.s9.body">如有任何疑问、意见或投诉，欢迎通过电子邮件与我们联系：<a href="mailto:PeaDevTeam@icloud.com" data-od-id="privacy-contact-mail">PeaDevTeam@icloud.com</a>，我们会在合理期限内回复。</p>
-        <p class="psec-note mono" data-i18n="privacy.updated">最后更新：2026-08-09</p>
+        <p class="psec-note mono" data-i18n="privacy.updated">最后更新：2026-08-16</p>
       </section>
     </div>
   </div>
@@ -477,7 +507,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
   window.PEA_I18N = {
     zh: {
       "meta.title": "隐私政策 · Pea 系列",
-      "meta.description": "Pea 系列隐私政策：我们坚持最小必要原则，文件与数据默认留在你的设备上。适用于 macOS 与 Windows 桌面应用。",
+      "meta.description": "Pea 系列隐私政策：媒体文件与字幕内容默认留在你的设备上；账户、支付、崩溃上报与匿名统计等信息仅在必要时处理。适用于 macOS 与 Windows 桌面应用。",
       "nav.brand": "Pea 系列",
       "nav.brand.aria": "Pea 系列 首页",
       "nav.aria": "主导航",
@@ -491,30 +521,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.eyebrow": "Privacy · 隐私",
       "privacy.title": "隐私政策",
       "privacy.scope": "适用于 macOS · Windows",
-      "privacy.effective": "生效日期：2026-08-09",
+      "privacy.effective": "生效日期：2026-08-16",
       "privacy.notice": "我们坚持<b>最小必要原则</b>：只在为向你提供功能所必需时，才处理最少必要的信息。继续使用本产品即表示你已阅读并同意本政策；如不同意，请停止使用。",
       "privacy.s1.title": "我们收集的信息类型与用途",
-      "privacy.s1.body": "Pea 系列均为本地优先的桌面应用。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。",
+      "privacy.s1.body": "Pea 系列是本地优先的桌面应用：你的媒体文件与字幕内容始终留在设备上；账户、支付、崩溃上报与匿名统计等信息仅在必要时处理。下表说明信息类型、使用场景、必要性，以及处理方式与保存期限。",
       "privacy.t1.col1": "信息类型", "privacy.t1.col2": "用途与场景", "privacy.t1.col3": "是否必要", "privacy.t1.col4": "处理方式与保存期限",
       "privacy.t1.r1c1": "设备信息（系统版本、芯片架构）", "privacy.t1.r1c2": "检查更新、兼容性适配", "privacy.t1.r1c3": "必要", "privacy.t1.r1c4": "仅在本机判断；联网检查更新时只携带当前版本号，不记录设备标识。",
-      "privacy.t1.r2c1": "崩溃日志与运行日志", "privacy.t1.r2c2": "排查稳定性问题", "privacy.t1.r2c3": "不适用", "privacy.t1.r2c4": "不采集。应用无遥测、无远程日志上报。",
-      "privacy.t1.r3c1": "账户与联系方式", "privacy.t1.r3c2": "登录、通知", "privacy.t1.r3c3": "不适用", "privacy.t1.r3c4": "应用无需登录，不创建云端账户。",
+      "privacy.t1.r2c1": "崩溃与错误信息", "privacy.t1.r2c2": "排查稳定性问题", "privacy.t1.r2c3": "可选（默认开启）", "privacy.t1.r2c4": "仅在崩溃或错误发生时自动上报错误信息，包含错误堆栈、系统与应用版本，不含你的媒体文件内容；可在应用设置中关闭。",
+      "privacy.t1.r3c1": "账户信息（邮箱地址、账户标识）", "privacy.t1.r3c2": "登录、账户管理、订阅", "privacy.t1.r3c3": "必要", "privacy.t1.r3c4": "用于创建与登录账户、管理订阅；邮箱仅在账户相关事务时使用，不用于营销推广。",
       "privacy.t1.r4c1": "媒体文件与字幕内容", "privacy.t1.r4c2": "播放、转写、学习等核心功能", "privacy.t1.r4c3": "必要（仅本地）", "privacy.t1.r4c4": "全部在你设备上处理，不上传、不存储。",
-      "privacy.t1.r5c1": "去标识化统计数据", "privacy.t1.r5c2": "产品改进", "privacy.t1.r5c3": "不适用", "privacy.t1.r5c4": "不采集。无行为分析、无广告跟踪器。",
+      "privacy.t1.r5c1": "匿名使用统计", "privacy.t1.r5c2": "产品改进", "privacy.t1.r5c3": "可选（默认开启）", "privacy.t1.r5c4": "以去标识化的汇总数据统计功能使用频率与崩溃率，不含你的文件内容或可识别身份的信息；可在应用设置中关闭。",
+      "privacy.t1.r6c1": "支付信息（账单地址、订阅状态）", "privacy.t1.r6c2": "处理购买与订阅", "privacy.t1.r6c3": "必要（支付时）", "privacy.t1.r6c4": "由经认证的第三方支付服务商处理，我们不在自己服务器上保存你的完整卡号。",
       "privacy.s2.title": "存储与保护",
       "privacy.s2.li1": "<b>本地优先存储</b>：你的文件、字幕、生词本与学习记录默认全部保存在你的设备上。",
       "privacy.s2.li2": "<b>最短保存期限</b>：仅保留完成任务所必需的时间；本地数据由你随时清理。",
-      "privacy.s2.li3": "<b>安全措施</b>：网络传输走 HTTPS 加密通道；应用以最小权限访问文件。",
-      "privacy.s2.li4": "<b>数据跨境</b>：不涉及个人信息跨境传输。",
+      "privacy.s2.li3": "<b>安全措施</b>：网络传输走 HTTPS 加密通道；支付由经认证的支付服务商处理；应用以最小权限访问文件。",
+      "privacy.s2.li4": "<b>存储位置</b>：崩溃上报与匿名统计数据存储于欧盟境内的服务商；你的媒体文件与字幕内容始终留在设备上，不上传。",
       "privacy.s3.title": "共享、转让与公开披露",
-      "privacy.s3.li1": "默认<b>不与任何第三方共享个人信息，不出售个人信息</b>。",
-      "privacy.s3.li2": "仅在法律要求、或事先征得你明确同意的情况下，才可能进行共享。",
+      "privacy.s3.li1": "我们<b>不出售个人信息</b>；仅在提供账户、支付、崩溃上报与统计等必要功能时，与受约束的服务商共享最小必要信息。",
+      "privacy.s3.li2": "上述服务商只能按我们的指示处理数据，不得用于其他用途；除此之外，仅在法律要求或事先征得你明确同意时才可能共享。",
       "privacy.s3.li3": "因合并、收购等原因涉及数据转让时，我们将要求接收方继续遵守本政策。",
       "privacy.s4.title": "第三方服务与 SDK",
-      "privacy.s4.body": "应用不内嵌任何第三方 SDK、统计或追踪组件。下表列出分发与运行所涉及的外部服务。",
+      "privacy.s4.body": "为实现账户、支付、崩溃上报与匿名统计等功能，应用内嵌了必要的第三方服务。下表列出分发与运行所涉及的外部服务。",
       "privacy.t2.col1": "名称", "privacy.t2.col2": "用途", "privacy.t2.col3": "涉及的数据", "privacy.t2.col4": "网络与加密",
       "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "安装包托管与下载", "privacy.t2.r1c3": "下载请求，不含个人信息", "privacy.t2.r1c4": "HTTPS 加密",
       "privacy.t2.r2c1": "Whisper 模型", "privacy.t2.r2c2": "本地字幕生成", "privacy.t2.r2c3": "模型文件，由你主动下载", "privacy.t2.r2c4": "本地运行，不联网",
+      "privacy.t2.r3c1": "账户与认证服务", "privacy.t2.r3c2": "账户注册、登录与账户数据存储", "privacy.t2.r3c3": "邮箱、账户标识、订阅状态", "privacy.t2.r3c4": "HTTPS 加密存储",
+      "privacy.t2.r4c1": "支付服务商", "privacy.t2.r4c2": "处理购买与订阅扣款", "privacy.t2.r4c3": "账单信息、支付结果；不包含完整卡号", "privacy.t2.r4c4": "HTTPS 加密 · 经认证合规",
+      "privacy.t2.r5c1": "崩溃与错误上报", "privacy.t2.r5c2": "故障诊断与稳定性改进", "privacy.t2.r5c3": "错误堆栈、系统与应用版本，不含文件内容", "privacy.t2.r5c4": "HTTPS 加密 · 欧盟境内存储",
+      "privacy.t2.r6c1": "匿名统计服务", "privacy.t2.r6c2": "功能使用情况与崩溃率统计", "privacy.t2.r6c3": "去标识化汇总数据", "privacy.t2.r6c4": "HTTPS 加密 · 欧盟境内存储",
       "privacy.s5.title": "设备权限使用说明",
       "privacy.s5.body": "应用仅在首次使用对应功能时申请权限，并说明用途。你可随时在系统设置中授予或撤回。",
       "privacy.t3.col1": "权限", "privacy.t3.col2": "用途", "privacy.t3.col3": "是否可选", "privacy.t3.col4": "撤回方式",
@@ -524,21 +559,21 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.s6.title": "未成年人保护",
       "privacy.s6.body": "本产品面向一般公众，不针对未成年人。若未成年人使用，建议在监护人指导下进行。我们不以知情的方式收集未成年人个人信息；监护人如需删除相关信息，可通过文末联系方式提出。",
       "privacy.s7.title": "您的权利与行使方式",
-      "privacy.s7.li1": "<b>访问与更正</b>：本地数据由你直接管理，随时查看、修改。",
-      "privacy.s7.li2": "<b>删除</b>：删除应用或本地文件即可彻底删除全部数据，无需申请。",
-      "privacy.s7.li3": "<b>撤回同意</b>：在系统设置中撤回文件访问等权限。",
+      "privacy.s7.li1": "<b>访问与更正</b>：本地数据由你直接管理，随时查看、修改；账户信息可在应用内或通过联系我们查看、更正。",
+      "privacy.s7.li2": "<b>删除</b>：删除应用或本地文件即可删除本地数据；账户及其相关云端数据可申请注销并删除。",
+      "privacy.s7.li3": "<b>撤回同意</b>：在系统设置中撤回文件访问等权限；在应用设置中可关闭匿名统计与崩溃上报。",
       "privacy.s7.li4": "<b>导出与携带</b>：SRT、CSV、Anki 等标准格式随时可导出。",
       "privacy.s8.title": "本政策的更新",
       "privacy.s8.body": "若本政策发生实质性变更，我们会在此页面更新，并注明新的生效日期。涉及数据处理方式的重要变更，将在应用内再次提示你确认。",
       "privacy.s9.title": "联系我们",
       "privacy.s9.body": "如有任何疑问、意见或投诉，欢迎通过电子邮件与我们联系：<a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>，我们会在合理期限内回复。",
-      "privacy.updated": "最后更新：2026-08-09",
+      "privacy.updated": "最后更新：2026-08-16",
       "footer.copy": "© 2026 Pea 系列 · 看剧学语言，两不误",
       "footer.privacy": "隐私政策"
     },
     en: {
       "meta.title": "Privacy Policy · Pea Series",
-      "meta.description": "Pea Series privacy policy: we follow the minimum-necessary principle. Files and data stay on your device by default. Applies to our macOS and Windows desktop apps.",
+      "meta.description": "Pea Series privacy policy: your media files and subtitle content stay on your device by default; account, payment, crash reporting, and anonymous analytics are processed only as needed. Applies to our macOS and Windows desktop apps.",
       "nav.brand": "Pea Series",
       "nav.brand.aria": "Pea Series home",
       "nav.aria": "Primary navigation",
@@ -552,30 +587,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.eyebrow": "Privacy",
       "privacy.title": "Privacy Policy",
       "privacy.scope": "Applies to macOS · Windows",
-      "privacy.effective": "Effective date: August 9, 2026",
+      "privacy.effective": "Effective date: August 16, 2026",
       "privacy.notice": "We follow the <b>minimum-necessary principle</b>: we only process the least information required to deliver a feature. By continuing to use this product you agree to this policy. If you do not agree, please stop using it.",
       "privacy.s1.title": "Information we collect and how it's used",
-      "privacy.s1.body": "Pea Series apps are local-first desktop applications. The table below describes the information types, their purpose, necessity, and how long they are kept.",
+      "privacy.s1.body": "Pea Series apps are local-first: your media files and subtitle content always stay on your device. Account, payment, crash reporting, and anonymous analytics are processed only as necessary. The table below describes the information types, their purpose, necessity, and how long they are kept.",
       "privacy.t1.col1": "Information type", "privacy.t1.col2": "Purpose", "privacy.t1.col3": "Required?", "privacy.t1.col4": "Processing & retention",
       "privacy.t1.r1c1": "Device info (OS version, chip architecture)", "privacy.t1.r1c2": "Update checks, compatibility", "privacy.t1.r1c3": "Required", "privacy.t1.r1c4": "Judged locally; update checks only send the current version number, no device identifiers are recorded.",
-      "privacy.t1.r2c1": "Crash & runtime logs", "privacy.t1.r2c2": "Stability troubleshooting", "privacy.t1.r2c3": "N/A", "privacy.t1.r2c4": "Not collected. No telemetry or remote log upload.",
-      "privacy.t1.r3c1": "Account & contact info", "privacy.t1.r3c2": "Login, notifications", "privacy.t1.r3c3": "N/A", "privacy.t1.r3c4": "No login required; no cloud account is created.",
+      "privacy.t1.r2c1": "Crash & error reports", "privacy.t1.r2c2": "Stability troubleshooting", "privacy.t1.r2c3": "Optional (on by default)", "privacy.t1.r2c4": "Sent automatically only when a crash or error occurs, including stack traces, OS and app version — never your media file contents. You can turn this off in the app settings.",
+      "privacy.t1.r3c1": "Account info (email address, account ID)", "privacy.t1.r3c2": "Login, account management, subscription", "privacy.t1.r3c3": "Required", "privacy.t1.r3c4": "Used to create and sign in to your account and manage subscriptions. Your email is only used for account-related matters, never for marketing.",
       "privacy.t1.r4c1": "Media files & subtitle content", "privacy.t1.r4c2": "Playback, transcription, learning", "privacy.t1.r4c3": "Required (local only)", "privacy.t1.r4c4": "Processed entirely on your device; never uploaded or stored.",
-      "privacy.t1.r5c1": "De-identified analytics", "privacy.t1.r5c2": "Product improvement", "privacy.t1.r5c3": "N/A", "privacy.t1.r5c4": "Not collected. No behavior analytics or ad trackers.",
+      "privacy.t1.r5c1": "Anonymous usage analytics", "privacy.t1.r5c2": "Product improvement", "privacy.t1.r5c3": "Optional (on by default)", "privacy.t1.r5c4": "Aggregated, de-identified stats on feature usage and crash rates — no file contents or personally identifiable information. You can turn this off in the app settings.",
+      "privacy.t1.r6c1": "Payment info (billing address, subscription status)", "privacy.t1.r6c2": "Processing purchases & subscriptions", "privacy.t1.r6c3": "Required (at payment)", "privacy.t1.r6c4": "Processed by a certified third-party payment processor; we never store your full card number on our servers.",
       "privacy.s2.title": "Storage & protection",
       "privacy.s2.li1": "<b>Local-first storage</b>: your files, subtitles, wordbook, and learning history stay on your device by default.",
       "privacy.s2.li2": "<b>Minimum retention</b>: data is kept only as long as needed to complete a task; local data is always under your control.",
-      "privacy.s2.li3": "<b>Security</b>: network transfers use HTTPS encryption; the apps request the minimum file access needed.",
-      "privacy.s2.li4": "<b>Cross-border transfer</b>: no personal information is transferred across borders.",
+      "privacy.s2.li3": "<b>Security</b>: network transfers use HTTPS encryption; payments are handled by a certified payment processor; the apps request the minimum file access needed.",
+      "privacy.s2.li4": "<b>Storage location</b>: crash reports and anonymous analytics are stored by providers within the European Union; your media files and subtitle content always stay on your device.",
       "privacy.s3.title": "Sharing, transfer & disclosure",
-      "privacy.s3.li1": "By default we <b>share no personal information with third parties and never sell it</b>.",
-      "privacy.s3.li2": "Sharing happens only when required by law or with your explicit prior consent.",
+      "privacy.s3.li1": "We <b>never sell your personal information</b>. We share only the minimum necessary information with contracted providers to deliver required features such as accounts, payments, crash reporting, and analytics.",
+      "privacy.s3.li2": "These providers may process data only on our instructions and for no other purpose. Beyond that, we share only when required by law or with your explicit prior consent.",
       "privacy.s3.li3": "If data is transferred due to a merger or acquisition, we will require the recipient to continue honoring this policy.",
       "privacy.s4.title": "Third-party services & SDKs",
-      "privacy.s4.body": "No third-party SDKs, analytics, or tracking components are embedded. The table below lists the external services involved in distribution and operation.",
+      "privacy.s4.body": "To deliver accounts, payments, crash reporting, and anonymous analytics, the apps embed necessary third-party services. The table below lists the external services involved in distribution and operation.",
       "privacy.t2.col1": "Name", "privacy.t2.col2": "Purpose", "privacy.t2.col3": "Data involved", "privacy.t2.col4": "Network & encryption",
       "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "Package hosting & download", "privacy.t2.r1c3": "Download request, no personal info", "privacy.t2.r1c4": "HTTPS",
       "privacy.t2.r2c1": "Whisper model", "privacy.t2.r2c2": "Local subtitle generation", "privacy.t2.r2c3": "Model file, downloaded by you", "privacy.t2.r2c4": "Runs offline",
+      "privacy.t2.r3c1": "Account & authentication", "privacy.t2.r3c2": "Account registration, sign-in, account data storage", "privacy.t2.r3c3": "Email, account ID, subscription status", "privacy.t2.r3c4": "HTTPS-encrypted storage",
+      "privacy.t2.r4c1": "Payment processor", "privacy.t2.r4c2": "Processing purchases & subscription charges", "privacy.t2.r4c3": "Billing info, payment outcome; no full card number", "privacy.t2.r4c4": "HTTPS · certified compliant",
+      "privacy.t2.r5c1": "Crash & error reporting", "privacy.t2.r5c2": "Diagnostics & stability improvement", "privacy.t2.r5c3": "Stack traces, OS and app version; no file contents", "privacy.t2.r5c4": "HTTPS · stored in the EU",
+      "privacy.t2.r6c1": "Anonymous analytics", "privacy.t2.r6c2": "Feature usage & crash-rate statistics", "privacy.t2.r6c3": "De-identified aggregated data", "privacy.t2.r6c4": "HTTPS · stored in the EU",
       "privacy.s5.title": "Device permissions",
       "privacy.s5.body": "Permissions are requested only the first time a feature is used, with an explanation. You can grant or revoke them anytime in system settings.",
       "privacy.t3.col1": "Permission", "privacy.t3.col2": "Purpose", "privacy.t3.col3": "Optional?", "privacy.t3.col4": "How to revoke",
@@ -585,21 +625,21 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.s6.title": "Children's privacy",
       "privacy.s6.body": "This product is intended for the general public, not children. Minors should use it under a guardian's guidance. We do not knowingly collect children's personal information; guardians may request deletion through the contact details below.",
       "privacy.s7.title": "Your rights",
-      "privacy.s7.li1": "<b>Access & correction</b>: your local data is managed directly by you, viewable and editable anytime.",
-      "privacy.s7.li2": "<b>Deletion</b>: uninstalling the app or deleting local files permanently removes all data — no request needed.",
-      "privacy.s7.li3": "<b>Withdraw consent</b>: revoke file-access or other permissions in system settings.",
+      "privacy.s7.li1": "<b>Access & correction</b>: your local data is managed directly by you, viewable and editable anytime; account information can be viewed or corrected in the app or by contacting us.",
+      "privacy.s7.li2": "<b>Deletion</b>: uninstalling the app or deleting local files removes local data; your account and related cloud data can be deleted by requesting account deletion.",
+      "privacy.s7.li3": "<b>Withdraw consent</b>: revoke file-access or other permissions in system settings; turn off anonymous analytics and crash reporting in the app settings.",
       "privacy.s7.li4": "<b>Export & portability</b>: SRT, CSV, Anki, and other standard formats can be exported anytime.",
       "privacy.s8.title": "Policy updates",
       "privacy.s8.body": "If this policy changes materially, we will update this page with a new effective date. Important changes to how data is processed will be flagged for your confirmation in the apps.",
       "privacy.s9.title": "Contact",
       "privacy.s9.body": "Questions or feedback? Email us at <a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>. We aim to reply within a reasonable period.",
-      "privacy.updated": "Last updated: August 9, 2026",
+      "privacy.updated": "Last updated: August 16, 2026",
       "footer.copy": "© 2026 Pea Series · Learn languages while you watch.",
       "footer.privacy": "Privacy Policy"
     },
     ja: {
       "meta.title": "プライバシーポリシー · Pea シリーズ",
-      "meta.description": "Pea シリーズのプライバシーポリシー：最小必要の原則に従い、ファイルとデータはデフォルトでデバイス上に残ります。macOS と Windows のデスクトップアプリに適用されます。",
+      "meta.description": "Pea シリーズのプライバシーポリシー：メディアファイルと字幕内容はデフォルトでデバイス上に残ります。アカウント・決済・クラッシュ報告・匿名統計は必要な場合のみ処理されます。macOS と Windows のデスクトップアプリに適用されます。",
       "nav.brand": "Pea シリーズ",
       "nav.brand.aria": "Pea シリーズ ホーム",
       "nav.aria": "メインナビゲーション",
@@ -613,30 +653,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.eyebrow": "プライバシー",
       "privacy.title": "プライバシーポリシー",
       "privacy.scope": "対象：macOS · Windows",
-      "privacy.effective": "発効日：2026-08-09",
+      "privacy.effective": "発効日：2026-08-16",
       "privacy.notice": "私たちは<b>最小必要の原則</b>に従います：機能の提供に必要な最小限の情報だけを処理します。本製品の利用を続けることで、このポリシーに同意したものとみなされます。同意できない場合はご利用をおやめください。",
       "privacy.s1.title": "収集する情報の種類と用途",
-      "privacy.s1.body": "Pea シリーズはローカルファーストのデスクトップアプリです。以下の表は、情報の種類、用途、必要性、処理方法と保存期間を示します。",
+      "privacy.s1.body": "Pea シリーズはローカルファーストのアプリです：メディアファイルと字幕内容は常にデバイス上に残ります。アカウント・決済・クラッシュ報告・匿名統計は必要な場合のみ処理されます。以下の表は、情報の種類、用途、必要性、処理方法と保存期間を示します。",
       "privacy.t1.col1": "情報の種類", "privacy.t1.col2": "用途", "privacy.t1.col3": "必要性", "privacy.t1.col4": "処理方法と保存期間",
       "privacy.t1.r1c1": "デバイス情報（OS バージョン、アーキテクチャ）", "privacy.t1.r1c2": "アップデート確認、互換性", "privacy.t1.r1c3": "必要", "privacy.t1.r1c4": "ローカルで判断。更新確認時は現在のバージョンのみ送信し、デバイス識別子は記録しません。",
-      "privacy.t1.r2c1": "クラッシュログ・実行ログ", "privacy.t1.r2c2": "安定性の調査", "privacy.t1.r2c3": "該当なし", "privacy.t1.r2c4": "収集しません。テレメトリなし、リモートログなし。",
-      "privacy.t1.r3c1": "アカウント・連絡先", "privacy.t1.r3c2": "ログイン、通知", "privacy.t1.r3c3": "該当なし", "privacy.t1.r3c4": "ログイン不要、クラウドアカウントは作成されません。",
+      "privacy.t1.r2c1": "クラッシュ・エラー情報", "privacy.t1.r2c2": "安定性の調査", "privacy.t1.r2c3": "任意（初期設定で有効）", "privacy.t1.r2c4": "クラッシュやエラーが発生した場合のみ自動送信。エラースタック、OS・アプリのバージョンを含みますが、メディアファイルの内容は含みません。アプリ設定で無効にできます。",
+      "privacy.t1.r3c1": "アカウント情報（メールアドレス、アカウント ID）", "privacy.t1.r3c2": "ログイン、アカウント管理、サブスクリプション", "privacy.t1.r3c3": "必要", "privacy.t1.r3c4": "アカウントの作成・ログイン・サブスクリプション管理に使用。メールはアカウント関連の連絡にのみ使用し、マーケティングには使用しません。",
       "privacy.t1.r4c1": "メディアファイル・字幕内容", "privacy.t1.r4c2": "再生、書き起こし、学習など", "privacy.t1.r4c3": "必要（ローカルのみ）", "privacy.t1.r4c4": "すべてデバイス上で処理。アップロード・保存はありません。",
-      "privacy.t1.r5c1": "匿名化統計データ", "privacy.t1.r5c2": "製品改善", "privacy.t1.r5c3": "該当なし", "privacy.t1.r5c4": "収集しません。行動分析・広告トラッカーなし。",
+      "privacy.t1.r5c1": "匿名利用統計", "privacy.t1.r5c2": "製品改善", "privacy.t1.r5c3": "任意（初期設定で有効）", "privacy.t1.r5c4": "機能の利用頻度とクラッシュ率の匿名集計データ。ファイルの内容や個人を特定できる情報は含みません。アプリ設定で無効にできます。",
+      "privacy.t1.r6c1": "支払い情報（請求先住所、サブスクリプション状態）", "privacy.t1.r6c2": "購入・サブスクリプションの処理", "privacy.t1.r6c3": "必要（支払い時）", "privacy.t1.r6c4": "認証済みの第三者決済サービスが処理します。私たちは完全なカード番号をサーバーに保存しません。",
       "privacy.s2.title": "保存と保護",
       "privacy.s2.li1": "<b>ローカルファースト</b>：ファイル、字幕、単語帳、学習履歴はデフォルトでデバイス上に保存されます。",
       "privacy.s2.li2": "<b>最短保存期間</b>：タスク完了に必要な期間のみ保持。ローカルデータはいつでも整理できます。",
-      "privacy.s2.li3": "<b>セキュリティ</b>：ネットワーク通信は HTTPS で暗号化。アプリは最小限のファイルアクセス権限のみ使用します。",
-      "privacy.s2.li4": "<b>越境移転</b>：個人情報の越境移転はありません。",
+      "privacy.s2.li3": "<b>セキュリティ</b>：ネットワーク通信は HTTPS で暗号化。決済は認証済みの決済サービスが処理。アプリは最小限のファイルアクセス権限のみ使用します。",
+      "privacy.s2.li4": "<b>保存場所</b>：クラッシュ報告と匿名統計は欧州連合（EU）内のサービスに保存。メディアファイルと字幕内容は常にデバイス上に残り、アップロードされません。",
       "privacy.s3.title": "共有・移転・開示",
-      "privacy.s3.li1": "デフォルトでは<b>第三者と個人情報を共有せず、販売もしません</b>。",
-      "privacy.s3.li2": "共有は法律で要求される場合、または事前の明確な同意を得た場合のみです。",
+      "privacy.s3.li1": "個人情報を<b>販売することはありません</b>。アカウント・決済・クラッシュ報告・統計など必要機能のために、契約したサービスと最小限の情報のみ共有します。",
+      "privacy.s3.li2": "これらのサービスは当社の指示に従ってのみデータを処理し、他の用途には使用できません。それ以外の共有は、法律で要求される場合、または事前の明確な同意を得た場合のみです。",
       "privacy.s3.li3": "合併・買収などでデータ移転が生じる場合、受領者に本ポリシーの遵守を求めます。",
       "privacy.s4.title": "第三者サービスと SDK",
-      "privacy.s4.body": "第三者 SDK・統計・トラッカーは埋め込まれていません。以下の表は、配布と運用に関わる外部サービスを示します。",
+      "privacy.s4.body": "アカウント・決済・クラッシュ報告・匿名統計を提供するため、アプリには必要な第三者サービスが組み込まれています。以下の表は、配布と運用に関わる外部サービスを示します。",
       "privacy.t2.col1": "名称", "privacy.t2.col2": "用途", "privacy.t2.col3": "対象データ", "privacy.t2.col4": "通信と暗号化",
       "privacy.t2.r1c1": "GitHub Releases", "privacy.t2.r1c2": "パッケージ配布・ダウンロード", "privacy.t2.r1c3": "ダウンロード要求のみ、個人情報なし", "privacy.t2.r1c4": "HTTPS",
       "privacy.t2.r2c1": "Whisper モデル", "privacy.t2.r2c2": "ローカル字幕生成", "privacy.t2.r2c3": "モデルファイル（自分でダウンロード）", "privacy.t2.r2c4": "オフラインで動作",
+      "privacy.t2.r3c1": "アカウント・認証サービス", "privacy.t2.r3c2": "アカウント登録、ログイン、アカウントデータの保存", "privacy.t2.r3c3": "メール、アカウント ID、サブスクリプション状態", "privacy.t2.r3c4": "HTTPS 暗号化で保存",
+      "privacy.t2.r4c1": "決済サービス", "privacy.t2.r4c2": "購入・サブスクリプションの請求処理", "privacy.t2.r4c3": "請求情報、決済結果；完全なカード番号なし", "privacy.t2.r4c4": "HTTPS ・認証済み",
+      "privacy.t2.r5c1": "クラッシュ・エラー報告", "privacy.t2.r5c2": "障害診断と安定性改善", "privacy.t2.r5c3": "エラースタック、OS・アプリのバージョン；ファイル内容なし", "privacy.t2.r5c4": "HTTPS ・EU 内に保存",
+      "privacy.t2.r6c1": "匿名統計サービス", "privacy.t2.r6c2": "機能利用状況・クラッシュ率の統計", "privacy.t2.r6c3": "匿名集計データ", "privacy.t2.r6c4": "HTTPS ・EU 内に保存",
       "privacy.s5.title": "デバイス権限について",
       "privacy.s5.body": "権限は機能を初めて使うときのみ、目的を説明して要求します。システム設定でいつでも許可・拒否できます。",
       "privacy.t3.col1": "権限", "privacy.t3.col2": "用途", "privacy.t3.col3": "任意か", "privacy.t3.col4": "取り消し方法",
@@ -646,15 +691,15 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
       "privacy.s6.title": "未成年者の保護",
       "privacy.s6.body": "本製品は一般向けであり、未成年者を対象としていません。未成年者が利用する場合は保護者の指導のもとでお願いします。未成年者の個人情報を意図的に収集することはなく、削除を希望される場合は下記の連絡先からご請求ください。",
       "privacy.s7.title": "あなたの権利",
-      "privacy.s7.li1": "<b>アクセス・訂正</b>：ローカルデータは自分で直接管理でき、いつでも閲覧・修正できます。",
-      "privacy.s7.li2": "<b>削除</b>：アプリやローカルファイルを削除すれば、すべてのデータが完全に消去されます。申請は不要です。",
-      "privacy.s7.li3": "<b>同意の撤回</b>：システム設定でファイルアクセスなどの権限を取り消せます。",
+      "privacy.s7.li1": "<b>アクセス・訂正</b>：ローカルデータは自分で直接管理でき、いつでも閲覧・修正できます。アカウント情報はアプリ内またはお問い合わせで閲覧・修正できます。",
+      "privacy.s7.li2": "<b>削除</b>：アプリやローカルファイルを削除すればローカルデータは消去されます。アカウントと関連するクラウドデータは、アカウント削除を申請して削除できます。",
+      "privacy.s7.li3": "<b>同意の撤回</b>：システム設定でファイルアクセスなどの権限を取り消せます。アプリ設定で匿名統計とクラッシュ報告を無効にできます。",
       "privacy.s7.li4": "<b>エクスポート・持ち運び</b>：SRT・CSV・Anki などの標準形式でいつでも書き出せます。",
       "privacy.s8.title": "本ポリシーの更新",
       "privacy.s8.body": "本ポリシーに実質的な変更があった場合は、このページを更新し、新しい発効日を記載します。データ処理に重要な変更がある場合は、アプリ内で再確認を求めます。",
       "privacy.s9.title": "お問い合わせ",
       "privacy.s9.body": "ご質問・ご意見・苦情は、<a href=\"mailto:PeaDevTeam@icloud.com\" data-od-id=\"privacy-contact-mail\">PeaDevTeam@icloud.com</a>までご連絡ください。合理的な期間内に返信いたします。",
-      "privacy.updated": "最終更新：2026-08-09",
+      "privacy.updated": "最終更新：2026-08-16",
       "footer.copy": "© 2026 Pea シリーズ · ドラマを見ながら語学も",
       "footer.privacy": "プライバシーポリシー"
     }
