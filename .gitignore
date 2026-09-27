@@ -3,3 +3,7 @@
 .od-skills/
 .mcp.json
 *.artifact.json
+
+# 临时工具/产物（本地生成，不发布）
+.i18n-work/
+.playwright-mcp/

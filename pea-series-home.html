@@ -38,9 +38,10 @@
   --success: oklch(65% 0.18 145);
   --warn: oklch(75% 0.15 85);
   --danger: oklch(55% 0.2 25);
-  --font-display: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Inter 覆盖拉丁 / 西里尔 / 希腊；日韩字形交给系统字体兜底（Inter 不含假名与谚文） */
+  --font-display: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Hiragino Sans", "Yu Gothic UI", Meiryo, "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Hiragino Sans", "Yu Gothic UI", Meiryo, "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, "Malgun Gothic", monospace;
   --text-xs: 12px;
   --text-sm: 14px;
   --text-base: 16px;
@@ -87,6 +88,12 @@
   --pea-scribe-strong: oklch(44% 0.13 158);
   --pea-scribe-ink: oklch(100% 0 0);
   --pea-scribe-soft: color-mix(in oklab, var(--pea-scribe-strong), white 90%);
+
+  /* Microsoft Store 徽章（第三方品牌色，不随站点色板变化） */
+  --ms-badge-bg: #1f1f1f;
+  --ms-badge-bg-hover: #333333;
+  --ms-badge-fg: #ffffff;
+  --ms-badge-border: transparent;
 }
 
 /* ===== dark theme（夜间模式，参考 PeaScribe 暗色令牌）===== */
@@ -120,6 +127,12 @@ html[data-theme="dark"] {
   --pea-scribe-strong: oklch(56% 0.13 158);
   --pea-scribe-ink: oklch(14% 0.02 240);
   --pea-scribe-soft: color-mix(in oklab, var(--pea-scribe-strong), var(--surface) 82%);
+
+  /* 暗色下黑底徽章会沉进背景，改用近黑 + 描边保持轮廓 */
+  --ms-badge-bg: #101010;
+  --ms-badge-bg-hover: #232323;
+  --ms-badge-fg: #ffffff;
+  --ms-badge-border: rgba(255, 255, 255, 0.16);
 }
 /* 暗色下需要反向的局部规则 */
 html[data-theme="dark"] .status-live { color: var(--success); }
@@ -298,6 +311,14 @@ img, svg { display: block; }
 .launcher:hover .launcher-arrow { transform: translateX(3px); color: var(--fg-2); }
 
 /* ===== section head ===== */
+/* 德语复合词（"Systemanforderungen"、38px 下约 303px）在窄屏是一个无法断行的整词，
+   会顶出容器并让整页横向滚动。hyphens 优先按语言词典断词（html lang 已随语言切换），
+   break-word 作为兜底。中日韩本来就可任意断行，不受影响。 */
+h1, h2, h3, h4,
+.section-head, .product-copy h3, .hero h1, .value-card h3, .download-card h2 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 .section-head { max-width: 660px; margin-bottom: 52px; }
 .section-head h2 { margin: 14px 0 12px; font-size: clamp(28px, 3.4vw, 38px); font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--fg); }
 .section-lead { font-size: 16px; line-height: 1.7; color: var(--fg-2); }
@@ -328,15 +349,31 @@ img, svg { display: block; }
 .product-copy h3 { margin: 18px 0 12px; font-size: clamp(22px, 2.4vw, 27px); font-weight: 600; line-height: 1.35; letter-spacing: 0; color: var(--fg); }
 .product-desc { font-size: 15px; line-height: 1.72; color: var(--fg-2); max-width: 46ch; }
 
-.feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 24px 0; }
+/* auto-fit + minmax(250px)：两列各需 ≈228px 才能放下最长的语种提示词
+   （葡 "Histórico · Arquivo · Propriedades"、西/法 的同类三连）。
+   · 用 1fr 1fr：1fr 的最小值是 min-content，长提示词会把本列撑宽、挤窄另一列（两列不齐）；
+   · 用 minmax(0,1fr)：列被压到 228px 以下时提示词会被省略号截断。
+   auto-fit 在这里让「放得下就两列、放不下自动一列」，1200px 以上两列、以下一列，
+   不靠魔法断点，以后加语种也不再需要改这里。 */
+.feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 8px; margin: 24px 0; }
 .fchip {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 3px 10px;   /* 放不下时提示整体落到第二行，行距收紧 */
   padding: 10px 12px;
   border: 1px solid var(--border-soft); border-radius: 12px;
   background: var(--surface);
 }
-.fchip-name { font-size: 13.5px; font-weight: 500; color: var(--fg-2); }
-.fchip-kbd { font: 500 11px var(--font-mono); color: var(--muted); letter-spacing: 0.02em; white-space: nowrap; }
+.fchip-name { font-size: 13.5px; font-weight: 500; color: var(--fg-2); flex: 1 1 auto; min-width: 0; }
+/* 提示词是一条完整注解，不允许在「⌘ + / Klick」「I / O」「→」处断行：
+   nowrap + flex-wrap 让它在放不下时整条换到第二行右对齐，
+   仅当单行仍超出（如葡语的长属性名）才用省略号收尾。 */
+/* letter-spacing 用 0：0.02em 在 36 字符的葡语提示上要多占 ≈8px，
+   正好把 "Propriedades" 挤成省略号；11px 等宽字上这点字距肉眼几乎看不出 */
+.fchip-kbd {
+  font: 500 11px var(--font-mono); color: var(--muted);
+  flex: 0 1 auto; min-width: 0; margin-left: auto;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right;
+}
 
 .product-ctas { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .product-platforms { font: 500 12.5px var(--font-mono); color: var(--muted); letter-spacing: 0.04em; }
@@ -589,7 +626,9 @@ img, svg { display: block; }
   transition: border-color var(--motion-base) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
 }
 .download-card:hover { border-color: var(--fg-2); transform: translateY(-2px); }
-.card-head { display: flex; align-items: center; gap: 12px; padding: 19px 22px; border-bottom: 1px solid var(--border-soft); }
+/* flex-wrap：窄屏 + 长语种时版本徽章（"Neueste Version 1.0.1" 等）整体落到第二行，
+   否则 .download-card 的 overflow:hidden 会把它悄悄裁掉 */
+.card-head { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 19px 22px; border-bottom: 1px solid var(--border-soft); }
 .card-head .product-name { font-size: 17px; }
 .card-head .ver-chip { margin-left: auto; }
 
@@ -639,6 +678,24 @@ img, svg { display: block; }
   border: 1px dashed var(--border);
 }
 .btn-pending:hover { color: var(--fg-2); border-color: var(--fg-2); background: var(--surface-warm); }
+
+/* Microsoft Store 徽章按钮（Windows 平台在架时替代下载按钮）
+   沿用官方徽章的识别元素：近黑底、四色方块标识、Microsoft Store 字样；
+   尺寸与 .btn-sm 对齐，使同一张卡里「下载 / 待上线」按钮高度一致 */
+.ms-store {
+  display: inline-flex; align-items: center; gap: 9px;
+  height: 44px; padding: 0 16px;
+  border: 1px solid var(--ms-badge-border); border-radius: 10px;
+  background: var(--ms-badge-bg); color: var(--ms-badge-fg);
+  font: 600 13.5px/1 var(--font-body); letter-spacing: 0.01em;
+  white-space: nowrap; cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-standard),
+              border-color var(--motion-fast) var(--ease-standard),
+              transform var(--motion-fast) var(--ease-standard);
+}
+.ms-store:hover { background: var(--ms-badge-bg-hover); }
+.ms-store:active { transform: translateY(1px); }
+.ms-store .ms-logo { flex: none; }
 
 /* 发布状态汇总 */
 
@@ -743,6 +800,14 @@ img, svg { display: block; }
   .value-grid { grid-template-columns: 1fr 1fr; }
   .req-grid { grid-template-columns: 1fr; }
 }
+/* 641–768px：导航项还没到隐藏的宽度，但德/法/俄的长标签（"Über den Entwickler"、
+   "Warum Pea"…）会把整行顶出视口，语言切换器被挤出屏幕并产生横向滚动。
+   让导航折成两行：第一行品牌 + 主题/语言控件，第二行导航项。 */
+@media (max-width: 768px) {
+  .nav-inner { flex-wrap: wrap; height: auto; min-height: 64px; row-gap: 2px; padding: 10px 0; }
+  .nav-links { order: 2; flex-wrap: wrap; }
+  .nav-controls { margin-left: auto; }
+}
 @media (max-width: 640px) {
   .container { padding: 0 var(--container-gutter-phone); }
   section.section { padding: var(--section-y-phone) 0; }
@@ -757,6 +822,7 @@ img, svg { display: block; }
   .platform-row { grid-template-columns: auto 1fr auto; gap: 12px; padding: 14px 16px; }
   .pf-note { display: none; }
   .pf-icon { width: 34px; height: 34px; border-radius: 9px; }
+  .ms-store { padding: 0 12px; gap: 7px; font-size: 12.5px; }
   .footer-inner { flex-direction: column; align-items: center; }
   /* 真实界面还原 — 小屏堆叠，避免横向溢出 */
   .p-cards { grid-template-columns: 1fr; }
@@ -794,6 +860,13 @@ img, svg { display: block; }
           <option value="zh">中文</option>
           <option value="en">EN</option>
           <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="it">Italiano</option>
+          <option value="pt">Português</option>
+          <option value="ru">Русский</option>
         </select>
       </label>
     </div>
@@ -1185,7 +1258,7 @@ img, svg { display: block; }
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
             <span class="pf-info">
               <span class="pf">macOS</span>
-              <span class="pf-note" data-note="Apple Silicon · Intel">Apple Silicon · Intel</span>
+              <span class="pf-note" data-note="M 系列芯片">M 系列芯片</span>
             </span>
             <div class="btn-slot">
               <button class="btn btn-sm btn-pending" data-od-id="dl-player-macos" data-i18n="download.soon">待上线</button>
@@ -1195,10 +1268,10 @@ img, svg { display: block; }
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
             <span class="pf-info">
               <span class="pf">Windows</span>
-              <span class="pf-note" data-note="Windows 10 及以上">Windows 10 及以上</span>
+              <span class="pf-note" data-note="Windows 10 版本 17763.0 或更高版本">Windows 10 版本 17763.0 或更高版本</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-sm btn-pending" data-od-id="dl-player-win" data-i18n="download.soon">待上线</button>
+              <a class="ms-store" href="https://apps.microsoft.com/detail/9pf3hdzw5t5d" target="_blank" rel="noopener" data-od-id="dl-player-win" aria-label="从 Microsoft Store 获取 PeaPlayer"><svg class="ms-logo" viewBox="0 0 21 21" width="17" height="17" aria-hidden="true" focusable="false"><rect width="10" height="10" fill="#F25022"/><rect x="11" width="10" height="10" fill="#7FBA00"/><rect y="11" width="10" height="10" fill="#00A4EF"/><rect x="11" y="11" width="10" height="10" fill="#FFB900"/></svg><span>Microsoft Store</span></a>
             </div>
           </div>
         </div>
@@ -1213,7 +1286,7 @@ img, svg { display: block; }
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span>
             <span class="pf-info">
               <span class="pf">macOS</span>
-              <span class="pf-note" data-note="macOS 10.15+ · Intel / Apple Silicon">macOS 10.15+ · Intel / Apple Silicon</span>
+              <span class="pf-note" data-note="M 系列芯片">M 系列芯片</span>
             </span>
             <div class="btn-slot">
               <button class="btn btn-sm btn-pending" data-od-id="dl-scribe-macos" data-i18n="download.soon">待上线</button>
@@ -1223,10 +1296,10 @@ img, svg { display: block; }
             <span class="pf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
             <span class="pf-info">
               <span class="pf">Windows</span>
-              <span class="pf-note" data-note="Windows 10 1809+ · x64">Windows 10 1809+ · x64</span>
+              <span class="pf-note" data-note="Windows 10 版本 17763.0 或更高版本">Windows 10 版本 17763.0 或更高版本</span>
             </span>
             <div class="btn-slot">
-              <button class="btn btn-scribe btn-sm" data-od-id="dl-scribe-win" data-i18n="download.btn">下载</button>
+              <a class="ms-store" href="https://apps.microsoft.com/detail/9pf3hdzw5t5d" target="_blank" rel="noopener" data-od-id="dl-scribe-win" aria-label="从 Microsoft Store 获取 PeaScribe"><svg class="ms-logo" viewBox="0 0 21 21" width="17" height="17" aria-hidden="true" focusable="false"><rect width="10" height="10" fill="#F25022"/><rect x="11" width="10" height="10" fill="#7FBA00"/><rect y="11" width="10" height="10" fill="#00A4EF"/><rect x="11" y="11" width="10" height="10" fill="#FFB900"/></svg><span>Microsoft Store</span></a>
             </div>
           </div>
         </div>
@@ -1246,7 +1319,7 @@ img, svg { display: block; }
         <div class="req-card" data-od-id="req-windows">
           <h4><span class="pf-dot" aria-hidden="true"></span> Windows</h4>
           <ul>
-            <li data-i18n="req.win.os">Windows 10 (1809+) 或 Windows 11</li>
+            <li data-i18n="req.win.os">Windows 10 版本 17763.0 或更高版本</li>
             <li data-i18n="req.win.arch">64 位 (x64)</li>
             <li data-i18n="req.win.gpu">NVIDIA 显卡可启用 CUDA 加速</li>
           </ul>
@@ -1255,7 +1328,7 @@ img, svg { display: block; }
           <h4><span class="pf-dot" aria-hidden="true"></span> macOS</h4>
           <ul>
             <li data-i18n="req.mac.os">macOS 10.15 Catalina 或更高</li>
-            <li data-i18n="req.mac.chip">Intel / Apple Silicon 均支持</li>
+            <li data-i18n="req.mac.chip">M 系列芯片</li>
             <li data-i18n="req.mac.gpu">Apple Silicon 自动启用 Metal 加速</li>
           </ul>
         </div>
@@ -1336,14 +1409,22 @@ img, svg { display: block; }
       "player.kind": "语言学习播放器",
       "player.h3": "沉浸式语言学习，从一段视频开始。",
       "player.desc": "在任意本地视频上叠加双语字幕，点击生词即时查词、自动收入生词本，并按期复习。观看不被打断，节奏完全由你掌控。",
-      "player.f1": "双语字幕 · 逐句同步", "player.f1k": "原文 / 译文",
-      "player.f2": "点击查词 · 加入生词本", "player.f2k": "⌘ + 点按",
-      "player.f3": "生词本 · SRS 复习", "player.f3k": "自动收录",
-      "player.f4": "Anki / CSV 导出", "player.f4k": "双向同步",
-      "player.f5": "字幕搜索 · 跟随播放", "player.f5k": "⌘F",
-      "player.f6": "A-B 循环 · 逐句精听", "player.f6k": "I / O",
-      "player.f7": "中文反向背诵", "player.f7k": "中 → 原文",
-      "player.f8": "学习统计", "player.f8k": "掌握率",
+      "player.f1": "双语字幕 · 逐句同步",
+      "player.f1k": "原文 / 译文",
+      "player.f2": "点击查词 · 加入生词本",
+      "player.f2k": "⌘ + 点按",
+      "player.f3": "生词本 · SRS 复习",
+      "player.f3k": "自动收录",
+      "player.f4": "Anki / CSV 导出",
+      "player.f4k": "双向同步",
+      "player.f5": "字幕搜索 · 跟随播放",
+      "player.f5k": "⌘F",
+      "player.f6": "A-B 循环 · 逐句精听",
+      "player.f6k": "I / O",
+      "player.f7": "中文反向背诵",
+      "player.f7k": "中 → 原文",
+      "player.f8": "学习统计",
+      "player.f8k": "掌握率",
       "player.cta": "下载 PeaPlayer",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer 界面预览",
@@ -1358,14 +1439,22 @@ img, svg { display: block; }
       "scribe.kind": "字幕生成器",
       "scribe.h3": "从音频到字幕，一次生成，直接可用。",
       "scribe.desc": "拖入视频或音频，自动探测音轨、选择语言，调用本地 Whisper 模型生成字幕并导出 SRT。逐条校对时间码后，交付即可。",
-      "scribe.f1": "音轨自动探测", "scribe.f1k": "多语言",
-      "scribe.f2": "本地 Whisper 字幕生成", "scribe.f2k": "离线模型",
-      "scribe.f3": "模型管理 · 进度可视", "scribe.f3k": "base / turbo",
-      "scribe.f4": "三栏工作区", "scribe.f4k": "历史 · 文件 · 属性",
-      "scribe.f5": "逐条校对时间码", "scribe.f5k": "表格编辑",
-      "scribe.f6": "一键导出 SRT", "scribe.f6k": "⌘E",
-      "scribe.f7": "批量队列", "scribe.f7k": "自动顺延",
-      "scribe.f8": "命令面板", "scribe.f8k": "⌘K",
+      "scribe.f1": "音轨自动探测",
+      "scribe.f1k": "多语言",
+      "scribe.f2": "本地 Whisper 字幕生成",
+      "scribe.f2k": "离线模型",
+      "scribe.f3": "模型管理 · 进度可视",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "三栏工作区",
+      "scribe.f4k": "历史 · 文件 · 属性",
+      "scribe.f5": "逐条校对时间码",
+      "scribe.f5k": "表格编辑",
+      "scribe.f6": "一键导出 SRT",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "批量队列",
+      "scribe.f7k": "自动顺延",
+      "scribe.f8": "命令面板",
+      "scribe.f8k": "⌘K",
       "scribe.cta": "下载 PeaScribe",
       "scribe.platforms": "macOS · Windows",
       "scribe.mock.aria": "PeaScribe 界面预览",
@@ -1390,15 +1479,17 @@ img, svg { display: block; }
       "download.soon": "待上线",
       "ver.label": "最新版本",
       "download.aria": "下载 {product} · {platform}",
+      "download.msStoreAria": "从 Microsoft Store 获取 {product}",
       "download.toast.pending": "「{product} · {platform}」待上线，发布后这里会自动提供下载。",
-      "note.win": "Windows 10 及以上",
+      "note.win": "Windows 10 版本 17763.0 或更高版本",
+      "note.mac": "M 系列芯片",
       "req.eyebrow": "Requirements · 系统要求",
       "req.title": "PeaScribe 系统要求",
-      "req.win.os": "Windows 10 (1809+) 或 Windows 11",
+      "req.win.os": "Windows 10 版本 17763.0 或更高版本",
       "req.win.arch": "64 位 (x64)",
       "req.win.gpu": "NVIDIA 显卡可启用 CUDA 加速",
       "req.mac.os": "macOS 10.15 Catalina 或更高",
-      "req.mac.chip": "Intel / Apple Silicon 均支持",
+      "req.mac.chip": "M 系列芯片",
       "req.mac.gpu": "Apple Silicon 自动启用 Metal 加速",
       "values.eyebrow": "Why Pea · 理念",
       "values.title": "为什么做本地工具",
@@ -1439,14 +1530,22 @@ img, svg { display: block; }
       "player.kind": "Language Player",
       "player.h3": "Immersive language learning, starting with a video.",
       "player.desc": "Overlay bilingual subtitles on any local video, tap a word to look it up instantly, auto-collect it into your wordbook, and review on schedule. Watching stays uninterrupted — you set the pace.",
-      "player.f1": "Bilingual subs · line-synced", "player.f1k": "Source / Translation",
-      "player.f2": "Tap to look up · add to wordbook", "player.f2k": "⌘ + Click",
-      "player.f3": "Wordbook · SRS review", "player.f3k": "Auto-added",
-      "player.f4": "Anki / CSV export", "player.f4k": "Two-way",
-      "player.f5": "Subtitle search · follows playback", "player.f5k": "⌘F",
-      "player.f6": "A-B loop · repeat each line", "player.f6k": "I / O",
-      "player.f7": "Reverse recital (Chinese → source)", "player.f7k": "中 → 原文",
-      "player.f8": "Learning stats", "player.f8k": "Mastery",
+      "player.f1": "Bilingual subs · line-synced",
+      "player.f1k": "Source / Translation",
+      "player.f2": "Tap to look up · add to wordbook",
+      "player.f2k": "⌘ + Click",
+      "player.f3": "Wordbook · SRS review",
+      "player.f3k": "Auto-added",
+      "player.f4": "Anki / CSV export",
+      "player.f4k": "Two-way",
+      "player.f5": "Subtitle search · follows playback",
+      "player.f5k": "⌘F",
+      "player.f6": "A-B loop · repeat each line",
+      "player.f6k": "I / O",
+      "player.f7": "Reverse recital (Chinese → source)",
+      "player.f7k": "Chinese → Source",
+      "player.f8": "Learning stats",
+      "player.f8k": "Mastery",
       "player.cta": "Download PeaPlayer",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer interface preview",
@@ -1458,22 +1557,25 @@ img, svg { display: block; }
       "player.foot.player": "Dual-track bilingual subs · tap any word to look it up · A-B loop. <b>Watching never stops</b>.",
       "player.foot.review": "Reverse recital · rate your memory · <b>SRS</b> schedules reviews automatically.",
       "player.cue.word": "Tap a word · look it up instantly",
-      "player.mock.sub.zh": "我从来没有想过，语言可以这样学。",
-      "player.mock.sub.en": "I never thought language could be learned this way.",
-      "player.mock.tag": "Added to wordbook",
-      "player.mock.def": "adv. never; not at all — as in “never thought of it”",
-      "player.mock.bar": "Review progress",
       "scribe.kind": "Subtitle Generator",
       "scribe.h3": "From audio to subtitles — one pass, ready to use.",
       "scribe.desc": "Drop in a video or audio file; it detects the track, picks a language, runs a local Whisper model, and generates SRT. Fine-tune timecodes, then export.",
-      "scribe.f1": "Auto track detection", "scribe.f1k": "Multi-language",
-      "scribe.f2": "Local Whisper subtitle generation", "scribe.f2k": "Offline model",
-      "scribe.f3": "Model manager · live progress", "scribe.f3k": "base / turbo",
-      "scribe.f4": "Three-column workspace", "scribe.f4k": "History · File · Props",
-      "scribe.f5": "Per-line timecode editing", "scribe.f5k": "Table editor",
-      "scribe.f6": "One-click SRT export", "scribe.f6k": "⌘E",
-      "scribe.f7": "Batch queue", "scribe.f7k": "Auto-advance",
-      "scribe.f8": "Command palette", "scribe.f8k": "⌘K",
+      "scribe.f1": "Auto track detection",
+      "scribe.f1k": "Multi-language",
+      "scribe.f2": "Local Whisper subtitle generation",
+      "scribe.f2k": "Offline model",
+      "scribe.f3": "Model manager · live progress",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Three-column workspace",
+      "scribe.f4k": "History · File · Props",
+      "scribe.f5": "Per-line timecode editing",
+      "scribe.f5k": "Table editor",
+      "scribe.f6": "One-click SRT export",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Batch queue",
+      "scribe.f7k": "Auto-advance",
+      "scribe.f8": "Command palette",
+      "scribe.f8k": "⌘K",
       "scribe.cta": "Download PeaScribe",
       "scribe.platforms": "macOS · Windows",
       "scribe.mock.aria": "PeaScribe interface preview",
@@ -1498,15 +1600,17 @@ img, svg { display: block; }
       "download.soon": "Coming soon",
       "ver.label": "Latest",
       "download.aria": "Download {product} · {platform}",
+      "download.msStoreAria": "Get {product} from Microsoft Store",
       "download.toast.pending": "{product} · {platform} is coming soon — a download link will appear here once it ships.",
-      "note.win": "Windows 10 or later",
+      "note.win": "Windows 10 version 17763.0 or later",
+      "note.mac": "Apple M-series",
       "req.eyebrow": "Requirements",
       "req.title": "PeaScribe Requirements",
-      "req.win.os": "Windows 10 (1809+) or Windows 11",
+      "req.win.os": "Windows 10 version 17763.0 or later",
       "req.win.arch": "64-bit (x64)",
       "req.win.gpu": "NVIDIA GPU for CUDA acceleration",
       "req.mac.os": "macOS 10.15 Catalina or later",
-      "req.mac.chip": "Intel or Apple Silicon",
+      "req.mac.chip": "M-series chips",
       "req.mac.gpu": "Apple Silicon uses Metal acceleration automatically",
       "values.eyebrow": "Why Pea",
       "values.title": "Why local-first tools",
@@ -1547,14 +1651,22 @@ img, svg { display: block; }
       "player.kind": "言語学習プレイヤー",
       "player.h3": "動画から始まる、没入型の言語学習。",
       "player.desc": "ローカル動画に二か国語字幕を重ね、知らない単語をタップで即座に辞書引きし、単語帳に自動保存して復習。視聴を邪魔せず、ペースはあなた次第。",
-      "player.f1": "二か国語字幕 · 行同期", "player.f1k": "原文 / 訳文",
-      "player.f2": "タップで辞書引き · 単語帳へ", "player.f2k": "⌘ + クリック",
-      "player.f3": "単語帳 · SRS 復習", "player.f3k": "自動保存",
-      "player.f4": "Anki / CSV 出力", "player.f4k": "双方向",
-      "player.f5": "字幕検索 · 再生に追従", "player.f5k": "⌘F",
-      "player.f6": "A-B ループ · 一文リスニング", "player.f6k": "I / O",
-      "player.f7": "中国語から原文を暗唱", "player.f7k": "中 → 原文",
-      "player.f8": "学習統計", "player.f8k": "定着率",
+      "player.f1": "二か国語字幕 · 行同期",
+      "player.f1k": "原文 / 訳文",
+      "player.f2": "タップで辞書引き · 単語帳へ",
+      "player.f2k": "⌘ + クリック",
+      "player.f3": "単語帳 · SRS 復習",
+      "player.f3k": "自動保存",
+      "player.f4": "Anki / CSV 出力",
+      "player.f4k": "双方向",
+      "player.f5": "字幕検索 · 再生に追従",
+      "player.f5k": "⌘F",
+      "player.f6": "A-B ループ · 一文リスニング",
+      "player.f6k": "I / O",
+      "player.f7": "中国語から原文を暗唱",
+      "player.f7k": "中 → 原文",
+      "player.f8": "学習統計",
+      "player.f8k": "定着率",
       "player.cta": "PeaPlayer をダウンロード",
       "player.platforms": "macOS · Windows",
       "player.mock.aria": "PeaPlayer インターフェースプレビュー",
@@ -1566,24 +1678,28 @@ img, svg { display: block; }
       "player.foot.player": "2トラックの二か国語字幕・単語タップ検索・A-B ループ。<b>視聴は止まらない</b>。",
       "player.foot.review": "中国語から原文を暗唱・記憶を評価・<b>SRS</b> が復習を自動計画。",
       "player.cue.word": "単語をタップ · 即辞書引き",
-      "player.mock.sub.zh": "言語はこんなふうに学べるなんて、思ってもみなかった。",
-      "player.mock.sub.en": "I never thought language could be learned this way.",
-      "player.mock.tag": "単語帳に追加済み",
-      "player.mock.def": "副詞。決して〜ない —— 「思ってもみなかった」のように",
-      "player.mock.bar": "復習の進捗",
       "scribe.kind": "字幕ジェネレーター",
       "scribe.h3": "音声から字幕まで。一度の書き起こしですぐ使える。",
       "scribe.desc": "動画や音声をドラッグすると、トラックを自動検出して言語を選び、ローカルの Whisper モデルで書き起こして SRT を生成します。タイムコードを微調整して書き出すだけ。",
-      "scribe.f1": "トラック自動検出", "scribe.f1k": "多言語",
-      "scribe.f2": "ローカル Whisper 書き起こし", "scribe.f2k": "オフラインモデル",
-      "scribe.f3": "モデル管理・進捗表示", "scribe.f3k": "base / turbo",
-      "scribe.f4": "3カラムワークスペース", "scribe.f4k": "履歴 · ファイル · プロパティ",
-      "scribe.f5": "行ごとのタイムコード編集", "scribe.f5k": "表エディタ",
-      "scribe.f6": "ワンクリックで SRT 書き出し", "scribe.f6k": "⌘E",
-      "scribe.f7": "バッチキュー", "scribe.f7k": "自動で順延",
-      "scribe.f8": "コマンドパレット", "scribe.f8k": "⌘K",
+      "scribe.f1": "トラック自動検出",
+      "scribe.f1k": "多言語",
+      "scribe.f2": "ローカル Whisper 書き起こし",
+      "scribe.f2k": "オフラインモデル",
+      "scribe.f3": "モデル管理・進捗表示",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "3カラムワークスペース",
+      "scribe.f4k": "履歴 · ファイル · プロパティ",
+      "scribe.f5": "行ごとのタイムコード編集",
+      "scribe.f5k": "表エディタ",
+      "scribe.f6": "ワンクリックで SRT 書き出し",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "バッチキュー",
+      "scribe.f7k": "自動で順延",
+      "scribe.f8": "コマンドパレット",
+      "scribe.f8k": "⌘K",
       "scribe.cta": "PeaScribe をダウンロード",
       "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe インターフェースプレビュー",
       "scribe.tabs.aria": "PeaScribe 画面切り替え",
       "scribe.screens.idle": "ホーム",
       "scribe.screens.transcribing": "書き起こし中",
@@ -1591,7 +1707,6 @@ img, svg { display: block; }
       "scribe.foot.idle": "音声・動画をドロップ → <b>トラック</b>と<b>言語</b>を自動検出して書き起こし開始。",
       "scribe.foot.transcribing": "ローカル Whisper の分割書き起こし。<b>進捗</b>と<b>ログ</b>をリアルタイム表示、いつでもキャンセル可能。",
       "scribe.foot.complete": "<b>タイムコード</b>と<b>テキスト</b>を校正し、<b>SRT</b> をワンクリックで書き出し。",
-      "scribe.mock.aria": "PeaScribe インターフェースプレビュー",
       "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 中国語",
       "scribe.mock.track": "トラック 1 · 中国語",
       "scribe.mock.model": "whisper·base",
@@ -1606,15 +1721,17 @@ img, svg { display: block; }
       "download.soon": "近日公開",
       "ver.label": "最新版",
       "download.aria": "{product} · {platform} をダウンロード",
+      "download.msStoreAria": "{product} を Microsoft Store で入手",
       "download.toast.pending": "{product} · {platform} は近日公開です。公開後、ここにダウンロードリンクが表示されます。",
-      "note.win": "Windows 10 以降",
+      "note.win": "Windows 10 バージョン 17763.0 以降",
+      "note.mac": "Apple M シリーズ",
       "req.eyebrow": "システム要件",
       "req.title": "PeaScribe のシステム要件",
-      "req.win.os": "Windows 10 (1809+) または Windows 11",
+      "req.win.os": "Windows 10 バージョン 17763.0 以降",
       "req.win.arch": "64ビット (x64)",
       "req.win.gpu": "NVIDIA GPU で CUDA アクセラレーション対応",
       "req.mac.os": "macOS 10.15 Catalina 以降",
-      "req.mac.chip": "Intel / Apple Silicon 対応",
+      "req.mac.chip": "M シリーズチップ",
       "req.mac.gpu": "Apple Silicon は Metal アクセラレーションを自動有効化",
       "values.eyebrow": "Why Pea",
       "values.title": "なぜローカルファーストなのか",
@@ -1627,6 +1744,853 @@ img, svg { display: block; }
       "values.card3.body": "SRT・CSV・Anki — 標準フォーマットでいつでも持ち出せます。あなたの積み重ねは、いつでもあなたのもの。",
       "footer.copy": "© 2026 Pea シリーズ · ドラマを見ながら語学も",
       "footer.privacy": "プライバシーポリシー"
+    },
+    ko: {
+      "meta.title": "Pea 시리즈 — 드라마 보며 언어 배우기",
+      "meta.description": "Pea 시리즈는 작고 알찬 로컬 데스크톱 앱 모음입니다: PeaPlayer 언어 학습 플레이어와 PeaScribe 자막 생성기. 파일은 기기에 남고, 속도가 곧 경험입니다.",
+      "nav.brand": "Pea 시리즈",
+      "nav.brand.aria": "Pea 시리즈 홈",
+      "nav.aria": "주요 내비게이션",
+      "nav.products": "제품",
+      "nav.values": "철학",
+      "nav.download": "다운로드",
+      "nav.developer": "개발자 소개",
+      "lang.label": "언어",
+      "theme.light": "다크 모드로 전환",
+      "theme.dark": "라이트 모드로 전환",
+      "hero.title": "드라마도 언어도,<br>둘 다 놓치지 않게.",
+      "hero.sub": "PeaPlayer는 드라마를 보면서 자연스럽게 언어를 익히게 해줍니다. PeaScribe는 오디오와 영상을 자막으로 바꿔줍니다. 파일은 로컬에 남고, 개인정보와 속도를 모두 챙깁니다.",
+      "hero.browse": "제품 살펴보기",
+      "hero.download": "바로 다운로드",
+      "hero.launcher.player.aria": "PeaPlayer — 언어 학습 플레이어",
+      "hero.launcher.player.desc": "언어 학습 플레이어",
+      "hero.launcher.scribe.aria": "PeaScribe — 자막 생성기",
+      "hero.launcher.scribe.desc": "자막 생성기",
+      "products.eyebrow": "제품",
+      "products.title": "작은 도구 둘, 보는 시간을 공부로",
+      "products.lead": "PeaPlayer는 '보기'를, PeaScribe는 '자막'을 맡습니다. 서로 독립적이지만, 함께 쓰면 더 편합니다.",
+      "player.kind": "언어 학습 플레이어",
+      "player.h3": "몰입형 언어 학습, 영상 한 편에서 시작됩니다.",
+      "player.desc": "어떤 로컬 영상이든 이중언어 자막을 겹쳐 보여주고, 단어를 클릭하면 바로 뜻을 찾아 단어장에 자동 저장한 뒤 일정에 맞춰 복습합니다. 시청은 끊기지 않고, 페이스는 온전히 당신의 몫입니다.",
+      "player.f1": "이중언어 자막 · 문장별 동기화",
+      "player.f1k": "원문 / 번역",
+      "player.f2": "클릭으로 단어 검색 · 단어장 추가",
+      "player.f2k": "⌘ + 클릭",
+      "player.f3": "단어장 · SRS 복습",
+      "player.f3k": "자동 저장",
+      "player.f4": "Anki / CSV 내보내기",
+      "player.f4k": "양방향",
+      "player.f5": "자막 검색 · 재생 따라가기",
+      "player.f5k": "⌘F",
+      "player.f6": "A-B 반복 · 문장별 집중 듣기",
+      "player.f6k": "I / O",
+      "player.f7": "중국어 역방향 암송",
+      "player.f7k": "중국어 → 원문",
+      "player.f8": "학습 통계",
+      "player.f8k": "숙달도",
+      "player.cta": "PeaPlayer 다운로드",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "PeaPlayer 화면 미리보기",
+      "player.tabs.aria": "PeaPlayer 화면 전환",
+      "player.screens.home": "홈",
+      "player.screens.player": "플레이어",
+      "player.screens.review": "학습 · 복습",
+      "player.foot.home": "런처에서 <b>재생</b>, <b>복습</b>, <b>사용 안내</b>로 바로 이동합니다.",
+      "player.foot.player": "2트랙 이중언어 자막 · 단어 클릭 검색 · A-B 구간 반복, <b>시청은 멈추지 않습니다</b>.",
+      "player.foot.review": "중국어 역방향 암송 · 기억 평가 · <b>SRS</b>가 복습 일정을 자동으로 잡아줍니다.",
+      "player.cue.word": "단어 클릭 · 즉시 검색",
+      "scribe.kind": "자막 생성기",
+      "scribe.h3": "오디오에서 자막까지, 한 번 생성하면 바로 사용.",
+      "scribe.desc": "영상이나 오디오를 끌어다 놓으면 트랙을 자동 감지하고 언어를 선택해, 로컬 Whisper 모델로 자막을 생성하고 SRT로 내보냅니다. 타임코드를 한 줄씩 다듬은 뒤 바로 전달하면 됩니다.",
+      "scribe.f1": "트랙 자동 감지",
+      "scribe.f1k": "다국어",
+      "scribe.f2": "로컬 Whisper 자막 생성",
+      "scribe.f2k": "오프라인 모델",
+      "scribe.f3": "모델 관리 · 진행 상황 표시",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "3열 워크스페이스",
+      "scribe.f4k": "기록 · 파일 · 속성",
+      "scribe.f5": "타임코드 한 줄씩 교정",
+      "scribe.f5k": "표 편집기",
+      "scribe.f6": "클릭 한 번으로 SRT 내보내기",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "일괄 처리 큐",
+      "scribe.f7k": "자동 진행",
+      "scribe.f8": "명령 팔레트",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "PeaScribe 다운로드",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe 화면 미리보기",
+      "scribe.tabs.aria": "PeaScribe 화면 전환",
+      "scribe.screens.idle": "홈",
+      "scribe.screens.transcribing": "생성 중",
+      "scribe.screens.complete": "자막 편집",
+      "scribe.foot.idle": "오디오/영상을 끌어다 놓으면 <b>트랙</b>과 <b>언어</b>를 자동 감지하고 자막 생성을 시작합니다.",
+      "scribe.foot.transcribing": "로컬 Whisper가 자막을 분할 생성 · <b>진행 상황</b>과 <b>로그</b>를 실시간으로 확인하고 언제든 취소할 수 있습니다.",
+      "scribe.foot.complete": "<b>타임코드</b>와 <b>텍스트</b>를 한 줄씩 교정하고 <b>SRT</b>를 클릭 한 번으로 내보내 바로 전달하세요.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · 중국어",
+      "scribe.mock.track": "트랙 1 · 중국어",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "생성 중",
+      "scribe.mock.srt1": "Pea 시리즈에 오신 것을 환영합니다",
+      "scribe.mock.srt2": "오늘은 로컬 도구에 대해 이야기해 보겠습니다",
+      "scribe.mock.srt3": "영상에서 언어를 배우기",
+      "download.eyebrow": "다운로드",
+      "download.title": "Pea 시리즈 다운로드",
+      "download.btn": "다운로드",
+      "download.live": "출시됨",
+      "download.soon": "출시 예정",
+      "ver.label": "최신 버전",
+      "download.aria": "{product} · {platform} 다운로드",
+      "download.msStoreAria": "Microsoft Store에서 {product} 받기",
+      "download.toast.pending": "{product} · {platform} 버전은 아직 출시 전입니다. 출시되면 여기에 다운로드 링크가 표시됩니다.",
+      "note.win": "Windows 10 버전 17763.0 이상",
+      "note.mac": "M 시리즈 칩",
+      "req.eyebrow": "시스템 요구 사항",
+      "req.title": "PeaScribe 시스템 요구 사항",
+      "req.win.os": "Windows 10 버전 17763.0 이상",
+      "req.win.arch": "64비트 (x64)",
+      "req.win.gpu": "NVIDIA 그래픽 카드로 CUDA 가속 지원",
+      "req.mac.os": "macOS 10.15 Catalina 이상",
+      "req.mac.chip": "M 시리즈 칩",
+      "req.mac.gpu": "Apple Silicon은 Metal 가속을 자동으로 활성화합니다",
+      "values.eyebrow": "Why Pea",
+      "values.title": "왜 로컬 우선 도구인가",
+      "values.lead": "당신의 자료는 작품이자 데이터입니다. 어딘가로 업로드되는 대신 당신의 기기에 남아 있어야 합니다.",
+      "values.card1.title": "로컬 우선",
+      "values.card1.body": "파일과 데이터는 항상 당신의 기기에 남습니다. 업로드 없음, 추적 없음, 오프라인 사용 가능 — 개인정보 보호는 스위치가 아니라 기본값입니다.",
+      "values.card2.title": "조용히 빠르게",
+      "values.card2.body": "실행하면 바로 쓸 수 있고, 자막 생성과 재생 모두 충분히 빠릅니다. 절제된 인터페이스가 주의를 화면이 아닌 콘텐츠에 집중시킵니다.",
+      "values.card3.title": "열린 데이터",
+      "values.card3.body": "SRT, CSV, Anki — 표준 형식이라 언제든 가져다 쓸 수 있습니다. 당신이 쌓은 것은 당신의 것이며, 언제든 가져갈 수 있습니다.",
+      "footer.copy": "© 2026 Pea 시리즈 · 드라마 보며 언어 배우기",
+      "footer.privacy": "개인정보 처리방침"
+    },
+    de: {
+      "meta.title": "Pea-Serie — Sprachen lernen beim Zuschauen",
+      "meta.description": "Die Pea-Serie ist eine Sammlung kleiner, feiner lokaler Desktop-Apps: der Sprachlern-Player PeaPlayer und der Untertitel-Generator PeaScribe. Dateien bleiben lokal – Geschwindigkeit ist das Erlebnis.",
+      "nav.brand": "Pea-Serie",
+      "nav.brand.aria": "Pea-Serie Startseite",
+      "nav.aria": "Hauptnavigation",
+      "nav.products": "Produkte",
+      "nav.values": "Warum Pea",
+      "nav.download": "Download",
+      "nav.developer": "Über den Entwickler",
+      "lang.label": "Sprache",
+      "theme.light": "Zum Dunkelmodus wechseln",
+      "theme.dark": "Zum Hellmodus wechseln",
+      "hero.title": "Sprachen lernen beim Zuschauen,<br>ganz ohne Kompromiss.",
+      "hero.sub": "PeaPlayer hilft dir, beim Zuschauen ganz nebenbei eine Sprache aufzunehmen. PeaScribe macht aus Audio und Video Untertitel. Dateien bleiben lokal – Datenschutz und Tempo.",
+      "hero.browse": "Produkte ansehen",
+      "hero.download": "Direkt herunterladen",
+      "hero.launcher.player.aria": "PeaPlayer — Sprachlern-Player",
+      "hero.launcher.player.desc": "Sprachlern-Player",
+      "hero.launcher.scribe.aria": "PeaScribe — Untertitel-Generator",
+      "hero.launcher.scribe.desc": "Untertitel-Generator",
+      "products.eyebrow": "Produkte",
+      "products.title": "Zwei kleine Tools, die aus Zuschauen Lernen machen",
+      "products.lead": "PeaPlayer übernimmt das Zuschauen, PeaScribe die Untertitel. Unabhängig – und zusammen noch besser.",
+      "player.kind": "Sprachlern-Player",
+      "player.h3": "Immersives Sprachenlernen beginnt mit einem Video.",
+      "player.desc": "Zweisprachige Untertitel über jedes lokale Video legen, Wörter per Klick sofort nachschlagen, automatisch ins Vokabelheft übernehmen und regelmäßig wiederholen. Das Zuschauen läuft ungestört weiter – du bestimmst das Tempo.",
+      "player.f1": "Zweisprachige Untertitel · zeilensynchron",
+      "player.f1k": "Original / Übersetzung",
+      "player.f2": "Klick zum Nachschlagen · ins Vokabelheft",
+      "player.f2k": "⌘ + Klick",
+      "player.f3": "Vokabelheft · SRS-Wiederholung",
+      "player.f3k": "Automatisch",
+      "player.f4": "Anki / CSV-Export",
+      "player.f4k": "Beidseitig",
+      "player.f5": "Untertitel-Suche · folgt der Wiedergabe",
+      "player.f5k": "⌘F",
+      "player.f6": "A-B-Schleife · Satz für Satz hören",
+      "player.f6k": "I / O",
+      "player.f7": "Rückwärts auswendig lernen (Chinesisch → Original)",
+      "player.f7k": "Chinesisch → Original",
+      "player.f8": "Lernstatistik",
+      "player.f8k": "Beherrschung",
+      "player.cta": "PeaPlayer herunterladen",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "PeaPlayer – Oberflächenvorschau",
+      "player.tabs.aria": "PeaPlayer – Ansicht wechseln",
+      "player.screens.home": "Start",
+      "player.screens.player": "Player",
+      "player.screens.review": "Lernen · Wiederholen",
+      "player.foot.home": "Vom Launcher direkt zu <b>Wiedergabe</b>, <b>Wiederholung</b> und <b>Anleitung</b>.",
+      "player.foot.player": "Zweispurige zweisprachige Untertitel · jedes Wort nachschlagen · A-B-Schleife. <b>Das Zuschauen läuft weiter</b>.",
+      "player.foot.review": "Rückwärts auswendig lernen · Erinnerung bewerten · <b>SRS</b> plant Wiederholungen automatisch.",
+      "player.cue.word": "Wort anklicken · sofort nachschlagen",
+      "scribe.kind": "Untertitel-Generator",
+      "scribe.h3": "Von Audio zu Untertiteln – ein Durchlauf, sofort einsatzbereit.",
+      "scribe.desc": "Video oder Audio hineinziehen: Tonspur und Sprache werden erkannt, ein lokales Whisper-Modell erzeugt Untertitel und exportiert SRT. Zeitcodes prüfen, dann ausliefern.",
+      "scribe.f1": "Automatische Tonspur-Erkennung",
+      "scribe.f1k": "Mehrsprachig",
+      "scribe.f2": "Lokale Whisper-Untertitel",
+      "scribe.f2k": "Offline-Modell",
+      "scribe.f3": "Modellverwaltung · Fortschritt live",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Dreispaltiger Arbeitsbereich",
+      "scribe.f4k": "Verlauf · Datei · Eigenschaften",
+      "scribe.f5": "Zeitcodes pro Zeile bearbeiten",
+      "scribe.f5k": "Tabellen-Editor",
+      "scribe.f6": "SRT-Export mit einem Klick",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Stapel-Warteschlange",
+      "scribe.f7k": "Automatisch weiter",
+      "scribe.f8": "Befehlspalette",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "PeaScribe herunterladen",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "PeaScribe – Oberflächenvorschau",
+      "scribe.tabs.aria": "PeaScribe – Ansicht wechseln",
+      "scribe.screens.idle": "Start",
+      "scribe.screens.transcribing": "Generierung",
+      "scribe.screens.complete": "Untertitel-Editor",
+      "scribe.foot.idle": "Audio/Video hineinziehen → <b>Tonspur</b> und <b>Sprache</b> automatisch erkennen, dann Untertitel erzeugen.",
+      "scribe.foot.transcribing": "Lokale Whisper-Generierung in Abschnitten · <b>Fortschritt</b> und <b>Protokoll</b> live sichtbar, jederzeit abbrechen.",
+      "scribe.foot.complete": "<b>Zeitcodes</b> und <b>Text</b> prüfen, <b>SRT</b> mit einem Klick exportieren.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chinesisch",
+      "scribe.mock.track": "Tonspur 1 · Chinesisch",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Generierung",
+      "scribe.mock.srt1": "Willkommen bei der Pea-Serie",
+      "scribe.mock.srt2": "Heute reden wir über lokale Tools",
+      "scribe.mock.srt3": "Eine Sprache aus Videos lernen",
+      "download.eyebrow": "Download",
+      "download.title": "Pea-Serie herunterladen",
+      "download.btn": "Herunterladen",
+      "download.live": "Verfügbar",
+      "download.soon": "Demnächst",
+      "ver.label": "Neueste Version",
+      "download.aria": "{product} · {platform} herunterladen",
+      "download.msStoreAria": "{product} im Microsoft Store herunterladen",
+      "download.toast.pending": "„{product} · {platform}“ ist bald verfügbar – sobald es erscheint, findest du hier den Download.",
+      "note.win": "Windows 10 Version 17763.0 oder höher",
+      "note.mac": "Apple M-Serie",
+      "req.eyebrow": "Systemanforderungen",
+      "req.title": "Systemanforderungen für PeaScribe",
+      "req.win.os": "Windows 10 Version 17763.0 oder höher",
+      "req.win.arch": "64-Bit (x64)",
+      "req.win.gpu": "NVIDIA-Grafikkarte für CUDA-Beschleunigung",
+      "req.mac.os": "macOS 10.15 Catalina oder neuer",
+      "req.mac.chip": "M-Serie-Chips",
+      "req.mac.gpu": "Apple Silicon nutzt automatisch Metal-Beschleunigung",
+      "values.eyebrow": "Warum Pea",
+      "values.title": "Warum lokale Tools",
+      "values.lead": "Deine Materialien sind dein Werk und deine Daten. Sie sollten auf deinem Gerät bleiben – nicht irgendwohin hochgeladen werden.",
+      "values.card1.title": "Lokal zuerst",
+      "values.card1.body": "Dateien und Daten bleiben immer auf deinem Gerät. Kein Upload, kein Tracking, offline nutzbar – Datenschutz ist Standard, kein Schalter.",
+      "values.card2.title": "Leise und schnell",
+      "values.card2.body": "Startet sofort einsatzbereit; Generierung und Wiedergabe sind schnell. Eine zurückhaltende Oberfläche lässt die Aufmerksamkeit beim Inhalt, nicht bei der UI.",
+      "values.card3.title": "Offene Daten",
+      "values.card3.body": "SRT, CSV, Anki – Standardformate, die du jederzeit mitnehmen kannst. Dein Fortschritt gehört dir, immer.",
+      "footer.copy": "© 2026 Pea-Serie · Sprachen lernen beim Zuschauen",
+      "footer.privacy": "Datenschutzerklärung"
+    },
+    es: {
+      "meta.title": "Serie Pea — Aprende idiomas mientras ves",
+      "meta.description": "Serie Pea es un conjunto de apps de escritorio locales, pequeñas y cuidadas: el reproductor de aprendizaje de idiomas PeaPlayer y el generador de subtítulos PeaScribe. Tus archivos se quedan en tu equipo; la velocidad es la experiencia.",
+      "nav.brand": "Serie Pea",
+      "nav.brand.aria": "Inicio de Serie Pea",
+      "nav.aria": "Navegación principal",
+      "nav.products": "Productos",
+      "nav.values": "Por qué Pea",
+      "nav.download": "Descargar",
+      "nav.developer": "Sobre el desarrollador",
+      "lang.label": "Idioma",
+      "theme.light": "Cambiar a modo oscuro",
+      "theme.dark": "Cambiar a modo claro",
+      "hero.title": "Ve series y aprende idiomas,<br>sin renunciar a nada.",
+      "hero.sub": "PeaPlayer te ayuda a aprender un idioma de forma natural mientras ves. PeaScribe convierte audio y video en subtítulos. Tus archivos se quedan en tu equipo: privacidad y velocidad.",
+      "hero.browse": "Ver productos",
+      "hero.download": "Descargar las apps",
+      "hero.launcher.player.aria": "PeaPlayer — reproductor de aprendizaje de idiomas",
+      "hero.launcher.player.desc": "Reproductor de aprendizaje de idiomas",
+      "hero.launcher.scribe.aria": "PeaScribe — generador de subtítulos",
+      "hero.launcher.scribe.desc": "Generador de subtítulos",
+      "products.eyebrow": "Productos",
+      "products.title": "Dos herramientas pequeñas convierten ver series en aprender",
+      "products.lead": "PeaPlayer se encarga de ver; PeaScribe, de los subtítulos. Son independientes, y juntos funcionan aún mejor.",
+      "player.kind": "Reproductor de idiomas",
+      "player.h3": "Aprendizaje inmersivo de idiomas, empezando por un video.",
+      "player.desc": "Superpón subtítulos bilingües en cualquier video local, toca una palabra para consultarla al instante, se añade sola a tu glosario y se repasa según lo programado. La reproducción no se interrumpe: tú marcas el ritmo.",
+      "player.f1": "Subtítulos bilingües · línea por línea",
+      "player.f1k": "Original / Traducción",
+      "player.f2": "Toca para consultar · añadir al glosario",
+      "player.f2k": "⌘ + clic",
+      "player.f3": "Glosario · repaso SRS",
+      "player.f3k": "Automático",
+      "player.f4": "Exportar a Anki / CSV",
+      "player.f4k": "Bidireccional",
+      "player.f5": "Búsqueda de subtítulos · sigue la reproducción",
+      "player.f5k": "⌘F",
+      "player.f6": "Bucle A-B · repetir cada línea",
+      "player.f6k": "I / O",
+      "player.f7": "Recitado inverso (chino → original)",
+      "player.f7k": "Chino → original",
+      "player.f8": "Estadísticas de estudio",
+      "player.f8k": "Dominio",
+      "player.cta": "Descargar PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "Vista previa de la interfaz de PeaPlayer",
+      "player.tabs.aria": "Selector de pantallas de PeaPlayer",
+      "player.screens.home": "Inicio",
+      "player.screens.player": "Reproductor",
+      "player.screens.review": "Aprender · Repasar",
+      "player.foot.home": "Desde el lanzador, accede con un clic a la <b>reproducción</b>, el <b>repaso</b> y la <b>guía</b>.",
+      "player.foot.player": "Subtítulos bilingües en dos pistas · consulta por palabra · bucle A-B. <b>La reproducción nunca se detiene</b>.",
+      "player.foot.review": "Recitado inverso · califica tu memoria · <b>SRS</b> programa los repasos automáticamente.",
+      "player.cue.word": "Toca una palabra · consulta al instante",
+      "scribe.kind": "Generador de subtítulos",
+      "scribe.h3": "De audio a subtítulos: una sola pasada y listo para usar.",
+      "scribe.desc": "Arrastra un video o audio: detecta la pista, elige el idioma, ejecuta un modelo Whisper local y genera subtítulos en SRT. Ajusta los códigos de tiempo y exporta.",
+      "scribe.f1": "Detección automática de pista",
+      "scribe.f1k": "Multilingüe",
+      "scribe.f2": "Subtítulos con Whisper local",
+      "scribe.f2k": "Sin conexión",
+      "scribe.f3": "Gestión de modelos · progreso en vivo",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Espacio de trabajo de 3 columnas",
+      "scribe.f4k": "Historial · Archivo · Propiedades",
+      "scribe.f5": "Edición de códigos de tiempo por línea",
+      "scribe.f5k": "Editor de tabla",
+      "scribe.f6": "Exportar SRT con un clic",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Cola por lotes",
+      "scribe.f7k": "Avance automático",
+      "scribe.f8": "Paleta de comandos",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "Descargar PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "Vista previa de la interfaz de PeaScribe",
+      "scribe.tabs.aria": "Selector de pantallas de PeaScribe",
+      "scribe.screens.idle": "Inicio",
+      "scribe.screens.transcribing": "Generando",
+      "scribe.screens.complete": "Editor de subtítulos",
+      "scribe.foot.idle": "Arrastra audio o video → detecta la <b>pista</b> y el <b>idioma</b>, y empieza a generar subtítulos.",
+      "scribe.foot.transcribing": "Whisper local genera por fragmentos · <b>progreso</b> y <b>registro</b> en vivo, cancela cuando quieras.",
+      "scribe.foot.complete": "Revisa <b>códigos de tiempo</b> y <b>texto</b> línea por línea, y exporta <b>SRT</b> con un clic.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chino",
+      "scribe.mock.track": "Pista 1 · Chino",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Generando",
+      "scribe.mock.srt1": "Bienvenido a Serie Pea",
+      "scribe.mock.srt2": "Hoy hablemos de las herramientas locales",
+      "scribe.mock.srt3": "Aprende un idioma desde el video",
+      "download.eyebrow": "Descargar",
+      "download.title": "Descargar Serie Pea",
+      "download.btn": "Descargar",
+      "download.live": "Disponible",
+      "download.soon": "Próximamente",
+      "ver.label": "Última versión",
+      "download.aria": "Descargar {product} · {platform}",
+      "download.msStoreAria": "Obtener {product} en Microsoft Store",
+      "download.toast.pending": "«{product} · {platform}» llegará pronto: cuando se publique, aquí aparecerá el enlace de descarga.",
+      "note.win": "Windows 10 versión 17763.0 o posterior",
+      "note.mac": "Apple serie M",
+      "req.eyebrow": "Requisitos",
+      "req.title": "Requisitos de PeaScribe",
+      "req.win.os": "Windows 10 versión 17763.0 o posterior",
+      "req.win.arch": "64 bits (x64)",
+      "req.win.gpu": "GPU NVIDIA para aceleración CUDA",
+      "req.mac.os": "macOS 10.15 Catalina o posterior",
+      "req.mac.chip": "Chips de la serie M",
+      "req.mac.gpu": "Apple Silicon activa la aceleración Metal automáticamente",
+      "values.eyebrow": "Por qué Pea",
+      "values.title": "Por qué creamos herramientas locales",
+      "values.lead": "Tus materiales son tu obra y tus datos. Deben quedarse en tu equipo, no subirse a otro lugar.",
+      "values.card1.title": "Local primero",
+      "values.card1.body": "Los archivos y los datos siempre se quedan en tu equipo. Sin subidas, sin rastreo, funciona sin conexión: la privacidad es lo predeterminado, no un interruptor.",
+      "values.card2.title": "Rápido y discreto",
+      "values.card2.body": "Arranca listo para usar; la transcripción y la reproducción son rápidas. Una interfaz sobria deja la atención en el contenido, no en los controles.",
+      "values.card3.title": "Datos abiertos",
+      "values.card3.body": "SRT, CSV, Anki: formatos estándar que puedes llevar a donde quieras. Tu progreso es tuyo, siempre.",
+      "footer.copy": "© 2026 Serie Pea · Aprende idiomas mientras ves.",
+      "footer.privacy": "Política de privacidad"
+    },
+    fr: {
+      "meta.title": "Gamme Pea — Apprendre les langues en regardant des séries",
+      "meta.description": "La gamme Pea réunit de petites applications de bureau locales et soignées : PeaPlayer, lecteur d'apprentissage des langues, et PeaScribe, générateur de sous-titres. Les fichiers restent sur votre appareil ; la vitesse fait l'expérience.",
+      "nav.brand": "Gamme Pea",
+      "nav.brand.aria": "Accueil Gamme Pea",
+      "nav.aria": "Navigation principale",
+      "nav.products": "Produits",
+      "nav.values": "Pourquoi Pea",
+      "nav.download": "Téléchargement",
+      "nav.developer": "À propos du développeur",
+      "lang.label": "Langue",
+      "theme.light": "Passer en mode sombre",
+      "theme.dark": "Passer en mode clair",
+      "hero.title": "Regarder des séries,<br>apprendre une langue — sans compromis.",
+      "hero.sub": "PeaPlayer vous fait acquérir la langue naturellement pendant que vous regardez ; PeaScribe transforme l'audio et la vidéo en sous-titres. Les fichiers restent en local — confidentialité et rapidité.",
+      "hero.browse": "Voir les produits",
+      "hero.download": "Télécharger",
+      "hero.launcher.player.aria": "PeaPlayer — lecteur d'apprentissage des langues",
+      "hero.launcher.player.desc": "Lecteur d'apprentissage des langues",
+      "hero.launcher.scribe.aria": "PeaScribe — générateur de sous-titres",
+      "hero.launcher.scribe.desc": "Générateur de sous-titres",
+      "products.eyebrow": "Produits",
+      "products.title": "Deux petits outils qui transforment le visionnage en apprentissage",
+      "products.lead": "PeaPlayer s'occupe du visionnage, PeaScribe des sous-titres. Indépendants — et encore meilleurs ensemble.",
+      "player.kind": "Lecteur d'apprentissage des langues",
+      "player.h3": "L'apprentissage immersif d'une langue commence par une vidéo.",
+      "player.desc": "Superposez des sous-titres bilingues sur n'importe quelle vidéo locale : touchez un mot pour le consulter aussitôt, il rejoint votre carnet de vocabulaire, et révisez selon votre planning. Le visionnage n'est jamais interrompu — vous gardez le rythme.",
+      "player.f1": "Sous-titres bilingues · synchro ligne à ligne",
+      "player.f1k": "Original / Traduction",
+      "player.f2": "Touchez un mot · ajout au carnet",
+      "player.f2k": "⌘ + Clic",
+      "player.f3": "Carnet de vocabulaire · révision SRS",
+      "player.f3k": "Ajout auto",
+      "player.f4": "Export Anki / CSV",
+      "player.f4k": "Bidirectionnel",
+      "player.f5": "Recherche de sous-titres · suit la lecture",
+      "player.f5k": "⌘F",
+      "player.f6": "Boucle A-B · écoute ligne par ligne",
+      "player.f6k": "I / O",
+      "player.f7": "Récitation inversée (chinois → original)",
+      "player.f7k": "Chinois → original",
+      "player.f8": "Statistiques d'apprentissage",
+      "player.f8k": "Taux de maîtrise",
+      "player.cta": "Télécharger PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "Aperçu de l'interface PeaPlayer",
+      "player.tabs.aria": "Sélecteur d'écran PeaPlayer",
+      "player.screens.home": "Accueil",
+      "player.screens.player": "Lecteur",
+      "player.screens.review": "Apprendre · Réviser",
+      "player.foot.home": "Depuis le lanceur, accédez en un clic à la <b>lecture</b>, à la <b>révision</b> et au <b>guide</b>.",
+      "player.foot.player": "Sous-titres bilingues sur deux pistes · recherche au mot près · boucle A-B. <b>Le visionnage ne s'arrête jamais</b>.",
+      "player.foot.review": "Récitation inversée · évaluation de la mémoire · <b>SRS</b> planifie les révisions automatiquement.",
+      "player.cue.word": "Touchez un mot · recherche instantanée",
+      "scribe.kind": "Générateur de sous-titres",
+      "scribe.h3": "De l'audio aux sous-titres : une seule passe, prêt à l'emploi.",
+      "scribe.desc": "Déposez une vidéo ou un fichier audio : la piste est détectée, la langue choisie, puis un modèle Whisper local génère les sous-titres et les exporte en SRT. Vérifiez les codes temporels, et c'est prêt à livrer.",
+      "scribe.f1": "Détection auto de la piste",
+      "scribe.f1k": "Multilingue",
+      "scribe.f2": "Sous-titres Whisper en local",
+      "scribe.f2k": "Modèle hors ligne",
+      "scribe.f3": "Gestion des modèles · progression visible",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Espace de travail à 3 colonnes",
+      "scribe.f4k": "Historique · Fichier · Propriétés",
+      "scribe.f5": "Correction des codes temporels",
+      "scribe.f5k": "Éditeur tabulaire",
+      "scribe.f6": "Export SRT en un clic",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Traitement par lots",
+      "scribe.f7k": "Avance auto",
+      "scribe.f8": "Palette de commandes",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "Télécharger PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "Aperçu de l'interface PeaScribe",
+      "scribe.tabs.aria": "Sélecteur d'écran PeaScribe",
+      "scribe.screens.idle": "Accueil",
+      "scribe.screens.transcribing": "Génération",
+      "scribe.screens.complete": "Éditeur de sous-titres",
+      "scribe.foot.idle": "Déposez un audio ou une vidéo → détection auto de la <b>piste</b> et de la <b>langue</b>, puis lancement de la génération.",
+      "scribe.foot.transcribing": "Génération de sous-titres par Whisper en local, par segments · <b>progression</b> et <b>journal</b> en direct, annulable à tout moment.",
+      "scribe.foot.complete": "Vérifiez les <b>codes temporels</b> et le <b>texte</b> ligne par ligne, exportez le <b>SRT</b> en un clic.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · chinois",
+      "scribe.mock.track": "Piste 1 · chinois",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Génération",
+      "scribe.mock.srt1": "Bienvenue dans la gamme Pea",
+      "scribe.mock.srt2": "Aujourd'hui, parlons des outils locaux",
+      "scribe.mock.srt3": "Apprendre une langue à partir d'une vidéo",
+      "download.eyebrow": "Téléchargement",
+      "download.title": "Télécharger la gamme Pea",
+      "download.btn": "Télécharger",
+      "download.live": "Disponible",
+      "download.soon": "Bientôt disponible",
+      "ver.label": "Dernière version",
+      "download.aria": "Télécharger {product} · {platform}",
+      "download.msStoreAria": "Obtenir {product} sur le Microsoft Store",
+      "download.toast.pending": "« {product} · {platform} » bientôt disponible — le lien de téléchargement apparaîtra ici dès la sortie.",
+      "note.win": "Windows 10 version 17763.0 ou ultérieure",
+      "note.mac": "Puce Apple M",
+      "req.eyebrow": "Prérequis",
+      "req.title": "Configuration requise pour PeaScribe",
+      "req.win.os": "Windows 10 version 17763.0 ou ultérieure",
+      "req.win.arch": "64 bits (x64)",
+      "req.win.gpu": "Carte NVIDIA pour l'accélération CUDA",
+      "req.mac.os": "macOS 10.15 Catalina ou version ultérieure",
+      "req.mac.chip": "Puces Apple M",
+      "req.mac.gpu": "Apple Silicon active automatiquement l'accélération Metal",
+      "values.eyebrow": "Pourquoi Pea",
+      "values.title": "Pourquoi des outils locaux",
+      "values.lead": "Vos contenus sont vos œuvres et vos données. Ils doivent rester sur votre appareil, et non être envoyés ailleurs.",
+      "values.card1.title": "Local d'abord",
+      "values.card1.body": "Fichiers et données restent toujours sur votre appareil. Aucun envoi, aucun pistage, fonctionne hors ligne — la confidentialité est le réglage par défaut, pas une option.",
+      "values.card2.title": "Discret et rapide",
+      "values.card2.body": "Démarrage immédiat ; génération de sous-titres et lecture sont rapides. Une interface sobre laisse l'attention au contenu, pas au décor.",
+      "values.card3.title": "Données ouvertes",
+      "values.card3.body": "SRT, CSV, Anki — des formats standards, à emporter partout. Votre progression vous appartient, toujours.",
+      "footer.copy": "© 2026 Gamme Pea · Apprendre les langues en regardant des séries",
+      "footer.privacy": "Politique de confidentialité"
+    },
+    it: {
+      "meta.title": "Serie Pea — Impara le lingue guardando",
+      "meta.description": "Serie Pea è una raccolta di piccole app desktop locali, curate nei dettagli: il lettore per imparare le lingue PeaPlayer e il generatore di sottotitoli PeaScribe. I file restano sul tuo dispositivo: la velocità è l'esperienza.",
+      "nav.brand": "Serie Pea",
+      "nav.brand.aria": "Home di Serie Pea",
+      "nav.aria": "Navigazione principale",
+      "nav.products": "Prodotti",
+      "nav.values": "Perché Pea",
+      "nav.download": "Download",
+      "nav.developer": "Lo sviluppatore",
+      "lang.label": "Lingua",
+      "theme.light": "Passa alla modalità scura",
+      "theme.dark": "Passa alla modalità chiara",
+      "hero.title": "Guarda le serie,<br>impara le lingue — senza compromessi.",
+      "hero.sub": "PeaPlayer ti fa assorbire la lingua mentre guardi, PeaScribe trasforma audio e video in sottotitoli. I file restano in locale: privacy e velocità insieme.",
+      "hero.browse": "Scopri i prodotti",
+      "hero.download": "Scarica le app",
+      "hero.launcher.player.aria": "PeaPlayer — lettore per imparare le lingue",
+      "hero.launcher.player.desc": "Lettore per imparare le lingue",
+      "hero.launcher.scribe.aria": "PeaScribe — generatore di sottotitoli",
+      "hero.launcher.scribe.desc": "Generatore di sottotitoli",
+      "products.eyebrow": "Prodotti",
+      "products.title": "Due piccoli strumenti che trasformano la visione in apprendimento",
+      "products.lead": "PeaPlayer si occupa del «guardare», PeaScribe dei «sottotitoli». Indipendenti, ma insieme funzionano ancora meglio.",
+      "player.kind": "Lettore per imparare le lingue",
+      "player.h3": "Apprendimento immersivo della lingua, a partire da un video.",
+      "player.desc": "Sovrapponi sottotitoli bilingue a qualsiasi video locale, tocca una parola per consultarla subito, salvala automaticamente nel vocabolario e ripassala con regolarità. La visione non si interrompe: il ritmo lo decidi tu.",
+      "player.f1": "Sottotitoli bilingue · sincronizzati per riga",
+      "player.f1k": "Originale / Traduzione",
+      "player.f2": "Tocca per cercare · aggiungi al vocabolario",
+      "player.f2k": "⌘ + clic",
+      "player.f3": "Vocabolario · ripasso SRS",
+      "player.f3k": "Aggiunta automatica",
+      "player.f4": "Esportazione Anki / CSV",
+      "player.f4k": "Bidirezionale",
+      "player.f5": "Ricerca nei sottotitoli · segue la riproduzione",
+      "player.f5k": "⌘F",
+      "player.f6": "Loop A-B · una riga alla volta",
+      "player.f6k": "I / O",
+      "player.f7": "Recita inversa (cinese → originale)",
+      "player.f7k": "Cinese → originale",
+      "player.f8": "Statistiche di studio",
+      "player.f8k": "Padronanza",
+      "player.cta": "Scarica PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "Anteprima dell'interfaccia di PeaPlayer",
+      "player.tabs.aria": "Selettore schermate di PeaPlayer",
+      "player.screens.home": "Home",
+      "player.screens.player": "Lettore",
+      "player.screens.review": "Studio · Ripasso",
+      "player.foot.home": "Dalla schermata iniziale accedi con un clic a <b>riproduzione</b>, <b>ripasso</b> e <b>guida</b>.",
+      "player.foot.player": "Sottotitoli bilingue su due tracce · ricerca per parola · loop A-B. <b>La visione non si interrompe</b>.",
+      "player.foot.review": "Recita inversa dal cinese · valuta la memoria · <b>SRS</b> pianifica i ripassi automaticamente.",
+      "player.cue.word": "Tocca una parola · consultala subito",
+      "scribe.kind": "Generatore di sottotitoli",
+      "scribe.h3": "Dall'audio ai sottotitoli: una sola generazione, subito pronta.",
+      "scribe.desc": "Trascina un video o un audio: rileva la traccia, sceglie la lingua, genera i sottotitoli con un modello Whisper locale ed esporta in SRT. Correggi i timecode riga per riga e sei pronto a consegnare.",
+      "scribe.f1": "Rilevamento automatico della traccia",
+      "scribe.f1k": "Multilingue",
+      "scribe.f2": "Generazione sottotitoli con Whisper locale",
+      "scribe.f2k": "Modello offline",
+      "scribe.f3": "Gestione modelli · avanzamento visibile",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Area di lavoro a tre colonne",
+      "scribe.f4k": "Cronologia · File · Proprietà",
+      "scribe.f5": "Correzione dei timecode riga per riga",
+      "scribe.f5k": "Editor a tabella",
+      "scribe.f6": "Esportazione SRT con un clic",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Coda batch",
+      "scribe.f7k": "Avanzamento automatico",
+      "scribe.f8": "Palette dei comandi",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "Scarica PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "Anteprima dell'interfaccia di PeaScribe",
+      "scribe.tabs.aria": "Selettore schermate di PeaScribe",
+      "scribe.screens.idle": "Home",
+      "scribe.screens.transcribing": "Generazione",
+      "scribe.screens.complete": "Editor dei sottotitoli",
+      "scribe.foot.idle": "Trascina audio o video → rileva automaticamente <b>traccia</b> e <b>lingua</b>, poi avvia la generazione dei sottotitoli con un clic.",
+      "scribe.foot.transcribing": "Sottotitoli generati a blocchi con Whisper locale · <b>avanzamento</b> e <b>log</b> visibili in tempo reale, annullabili in qualsiasi momento.",
+      "scribe.foot.complete": "Correggi <b>timecode</b> e <b>testo</b> riga per riga, esporta in <b>SRT</b> con un clic: pronto da consegnare.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Cinese",
+      "scribe.mock.track": "Traccia 1 · Cinese",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Generazione in corso",
+      "scribe.mock.srt1": "Benvenuti in Serie Pea",
+      "scribe.mock.srt2": "Oggi parliamo di strumenti locali",
+      "scribe.mock.srt3": "Imparare una lingua dai video",
+      "download.eyebrow": "Download",
+      "download.title": "Scarica Serie Pea",
+      "download.btn": "Scarica",
+      "download.live": "Disponibile",
+      "download.soon": "Prossimamente",
+      "ver.label": "Ultima versione",
+      "download.aria": "Scarica {product} · {platform}",
+      "download.msStoreAria": "Ottieni {product} dal Microsoft Store",
+      "download.toast.pending": "«{product} · {platform}» sarà presto disponibile: al rilascio comparirà qui il link per il download.",
+      "note.win": "Windows 10 versione 17763.0 o successiva",
+      "note.mac": "Chip Apple serie M",
+      "req.eyebrow": "Requisiti",
+      "req.title": "Requisiti di sistema di PeaScribe",
+      "req.win.os": "Windows 10 versione 17763.0 o successiva",
+      "req.win.arch": "64 bit (x64)",
+      "req.win.gpu": "GPU NVIDIA per l'accelerazione CUDA",
+      "req.mac.os": "macOS 10.15 Catalina o successivo",
+      "req.mac.chip": "Chip serie M",
+      "req.mac.gpu": "Apple Silicon attiva automaticamente l'accelerazione Metal",
+      "values.eyebrow": "Perché Pea",
+      "values.title": "Perché scegliere strumenti in locale",
+      "values.lead": "I tuoi materiali sono un'opera e anche un dato. Devono restare sul tuo dispositivo, non essere caricati altrove.",
+      "values.card1.title": "Tutto in locale",
+      "values.card1.body": "File e dati restano sempre sul tuo dispositivo. Nessun caricamento, nessun tracciamento, funziona offline: la privacy è l'impostazione predefinita, non un interruttore.",
+      "values.card2.title": "Veloce e discreto",
+      "values.card2.body": "Si avvia pronto all'uso; generazione dei sottotitoli e riproduzione sono rapide. Un'interfaccia sobria lascia l'attenzione al contenuto, non all'interfaccia.",
+      "values.card3.title": "Dati aperti",
+      "values.card3.body": "SRT, CSV, Anki — formati standard, sempre disponibili. I tuoi progressi sono tuoi, e puoi portarli con te in qualsiasi momento.",
+      "footer.copy": "© 2026 Serie Pea · Impara le lingue mentre guardi.",
+      "footer.privacy": "Informativa sulla privacy"
+    },
+    pt: {
+      "meta.title": "Série Pea — Aprenda idiomas assistindo",
+      "meta.description": "A Série Pea é um conjunto de apps de desktop locais, pequenos e bem-acabados: o PeaPlayer, player de aprendizado de idiomas, e o PeaScribe, gerador de legendas. Os arquivos ficam no seu dispositivo; velocidade é a experiência.",
+      "nav.brand": "Série Pea",
+      "nav.brand.aria": "Início da Série Pea",
+      "nav.aria": "Navegação principal",
+      "nav.products": "Produtos",
+      "nav.values": "Por que Pea",
+      "nav.download": "Download",
+      "nav.developer": "Sobre o desenvolvedor",
+      "lang.label": "Idioma",
+      "theme.light": "Mudar para o modo escuro",
+      "theme.dark": "Mudar para o modo claro",
+      "hero.title": "Assista séries,<br>aprenda idiomas — sem abrir mão de nada.",
+      "hero.sub": "O PeaPlayer ajuda você a absorver um idioma naturalmente enquanto assiste. O PeaScribe transforma áudio e vídeo em legendas. Arquivos ficam locais — privacidade e velocidade.",
+      "hero.browse": "Ver produtos",
+      "hero.download": "Baixar os apps",
+      "hero.launcher.player.aria": "PeaPlayer — player de aprendizado de idiomas",
+      "hero.launcher.player.desc": "Player de aprendizado de idiomas",
+      "hero.launcher.scribe.aria": "PeaScribe — gerador de legendas",
+      "hero.launcher.scribe.desc": "Gerador de legendas",
+      "products.eyebrow": "Produtos",
+      "products.title": "Duas ferramentas pequenas que transformam assistir em aprender",
+      "products.lead": "O PeaPlayer cuida de assistir; o PeaScribe cuida das legendas. Independentes — e ainda melhores juntos.",
+      "player.kind": "Player de aprendizado de idiomas",
+      "player.h3": "Aprendizado imersivo de idiomas começa com um vídeo.",
+      "player.desc": "Sobreponha legendas bilíngues em qualquer vídeo local, toque em uma palavra para consultar na hora, salve-a automaticamente no vocabulário e faça revisões programadas. Assistir não é interrompido — o ritmo é todo seu.",
+      "player.f1": "Legendas bilíngues · por frase",
+      "player.f1k": "Original / Tradução",
+      "player.f2": "Toque para consultar · adicionar ao vocabulário",
+      "player.f2k": "⌘ + clique",
+      "player.f3": "Vocabulário · revisão SRS",
+      "player.f3k": "Automático",
+      "player.f4": "Exportação Anki / CSV",
+      "player.f4k": "Bidirecional",
+      "player.f5": "Busca nas legendas · segue a reprodução",
+      "player.f5k": "⌘F",
+      "player.f6": "Loop A-B · repetir cada frase",
+      "player.f6k": "I / O",
+      "player.f7": "Recitação reversa (chinês → original)",
+      "player.f7k": "Chinês → original",
+      "player.f8": "Estatísticas de estudo",
+      "player.f8k": "Domínio",
+      "player.cta": "Baixar o PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "Prévia da interface do PeaPlayer",
+      "player.tabs.aria": "Alternador de telas do PeaPlayer",
+      "player.screens.home": "Início",
+      "player.screens.player": "Player",
+      "player.screens.review": "Aprender · Revisar",
+      "player.foot.home": "Do launcher, acesse <b>reprodução</b>, <b>revisão</b> e o <b>guia</b> com um clique.",
+      "player.foot.player": "Legendas bilíngues em duas faixas · consulta palavra a palavra · loop A-B. <b>Assistir sem interrupções</b>.",
+      "player.foot.review": "Recitação reversa · avalie sua memória · o <b>SRS</b> agenda as revisões automaticamente.",
+      "player.cue.word": "Toque na palavra · consulta na hora",
+      "scribe.kind": "Gerador de legendas",
+      "scribe.h3": "Do áudio à legenda — uma passada, pronta para usar.",
+      "scribe.desc": "Arraste um vídeo ou áudio: ele detecta a faixa, escolhe o idioma, executa um modelo Whisper local e gera a legenda em SRT. Ajuste os códigos de tempo e exporte.",
+      "scribe.f1": "Detecção automática de faixa",
+      "scribe.f1k": "Multilíngue",
+      "scribe.f2": "Geração de legendas com Whisper local",
+      "scribe.f2k": "Modelo offline",
+      "scribe.f3": "Gerenciamento de modelos · progresso ao vivo",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Área de trabalho em três colunas",
+      "scribe.f4k": "Histórico · Arquivo · Propriedades",
+      "scribe.f5": "Edição de código de tempo por linha",
+      "scribe.f5k": "Editor de tabela",
+      "scribe.f6": "Exportar SRT com um clique",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Fila em lote",
+      "scribe.f7k": "Avanço automático",
+      "scribe.f8": "Paleta de comandos",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "Baixar o PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "Prévia da interface do PeaScribe",
+      "scribe.tabs.aria": "Alternador de telas do PeaScribe",
+      "scribe.screens.idle": "Início",
+      "scribe.screens.transcribing": "Gerando",
+      "scribe.screens.complete": "Editor de legendas",
+      "scribe.foot.idle": "Arraste o áudio ou vídeo → detecção automática de <b>faixa</b> e <b>idioma</b>, e comece a gerar legendas.",
+      "scribe.foot.transcribing": "Geração de legendas em partes com Whisper local · <b>progresso</b> e <b>log</b> em tempo real, cancele quando quiser.",
+      "scribe.foot.complete": "Revise <b>códigos de tempo</b> e <b>texto</b> linha a linha e exporte <b>SRT</b> com um clique.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · Chinês",
+      "scribe.mock.track": "Faixa 1 · Chinês",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Gerando",
+      "scribe.mock.srt1": "Bem-vindo à Série Pea",
+      "scribe.mock.srt2": "Hoje vamos falar sobre ferramentas locais",
+      "scribe.mock.srt3": "Aprenda um idioma com vídeos",
+      "download.eyebrow": "Download",
+      "download.title": "Baixar a Série Pea",
+      "download.btn": "Baixar",
+      "download.live": "Disponível",
+      "download.soon": "Em breve",
+      "ver.label": "Mais recente",
+      "download.aria": "Baixar {product} · {platform}",
+      "download.msStoreAria": "Obter {product} na Microsoft Store",
+      "download.toast.pending": "“{product} · {platform}” chega em breve — o link de download aparecerá aqui assim que for lançado.",
+      "note.win": "Windows 10 versão 17763.0 ou posterior",
+      "note.mac": "Chips Apple série M",
+      "req.eyebrow": "Requisitos",
+      "req.title": "Requisitos do PeaScribe",
+      "req.win.os": "Windows 10 versão 17763.0 ou posterior",
+      "req.win.arch": "64 bits (x64)",
+      "req.win.gpu": "GPU NVIDIA para aceleração CUDA",
+      "req.mac.os": "macOS 10.15 Catalina ou posterior",
+      "req.mac.chip": "Chips Apple série M",
+      "req.mac.gpu": "Apple Silicon ativa a aceleração Metal automaticamente",
+      "values.eyebrow": "Por que Pea",
+      "values.title": "Por que ferramentas locais",
+      "values.lead": "Seus materiais são o seu trabalho e os seus dados. Eles devem ficar no seu dispositivo — e não ser enviados para outro lugar.",
+      "values.card1.title": "Local em primeiro lugar",
+      "values.card1.body": "Arquivos e dados ficam sempre no seu dispositivo. Sem uploads, sem rastreamento, funciona offline — a privacidade é o padrão, não um interruptor.",
+      "values.card2.title": "Rápido e discreto",
+      "values.card2.body": "Abre pronto para usar; a geração de legendas e a reprodução são rápidas. Uma interface contida mantém a atenção no conteúdo, e não nos controles.",
+      "values.card3.title": "Dados abertos",
+      "values.card3.body": "SRT, CSV, Anki — formatos padrão que você leva para onde quiser. Seu progresso pertence a você, sempre.",
+      "footer.copy": "© 2026 Série Pea · Aprenda idiomas enquanto assiste.",
+      "footer.privacy": "Política de Privacidade"
+    },
+    ru: {
+      "meta.title": "Pea Series — учите языки, смотря сериалы",
+      "meta.description": "Pea Series — это набор небольших локальных десктопных приложений: плеер для изучения языков PeaPlayer и генератор субтитров PeaScribe. Файлы остаются на устройстве, а скорость — часть впечатления.",
+      "nav.brand": "Pea Series",
+      "nav.brand.aria": "Pea Series — на главную",
+      "nav.aria": "Основная навигация",
+      "nav.products": "Приложения",
+      "nav.values": "Почему Pea",
+      "nav.download": "Скачать",
+      "nav.developer": "О разработчике",
+      "lang.label": "Язык",
+      "theme.light": "Включить тёмную тему",
+      "theme.dark": "Включить светлую тему",
+      "hero.title": "Смотрите сериалы,<br>учите язык — без компромиссов.",
+      "hero.sub": "PeaPlayer помогает осваивать язык естественно, прямо во время просмотра. PeaScribe превращает аудио и видео в субтитры. Файлы остаются на устройстве — приватность и скорость.",
+      "hero.browse": "Посмотреть приложения",
+      "hero.download": "Скачать приложения",
+      "hero.launcher.player.aria": "PeaPlayer — плеер для изучения языков",
+      "hero.launcher.player.desc": "Плеер для изучения языков",
+      "hero.launcher.scribe.aria": "PeaScribe — генератор субтитров",
+      "hero.launcher.scribe.desc": "Генератор субтитров",
+      "products.eyebrow": "Приложения",
+      "products.title": "Два инструмента, которые превращают просмотр в учёбу",
+      "products.lead": "PeaPlayer отвечает за просмотр, PeaScribe — за субтитры. Работают по отдельности, а вместе ещё удобнее.",
+      "player.kind": "Плеер для изучения языков",
+      "player.h3": "Иммерсивное изучение языка — начните с одного видео.",
+      "player.desc": "Накладывайте двуязычные субтитры на любое локальное видео: клик по незнакомому слову — и значение тут же, слово само уходит в словарь, а повторения идут по расписанию. Просмотр не прерывается — темп задаёте вы.",
+      "player.f1": "Двуязычные субтитры · построчно",
+      "player.f1k": "Оригинал / перевод",
+      "player.f2": "Клик по слову · в словарь",
+      "player.f2k": "⌘ + клик",
+      "player.f3": "Словарь · повторение по SRS",
+      "player.f3k": "Автодобавление",
+      "player.f4": "Экспорт в Anki / CSV",
+      "player.f4k": "Двусторонний",
+      "player.f5": "Поиск по субтитрам · синхронно с видео",
+      "player.f5k": "⌘F",
+      "player.f6": "Цикл A-B · повтор строки",
+      "player.f6k": "I / O",
+      "player.f7": "Обратный перевод с китайского",
+      "player.f7k": "Китайский → оригинал",
+      "player.f8": "Статистика обучения",
+      "player.f8k": "Освоение",
+      "player.cta": "Скачать PeaPlayer",
+      "player.platforms": "macOS · Windows",
+      "player.mock.aria": "Превью интерфейса PeaPlayer",
+      "player.tabs.aria": "Переключение экранов PeaPlayer",
+      "player.screens.home": "Главная",
+      "player.screens.player": "Плеер",
+      "player.screens.review": "Учёба · Повторение",
+      "player.foot.home": "Из лаунчера — сразу к <b>воспроизведению</b>, <b>повторению</b> и <b>инструкции</b>.",
+      "player.foot.player": "Двухдорожечные двуязычные субтитры · поиск по слову · цикл A-B. <b>Просмотр не прерывается</b>.",
+      "player.foot.review": "Обратный перевод · оценка памяти · <b>SRS</b> сам планирует повторения.",
+      "player.cue.word": "Клик по слову · мгновенный перевод",
+      "scribe.kind": "Генератор субтитров",
+      "scribe.h3": "От аудио до субтитров — один запуск, и готово.",
+      "scribe.desc": "Перетащите видео или аудио — приложение найдёт дорожку, выберет язык, запустит локальную модель Whisper и создаст субтитры. Останется выправить таймкоды и экспортировать SRT.",
+      "scribe.f1": "Автоопределение дорожки",
+      "scribe.f1k": "Мультиязычность",
+      "scribe.f2": "Локальная генерация субтитров Whisper",
+      "scribe.f2k": "Офлайн-модель",
+      "scribe.f3": "Управление моделями · прогресс",
+      "scribe.f3k": "base / turbo",
+      "scribe.f4": "Рабочая область в три колонки",
+      "scribe.f4k": "История · Файл · Свойства",
+      "scribe.f5": "Построчная правка таймкодов",
+      "scribe.f5k": "Редактор таблиц",
+      "scribe.f6": "Экспорт SRT в один клик",
+      "scribe.f6k": "⌘E",
+      "scribe.f7": "Пакетная очередь",
+      "scribe.f7k": "Автопереход",
+      "scribe.f8": "Палитра команд",
+      "scribe.f8k": "⌘K",
+      "scribe.cta": "Скачать PeaScribe",
+      "scribe.platforms": "macOS · Windows",
+      "scribe.mock.aria": "Превью интерфейса PeaScribe",
+      "scribe.tabs.aria": "Переключение экранов PeaScribe",
+      "scribe.screens.idle": "Главная",
+      "scribe.screens.transcribing": "Генерация",
+      "scribe.screens.complete": "Редактор субтитров",
+      "scribe.foot.idle": "Перетащите аудио или видео → автопоиск <b>дорожки</b> и <b>языка</b>, генерация субтитров в один клик.",
+      "scribe.foot.transcribing": "Whisper локально, генерация по частям · <b>прогресс</b> и <b>журнал</b> в реальном времени, отмена в любой момент.",
+      "scribe.foot.complete": "Выправьте <b>таймкоды</b> и <b>текст</b>, экспортируйте <b>SRT</b> в один клик.",
+      "scribe.mock.file": "~/media/interview_cn.mov · 45:00 · китайский",
+      "scribe.mock.track": "Дорожка 1 · китайский",
+      "scribe.mock.model": "whisper·base",
+      "scribe.mock.progress": "Генерация",
+      "scribe.mock.srt1": "Добро пожаловать в Pea Series",
+      "scribe.mock.srt2": "Сегодня поговорим о локальных инструментах",
+      "scribe.mock.srt3": "Учите язык по видео",
+      "download.eyebrow": "Скачать",
+      "download.title": "Скачать Pea Series",
+      "download.btn": "Скачать",
+      "download.live": "Доступно",
+      "download.soon": "Скоро",
+      "ver.label": "Версия",
+      "download.aria": "Скачать {product} · {platform}",
+      "download.msStoreAria": "Установить {product} из Microsoft Store",
+      "download.toast.pending": "«{product} · {platform}» ещё не вышло — после релиза здесь появится ссылка на скачивание.",
+      "note.win": "Windows 10 версии 17763.0 или новее",
+      "note.mac": "Чипы Apple M",
+      "req.eyebrow": "Требования",
+      "req.title": "Системные требования PeaScribe",
+      "req.win.os": "Windows 10 версии 17763.0 или новее",
+      "req.win.arch": "64-разрядная (x64)",
+      "req.win.gpu": "Ускорение CUDA на видеокартах NVIDIA",
+      "req.mac.os": "macOS 10.15 Catalina или новее",
+      "req.mac.chip": "Чипы серии M",
+      "req.mac.gpu": "Apple Silicon автоматически включает ускорение Metal",
+      "values.eyebrow": "Почему Pea",
+      "values.title": "Почему локальные инструменты",
+      "values.lead": "Ваши материалы — это ваш труд и ваши данные. Они должны оставаться на вашем устройстве, а не загружаться куда-то ещё.",
+      "values.card1.title": "Локальность в приоритете",
+      "values.card1.body": "Файлы и данные всегда остаются на вашем устройстве. Никаких загрузок на сервер, никакой слежки, работает офлайн — приватность по умолчанию, а не переключатель.",
+      "values.card2.title": "Тихо и быстро",
+      "values.card2.body": "Запускается и сразу работает; генерация субтитров и воспроизведение достаточно быстрые. Сдержанный интерфейс оставляет внимание контенту, а не оформлению.",
+      "values.card3.title": "Открытые данные",
+      "values.card3.body": "SRT, CSV, Anki — стандартные форматы, которые всегда можно забрать с собой. Ваши наработки принадлежат только вам.",
+      "footer.copy": "© 2026 Pea Series · Учите язык, смотря сериалы",
+      "footer.privacy": "Политика конфиденциальности"
     }
   };
 
@@ -1692,7 +2656,10 @@ img, svg { display: block; }
        version 非空 = 该平台已发布上线（由发布流程 tool/update_homepage.py 写入）。 */
   function isLive(product, platform) {
     var c = platformConf(product, platform);
-    if (!c || typeof c.url !== "string" || !c.url.trim()) return false;
+    if (!c) return false;
+    /* 已上架 Microsoft Store：填了 store 链接即视为该平台已上线 */
+    if (typeof c.store === "string" && c.store.trim()) return true;
+    if (typeof c.url !== "string" || !c.url.trim()) return false;
     var repo = cfg[product] && cfg[product].repo;
     var assets = releaseAssets[product];
     var fname = c.url.split("/").pop();
@@ -1716,8 +2683,27 @@ img, svg { display: block; }
     }
     return "";
   }
+  /* 该产品是否有平台走 Microsoft Store 上架 */
+  function hasStore(product) {
+    var platforms = cfg && cfg[product] && cfg[product].platforms;
+    if (!platforms) return false;
+    var keys = Object.keys(platforms);
+    for (var i = 0; i < keys.length; i++) {
+      var c = platforms[keys[i]];
+      if (c && typeof c.store === "string" && c.store.trim()) return true;
+    }
+    return false;
+  }
+  /* 展示用版本号：Microsoft Store 在架的产品以配置里的 version 为准 —— 商店版本
+     与 GitHub Release 的 tag 经常不同步，用自动拉取的 tag 会显示成旧版本 */
+  function displayVersion(product) {
+    if (hasStore(product)) return staticVersion(product);
+    return latestVersions[product] || staticVersion(product);
+  }
 
   var DL_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"/></svg>';
+  /* Microsoft 四色方块标识（官方品牌色，不随主题变化） */
+  var MS_SVG = '<svg class="ms-logo" viewBox="0 0 21 21" width="17" height="17" aria-hidden="true" focusable="false"><rect width="10" height="10" fill="#F25022"/><rect x="11" width="10" height="10" fill="#7FBA00"/><rect y="11" width="10" height="10" fill="#00A4EF"/><rect x="11" y="11" width="10" height="10" fill="#FFB900"/></svg>';
 
   /* 发布区渲染（幂等：语言/主题切换时清空重建）*/
   function renderReleases() {
@@ -1732,10 +2718,13 @@ img, svg { display: block; }
       if (!prod || !slot) return;
 
       var c = platformConf(product, platform);
-      var ver = latestVersions[product] || ((c && c.version) ? String(c.version) : "");
+      var isStore = !!(c && typeof c.store === "string" && c.store.trim());
+      /* 商店在架的平台用配置版本，其余用自动拉取的最新 tag */
+      var ver = isStore ? String(c.version || "")
+                        : (latestVersions[product] || ((c && c.version) ? String(c.version) : ""));
       var note;
       if (c && c.note) note = c.note;
-      else if (platform === "macos") note = "Apple Silicon · Intel";
+      else if (platform === "macos") note = t("note.mac");
       else note = t("note.win");
 
       slot.innerHTML = "";
@@ -1743,13 +2732,20 @@ img, svg { display: block; }
 
       if (isLive(product, platform)) {
         var a = document.createElement("a");
-        a.href = c.url.trim();
+        a.href = isStore ? c.store.trim() : c.url.trim();
         a.target = "_blank";
         a.rel = "noopener";
-        a.className = "btn btn-sm " + prod.btn;
         a.setAttribute("data-od-id", "dl-" + product + "-" + platform);
-        a.setAttribute("aria-label", t("download.aria").replace("{product}", prod.name).replace("{platform}", PLATFORM[platform] || platform));
-        a.innerHTML = DL_SVG + t("download.btn") + (ver ? '<span class="btn-ver">v' + ver + "</span>" : "");
+        if (isStore) {
+          /* Microsoft Store 徽章：跳商店页面，版本号只出现在下方 note 与右上角徽章里 */
+          a.className = "ms-store";
+          a.setAttribute("aria-label", t("download.msStoreAria").replace("{product}", prod.name));
+          a.innerHTML = MS_SVG + "<span>Microsoft Store</span>";
+        } else {
+          a.className = "btn btn-sm " + prod.btn;
+          a.setAttribute("aria-label", t("download.aria").replace("{product}", prod.name).replace("{platform}", PLATFORM[platform] || platform));
+          a.innerHTML = DL_SVG + t("download.btn") + (ver ? '<span class="btn-ver">v' + ver + "</span>" : "");
+        }
         slot.appendChild(a);
         if (pfEl && !pfEl.querySelector(".pf-dot")) pfEl.insertAdjacentHTML("afterbegin", '<span class="pf-dot" aria-hidden="true"></span>');
         if (noteEl && ver) noteEl.textContent = note + " · v" + ver;
@@ -1776,9 +2772,9 @@ img, svg { display: block; }
       });
     });
 
-    /* 最新版本徽章：右上角（自动拉取优先，其次静态版本）；未发布则留空 */
+    /* 最新版本徽章：右上角（商店在架用配置版本，其余自动拉取优先）；未发布则留空 */
     Object.keys(PRODUCT).forEach(function (key) {
-      var ver = latestVersions[key] || staticVersion(key);
+      var ver = displayVersion(key);
       var live = productHasLive(key);
       var nums = document.querySelectorAll('[data-ver-num="' + key + '"]');
       Array.prototype.forEach.call(nums, function (b) {

@@ -1,0 +1,6 @@
+  pea-releases.js:64，就这一行：
+
+  62            windows: {
+  63              /* TODO: PeaScribe 上架后换成它自己的商店链接（当前借用 PeaPlayer 的） */
+  64              store: "https://apps.microsoft.com/detail/9pf3hdzw5t5d",   ← 换这里
+  65              version: "1.0.0" // scribe-version

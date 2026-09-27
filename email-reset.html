@@ -7,14 +7,14 @@
   <meta name="x-apple-disable-message-reformatting">
   <meta name="color-scheme" content="light dark">
   <meta name="supported-color-schemes" content="light dark">
-  <title>确认你的邮箱 · Pea 系列</title>
+  <title>重置你的密码 · Pea 系列</title>
   <!--[if mso]>
   <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
   <![endif]-->
   <style>
-    /* ===== Pea 系列 · 注册确认邮件 =====
+    /* ===== Pea 系列 · 密码重置邮件 =====
        模板变量（Go / GoTrue）：
-         {{ .ConfirmationURL }} —— 确认链接（必需）
+         {{ .ConfirmationURL }} —— 重置链接（必需）
        邮箱客户端不支持 oklch()/var()，全部使用 hex。 */
     html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
     body { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
@@ -38,7 +38,6 @@
       .od-fg-2 { color: #c3cdd4 !important; }
       .od-muted { color: #94a1ab !important; }
       .od-panel { background-color: #141b20 !important; border-color: #2a343c !important; }
-      .od-chip { background-color: #141b20 !important; border-color: #2a343c !important; }
       .od-url { color: #94a1ab !important; }
       .od-btn-cell { background-color: #299236 !important; }
       .od-btn { color: #f4fbf4 !important; }
@@ -48,7 +47,7 @@
 <body class="od-bg" style="background-color:#f6f9fc; margin:0; padding:0;">
   <!-- Preheader：列表页摘要文本 -->
   <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; color:#f6f9fc;">
-    确认你的邮箱地址，完成 Pea 系列注册 · Confirm your email address to finish signing up to Pea Series
+    重置你的密码，保护你的账户安全 · Reset your password to secure your account
   </div>
 
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#f6f9fc" class="od-bg" style="background-color:#f6f9fc;">
@@ -88,24 +87,24 @@
             <td class="od-content" style="padding:36px 34px 30px 34px;" data-od-id="email-card">
 
               <!-- 眉题 -->
-              <p style="margin:0 0 12px 0; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#00791B;">账户确认 · Account Confirmation</p>
+              <p style="margin:0 0 12px 0; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#00791B;">重置密码 · Password Reset</p>
 
               <!-- 主标题（中英） -->
-              <h1 class="od-h1 od-fg" style="margin:0 0 6px 0; font-size:24px; line-height:1.4; font-weight:700; color:#121c23;">确认你的邮箱地址</h1>
-              <p class="od-fg-2" style="margin:0 0 24px 0; font-size:14px; line-height:1.5; color:#44525c;">Confirm your email address</p>
+              <h1 class="od-h1 od-fg" style="margin:0 0 6px 0; font-size:24px; line-height:1.4; font-weight:700; color:#121c23;">重置你的密码</h1>
+              <p class="od-fg-2" style="margin:0 0 24px 0; font-size:14px; line-height:1.5; color:#44525c;">Reset your password</p>
 
               <!-- 正文 -->
-              <p class="od-body od-fg" style="margin:0 0 8px 0; font-size:15px; line-height:1.7; color:#2a3440;">欢迎注册 Pea 系列。请点击下方按钮确认你的邮箱地址，以完成注册。</p>
-              <p class="od-body od-muted" style="margin:0 0 26px 0; font-size:14px; line-height:1.6; color:#5a656d;">Welcome to Pea Series. Please confirm your email address to finish signing up.</p>
+              <p class="od-body od-fg" style="margin:0 0 8px 0; font-size:15px; line-height:1.7; color:#2a3440;">我们收到了重置你 Pea 系列账户密码的请求。点击下方按钮，为你的账户设置一个新密码。</p>
+              <p class="od-body od-muted" style="margin:0 0 26px 0; font-size:14px; line-height:1.6; color:#5a656d;">We received a request to reset the password for your Pea Series account. Click the button below to set a new one.</p>
 
               <!-- 主按钮（防弹 · 双语两行） -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" class="od-btn-table" style="margin:0 auto 26px auto;">
                 <tr>
                   <td class="od-btn-cell" align="center" bgcolor="#00791B" style="border-radius:14px; background-color:#00791B;">
-                    <a href="{{ .ConfirmationURL }}" target="_blank" rel="noopener" class="od-btn" data-od-id="email-confirm-button"
+                    <a href="{{ .ConfirmationURL }}" target="_blank" rel="noopener" class="od-btn" data-od-id="email-reset-button"
                        style="display:inline-block; padding:15px 36px; border-radius:14px; font-size:16px; font-weight:600; line-height:1.35; color:#ffffff; text-decoration:none;">
-                      确认邮箱地址
-                      <span style="display:block; margin-top:3px; font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; opacity:.82;">Confirm email address</span>
+                      重置密码
+                      <span style="display:block; margin-top:3px; font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; opacity:.82;">Reset password</span>
                     </a>
                   </td>
                 </tr>
@@ -127,8 +126,8 @@
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td class="od-panel" style="background-color:#f6f9fc; border:1px solid #e3e9ed; border-radius:12px; padding:16px 18px;">
-                    <p style="margin:0; font-size:13px; line-height:1.7; color:#5a656d;">此链接具有时效性。如果你没有发起注册，请忽略此邮件，你的邮箱不会收到后续邮件。</p>
-                    <p style="margin:6px 0 0 0; font-size:13px; line-height:1.7; color:#5a656d;">This link expires after a short time. If you didn't create a Pea Series account, you can safely ignore this email.</p>
+                    <p style="margin:0; font-size:13px; line-height:1.7; color:#5a656d;">此链接具有时效性。如果你没有发起重置，请忽略此邮件，你的密码不会改变。</p>
+                    <p style="margin:6px 0 0 0; font-size:13px; line-height:1.7; color:#5a656d;">This link expires after a short time. If you didn't request a password reset, you can safely ignore this email — your password won't change.</p>
                   </td>
                 </tr>
               </table>
