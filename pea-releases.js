@@ -61,7 +61,7 @@ window.PEA_RELEASES = {
         },
         windows: {
           /* TODO: PeaScribe 上架后换成它自己的商店链接（当前借用 PeaPlayer 的） */
-          store: "https://apps.microsoft.com/detail/9pf3hdzw5t5d",
+          store: "https://apps.microsoft.com/detail/9pcswk5v1r1s",
           version: "1.0.0" // scribe-version
         }
       }
