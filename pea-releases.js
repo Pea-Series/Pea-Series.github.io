@@ -44,7 +44,7 @@ window.PEA_RELEASES = {
         windows: {
           /* 已上架 Microsoft Store */
           store: "https://apps.microsoft.com/detail/9pf3hdzw5t5d",
-          version: "1.0.1"
+          version: "1.0.3"
         }
       }
     },
