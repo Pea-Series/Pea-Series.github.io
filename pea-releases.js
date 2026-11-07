@@ -38,8 +38,8 @@ window.PEA_RELEASES = {
       platforms: {
         macos: {
           /* macOS 已上线：占位直链，替换为真实 .dmg 下载地址即可 */
-          url: "https://www.google.com",
-          version: ""
+          url: "https://pub-f1634453f5d84facbaa8cac8821c245b.r2.dev/mac/PeaPlayer.app.zip",
+          version: "1.0.3"
         },
         windows: {
           /* 已上架 Microsoft Store */
@@ -55,14 +55,14 @@ window.PEA_RELEASES = {
          （见 pea-releases.js 中的 "// scribe-version" 标记） */
       platforms: {
         macos: {
-          /* macOS 已上线：占位直链，替换为真实 .dmg 下载地址即可 */
-          url: "https://www.google.com",
-          version: ""
+          /* macOS 已上线：.dmg 下载地址即可 */
+          url: "https://pub-f1634453f5d84facbaa8cac8821c245b.r2.dev/mac/PeaScribe.app.zip",
+          version: "1.0.1"
         },
         windows: {
           /* 已上架 Microsoft Store */
           store: "https://apps.microsoft.com/detail/9pcswk5v1r1s",
-          version: "1.0.0" // scribe-version
+          version: "1.0.1" // scribe-version
         }
       }
     }
