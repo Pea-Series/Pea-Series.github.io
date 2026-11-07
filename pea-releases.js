@@ -59,7 +59,8 @@ window.PEA_RELEASES = {
           url: "https://www.google.com",
           version: ""
         },
-        windows: 
+        windows: {
+          /* 已上架 Microsoft Store */
           store: "https://apps.microsoft.com/detail/9pcswk5v1r1s",
           version: "1.0.0" // scribe-version
         }
