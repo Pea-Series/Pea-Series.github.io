@@ -28,7 +28,7 @@
    ========================================================================= */
 window.PEA_RELEASES = {
   /* 最近更新时间，仅作记录，展示用 */
-  updatedAt: "2026-09-27",
+  updatedAt: "2026-11-07",
 
   products: {
     player: {
@@ -37,8 +37,8 @@ window.PEA_RELEASES = {
       repo: "Pea-Series/peaplayer",
       platforms: {
         macos: {
-          /* macOS 暂未发布 → 待上线 */
-          url: "",
+          /* macOS 已上线：占位直链，替换为真实 .dmg 下载地址即可 */
+          url: "https://www.google.com",
           version: ""
         },
         windows: {
@@ -55,13 +55,13 @@ window.PEA_RELEASES = {
          （见 pea-releases.js 中的 "// scribe-version" 标记） */
       platforms: {
         macos: {
-          /* macOS 暂未发布 → 待上线 */
-          url: "",
+          /* macOS 已上线：占位直链，替换为真实 .dmg 下载地址即可 */
+          url: "https://www.google.com",
           version: ""
         },
         windows: {
-          /* TODO: PeaScribe 上架后换成它自己的商店链接（当前借用 PeaPlayer 的） */
-          store: "https://apps.microsoft.com/detail/9pf3hdzw5t5d",
+          /* 已上架 Microsoft Store */
+          store: "https://apps.microsoft.com/detail/9pcswk5v1r1s",
           version: "1.0.0" // scribe-version
         }
       }
