@@ -57,12 +57,12 @@ window.PEA_RELEASES = {
         macos: {
           /* macOS 已上线：.dmg 下载地址即可 */
           url: "https://pub-f1634453f5d84facbaa8cac8821c245b.r2.dev/mac/PeaScribe.app.zip",
-          version: "1.0.1"
+          version: "1.0.0"
         },
         windows: {
           /* 已上架 Microsoft Store */
           store: "https://apps.microsoft.com/detail/9pcswk5v1r1s",
-          version: "1.0.1" // scribe-version
+          version: "1.0.0" // scribe-version
         }
       }
     }
